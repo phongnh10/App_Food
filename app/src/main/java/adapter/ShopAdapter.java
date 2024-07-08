@@ -109,7 +109,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             alertDialog.show();
         }
         private void showConfirmationDialog(Shop shop) {
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+         AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Notification");
             builder.setMessage("Do you want to continue? \n" +
                     "Once deleted, the store cannot be restored\n"+
@@ -136,7 +136,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
                 }
             });
 
-            androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+           AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
 

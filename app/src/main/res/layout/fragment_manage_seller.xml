@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context="fragment.ManageSellerFragment">
 
-    <ScrollView
-        android:id="@+id/sv"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_conten1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -172,31 +172,20 @@
                 </LinearLayout>
 
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/ll_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical">
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
                         <FrameLayout
-                            android:id="@+id/fragment_manage_sell"
+                            android:id="@+id/fragme_manage_sell"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"></FrameLayout>
-                    </LinearLayout>
-                </ScrollView>
 
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

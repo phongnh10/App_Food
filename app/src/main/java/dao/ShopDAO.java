@@ -116,4 +116,33 @@ public class ShopDAO {
     }
 
 
+    public Shop getNameShop(int idShop) {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        Shop shop1 = null;
+
+        try {
+            db = dbHelper.getWritableDatabase();
+
+            String[] columns = {"name"};
+            String selection = "idShop = ?";
+            String[] selectionArgs = {String.valueOf(idShop)};
+
+            cursor = db.query("shop", columns, selection, selectionArgs, null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                shop1 = new Shop();
+                shop1.setName(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+        }
+
+        return shop1;
+    }
 }

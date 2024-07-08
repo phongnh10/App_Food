@@ -3,17 +3,17 @@ package model;
 public class Categories {
     private int idCategories;
     private int idShop;
-    private String nameCategories;
-    private int imageId;
+    private String name;
+    private byte[] image;
 
     public Categories() {
     }
 
-    public Categories(int idCategories, int idShop, String nameCategories, int imageId) {
+    public Categories(int idCategories, int idShop, String name, byte[] image) {
         this.idCategories = idCategories;
         this.idShop = idShop;
-        this.nameCategories = nameCategories;
-        this.imageId = imageId;
+        this.name = name;
+        this.image = image;
     }
 
     public int getIdCategories() {
@@ -32,19 +32,19 @@ public class Categories {
         this.idShop = idShop;
     }
 
-    public String getNameCategories() {
-        return nameCategories;
+    public String getName() {
+        return name;
     }
 
-    public void setNameCategories(String nameCategories) {
-        this.nameCategories = nameCategories;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getImageId() {
-        return imageId;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

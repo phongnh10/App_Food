@@ -83,18 +83,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Categories"
+                    android:text="Hôm nay ăn gì ?"
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="@color/selected_color"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp">
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_categories_home"
+                    android:id="@+id/rcv_eat_home"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="210dp"
+                    android:layout_gravity="center">
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
@@ -105,21 +107,48 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Favourite"
+                    android:text="Các loại đồ uống"
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="@color/selected_color"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp">
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_favourite_home"
+                    android:id="@+id/rcv_drink_home"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="210dp"
+                    android:layout_gravity="center">
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thể Loại"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="@color/selected_color"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                </TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/rcv_categories_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_gravity="center">
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>

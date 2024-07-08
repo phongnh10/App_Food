@@ -1,31 +1,19 @@
 package fragment;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
 import com.example.du_an_1.R;
-import com.example.du_an_1.databinding.FragmentManageAdminBinding;
 import com.example.du_an_1.databinding.FragmentManageSellerBinding;
-
-import java.util.List;
-import java.util.PrimitiveIterator;
-
 import dao.ShopDAO;
-import data.base.DbHelper;
 import model.Shop;
 
 public class ManageSellerFragment extends Fragment {
@@ -92,7 +80,7 @@ public class ManageSellerFragment extends Fragment {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_manage_sell, fragment);
+        fragmentTransaction.replace(R.id.fragme_manage_sell, fragment);
         fragmentTransaction.commit();
     }
     public void getShop() {
@@ -112,7 +100,6 @@ public class ManageSellerFragment extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }
-
 
 
 
