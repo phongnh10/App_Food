@@ -17,5 +17,6 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false);
         //// learn git mãi mãi
+        // test cònlict
     }
 }
