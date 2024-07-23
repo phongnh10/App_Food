@@ -202,5 +202,137 @@ public class ProductDAO {
 
         return productList;
     }
+    public List<Product> getProductsListAll() {
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product", null);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int idProductIndex = cursor.getColumnIndex("idProduct");
+                    int idCategoriesIndex = cursor.getColumnIndex("idCategories");
+                    int idShopIndex = cursor.getColumnIndex("idShop");
+                    int nameIndex = cursor.getColumnIndex("name");
+                    int imageIndex = cursor.getColumnIndex("image");
+                    int priceIndex = cursor.getColumnIndex("price");
+                    int noteIndex = cursor.getColumnIndex("note");
+                    int statusIndex = cursor.getColumnIndex("status");
+
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                        int idProduct = cursor.getInt(idProductIndex);
+                        int idCategories = cursor.getInt(idCategoriesIndex);
+                        int idShopValue = cursor.getInt(idShopIndex);
+                        String name = cursor.getString(nameIndex);
+                        byte[] imageBytes = cursor.getBlob(imageIndex);
+                        int price = cursor.getInt(priceIndex);
+                        String note = cursor.getString(noteIndex);
+                        int status = cursor.getInt(statusIndex);
+
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        productList.add(product);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ProductAdapter", "Error while fetching products: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return productList;
+    }
+    public List<Product> getProductsByName(String query) {
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String sql = "SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE name LIKE ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%"});
+
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int idProductIndex = cursor.getColumnIndex("idProduct");
+                    int idCategoriesIndex = cursor.getColumnIndex("idCategories");
+                    int idShopIndex = cursor.getColumnIndex("idShop");
+                    int nameIndex = cursor.getColumnIndex("name");
+                    int imageIndex = cursor.getColumnIndex("image");
+                    int priceIndex = cursor.getColumnIndex("price");
+                    int noteIndex = cursor.getColumnIndex("note");
+                    int statusIndex = cursor.getColumnIndex("status");
+
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                        int idProduct = cursor.getInt(idProductIndex);
+                        int idCategories = cursor.getInt(idCategoriesIndex);
+                        int idShopValue = cursor.getInt(idShopIndex);
+                        String name = cursor.getString(nameIndex);
+                        byte[] imageBytes = cursor.getBlob(imageIndex);
+                        int price = cursor.getInt(priceIndex);
+                        String note = cursor.getString(noteIndex);
+                        int status = cursor.getInt(statusIndex);
+
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        productList.add(product);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ProductAdapter", "Error while fetching products: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return productList;
+    }
+
+    public List<Product> getProductsid(int idShop) {
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idShop = ? OR idShop = 1", new String[]{String.valueOf(idShop)});
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int idProductIndex = cursor.getColumnIndex("idProduct");
+                    int idCategoriesIndex = cursor.getColumnIndex("idCategories");
+                    int idShopIndex = cursor.getColumnIndex("idShop");
+                    int nameIndex = cursor.getColumnIndex("name");
+                    int imageIndex = cursor.getColumnIndex("image");
+                    int priceIndex = cursor.getColumnIndex("price");
+                    int noteIndex = cursor.getColumnIndex("note");
+                    int statusIndex = cursor.getColumnIndex("status");
+
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                        int idProduct = cursor.getInt(idProductIndex);
+                        int idCategories = cursor.getInt(idCategoriesIndex);
+                        int idShopValue = cursor.getInt(idShopIndex);
+                        String name = cursor.getString(nameIndex);
+                        byte[] imageBytes = cursor.getBlob(imageIndex);
+                        int price = cursor.getInt(priceIndex);
+                        String note = cursor.getString(noteIndex);
+                        int status = cursor.getInt(statusIndex);
+
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        productList.add(product);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ProductAdapter", "Error while fetching products: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return productList;
+    }
 
 }

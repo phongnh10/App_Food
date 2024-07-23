@@ -44,7 +44,6 @@ public class ManageBoothFragment extends Fragment {
     private void loadShopList() {
         ShopDAO shopDao = new ShopDAO(getContext());
         List<Shop> shopList = shopDao.getListShop();
-
         adapter = new ShopAdapter(shopList, getContext());
         recyclerView.setAdapter(adapter);
     }

@@ -1,10 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="20dp">
+
+        <ImageView
+            android:id="@+id/img_back_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#5EFAF9F9"
+            android:padding="15dp"
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/img_product"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/image_goivit" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_alignBottom="@+id/img_product"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/top_rounded_card"
+        android:orientation="vertical"
+        app:background="@null">
+
+        <TextView
+            android:id="@+id/txt_name_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Bánh Tráng Trộn"
+            android:textSize="30dp"
+            android:textStyle="bold"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/txt_price_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="d 15.000"
+                android:textColor="#FF5722"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:layout_weight="1"></TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="4.5 "
+                    android:textColor="#FF5722"
+                    android:textSize="30dp"
+                    android:gravity="right"
+                    ></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_star_rate_24"
+                    android:layout_gravity="center"></ImageView>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp">
+            <ImageView
+                android:id="@+id/img_minus_quantity_product"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_remove_24"
+                android:background="@drawable/custum_price"></ImageView>
+            <TextView
+                android:id="@+id/txt_quantity_product"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="40dp"></TextView>
+            <ImageView
+                android:id="@+id/img_plus_quantity_product"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_add_24"
+                android:background="@drawable/custum_price"></ImageView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="Mô Tả"
+            android:textSize="30dp"></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Bánh Tráng phơi sương"></TextView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mời Bạn Đánh Giá"
+                android:gravity="center"></TextView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_rate_24"></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_rate_24"></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_rate_24"></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_rate_24"></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_rate_24"></ImageView>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_add_product_cart"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="80dp"
+            android:text="Thêm Vào Giỏ Hàng"></Button>
+    </LinearLayout>
+
+
+</RelativeLayout>
