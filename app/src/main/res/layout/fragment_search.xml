@@ -1,14 +1,97 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragment.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragment.SearchFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_pin"></ImageView>
+
+        <TextView
+            android:id="@+id/txt_location_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text="FPT-FPOLY"
+            android:gravity="center"></TextView>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_search_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/custum_edittext_seach"
+        android:hint="Tìm kiếm sản phẩm"
+        android:layout_marginHorizontal="10dp"></EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/show_menu1_textview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="Sản Phẩm"
+            android:textSize="20dp"
+            android:gravity="center"
+            app:background="@null"
+            android:background="@drawable/custum_categories_search"></TextView>
+
+        <TextView
+            android:id="@+id/show_menu2_textview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="Ăn Vặt"
+            android:textSize="20dp"
+            android:gravity="center"
+            app:background="@null"
+            android:background="@drawable/custum_categories_search"></TextView>
+
+        <TextView
+            android:id="@+id/show_menu3_textview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="Mới Nhất"
+            android:textSize="20dp"
+            android:gravity="center"
+            app:background="@null"
+            android:background="@drawable/custum_categories_search"></TextView>
+
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:background="#2196F3"/>
+        android:layout_height="1dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@color/black"></TextView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_product_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
 
-</FrameLayout>
+</LinearLayout>
