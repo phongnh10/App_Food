@@ -16,13 +16,17 @@ import com.example.du_an_1.databinding.ActivityProductBinding;
 
 import java.text.DecimalFormat;
 
+import dao.OrderDetailsDAO;
 import dao.ProductDAO;
+import model.OrderDetails;
 import model.Product;
 
 
 public class ProductActivity extends AppCompatActivity {
     private ProductDAO productDAO;
     private Product product;
+    private OrderDetailsDAO orderDetailsDAO;
+    private OrderDetails orderDetails;
     private ActivityProductBinding binding;
     private int quantity = 1;
     private int price;
@@ -87,7 +91,11 @@ public class ProductActivity extends AppCompatActivity {
         binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                OrderDetails newOrderDetails = new OrderDetails();
+                newOrderDetails.setIdProduct(product.getIdProduct());
+                newOrderDetails.setIdOrder(1);
+                newOrderDetails.setQuantity(quantity);
+                newOrderDetails.setPrice(price);
             }
         });
 
