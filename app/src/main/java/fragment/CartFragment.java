@@ -16,9 +16,5 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false);
-        //// learn git mãi mãi
-        ///đang làm task 2
-        // test cònlict
-        /// dang almf task 1
     }
 }
