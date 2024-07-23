@@ -42,7 +42,7 @@ public class ProductActivity extends AppCompatActivity {
             binding.txtNameProduct.setText(product.getName());
             DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
             String formattedPrice = decimalFormat.format(product.getPrice());
-            price= product.getPrice();
+            price = product.getPrice();
             binding.txtPriceProduct.setText(formattedPrice);
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
@@ -51,9 +51,9 @@ public class ProductActivity extends AppCompatActivity {
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (quantity>1) {
+                if (quantity > 1) {
                     quantity--;
-                    if (price>0){
+                    if (price > 0) {
                         price = price - product.getPrice();
                     }
                 }
@@ -87,15 +87,11 @@ public class ProductActivity extends AppCompatActivity {
         binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
             }
         });
 
     }
-
-
-
-
 
 
     private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
