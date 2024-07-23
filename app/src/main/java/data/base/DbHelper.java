@@ -21,9 +21,10 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String TABLE_SHOP = "Shop";
     private static final String TABLE_CATEGORIES = "Categories";
     private static final String TABLE_PRODUCT = "Product";
+    private static final String TABLE_ORDER_DETAILS = "OrderDetails";
+    private static final String TABLE_ORDER = "OrderTable";
 
-
-
+    // User table columns
     private static final String COLUMN_ID_USER = "idUser";
     private static final String COLUMN_USER = "user";
     private static final String COLUMN_PASS = "pass";
@@ -32,15 +33,18 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CCCD = "cccd";
     private static final String COLUMN_ROLE = "role";
 
+    // Shop table columns
     private static final String COLUMN_ID_SHOP = "idShop";
-    private static final String COLUMN_ADDRESS = "address";
+    private static final String COLUMN_NAME_SHOP = "name";
+    private static final String COLUMN_ADDRESS_SHOP = "address";
 
+    // Categories table columns
     private static final String COLUMN_ID_CATEGORIES = "idCategories";
-    private static final String COLUMN_IMAGE = "image";
+    private static final String COLUMN_NAME_CATEGORIES = "name";
+    private static final String COLUMN_IMAGE_CATEGORIES = "image";
 
     // Product table columns
     private static final String COLUMN_ID_PRODUCT = "idProduct";
-    private static final String COLUMN_ID_CATEGORIES_PRODUCT = "idCategories";
     private static final String COLUMN_ID_SHOP_PRODUCT = "idShop";
     private static final String COLUMN_NAME_PRODUCT = "name";
     private static final String COLUMN_IMAGE_PRODUCT = "image";
@@ -48,10 +52,21 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NOTE_PRODUCT = "note";
     private static final String COLUMN_STATUS_PRODUCT = "status";
 
-    // Categories table columns
+    // OrderDetails table columns
+    private static final String COLUMN_ID_ORDER_DETAILS = "idOrderDetails";
+    private static final String COLUMN_QUANTITY_ORDER_DETAILS = "quantity";
+    private static final String COLUMN_PRICE_ORDER_DETAILS = "price";
+    private static final String COLUMN_IMAGE_ORDER_DETAILS = "image";
+    private static final String COLUMN_NAME_ORDER_DETAILS = "name";
 
+    // Order table columns
+    private static final String COLUMN_ID_ORDER = "idOrder";
+    private static final String COLUMN_STATUS_ORDER = "status";
+    private static final String COLUMN_TOTAL_ORDER = "date";
+
+
+    ///
     private Context context;
-
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -59,7 +74,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create tables
+        // Create User table
         db.execSQL("CREATE TABLE " + TABLE_USER + " (" +
                 COLUMN_ID_USER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_USER + " TEXT, " +
@@ -69,34 +84,54 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_CCCD + " LONG, " +
                 COLUMN_ROLE + " INTEGER)");
 
+        // Create Shop table
         db.execSQL("CREATE TABLE " + TABLE_SHOP + " (" +
                 COLUMN_ID_SHOP + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ID_USER + " INTEGER, " +
-                COLUMN_NAME + " TEXT, " +
-                COLUMN_ADDRESS + " TEXT, " +
+                COLUMN_NAME_SHOP + " TEXT, " +
+                COLUMN_ADDRESS_SHOP + " TEXT, " +
                 "FOREIGN KEY(" + COLUMN_ID_USER + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID_USER + "))");
 
+        // Create Categories table
         db.execSQL("CREATE TABLE " + TABLE_CATEGORIES + " (" +
                 COLUMN_ID_CATEGORIES + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ID_SHOP + " INTEGER, " +
-                COLUMN_NAME + " TEXT, " +
-                COLUMN_IMAGE + " BLOB, " +
+                COLUMN_NAME_CATEGORIES + " TEXT, " +
+                COLUMN_IMAGE_CATEGORIES + " BLOB, " +
                 "FOREIGN KEY(" + COLUMN_ID_SHOP + ") REFERENCES " + TABLE_SHOP + "(" + COLUMN_ID_SHOP + "))");
 
         // Create Product table
-        db.execSQL("CREATE TABLE " + TABLE_PRODUCT + "("
-                + COLUMN_ID_PRODUCT + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_ID_CATEGORIES_PRODUCT + " INTEGER,"
-                + COLUMN_ID_SHOP_PRODUCT + " INTEGER,"
-                + COLUMN_NAME_PRODUCT + " TEXT,"
-                + COLUMN_IMAGE_PRODUCT + " BLOB,"
-                + COLUMN_PRICE_PRODUCT + " INTEGER,"
-                + COLUMN_NOTE_PRODUCT + " TEXT,"
-                + COLUMN_STATUS_PRODUCT + " INTEGER,"
-                + "FOREIGN KEY(" + COLUMN_ID_CATEGORIES_PRODUCT + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_ID_CATEGORIES + "),"
-                + "FOREIGN KEY(" + COLUMN_ID_SHOP_PRODUCT + ") REFERENCES " + TABLE_SHOP + "(" + COLUMN_ID_SHOP + ")"
-                + ")");
+        db.execSQL("CREATE TABLE " + TABLE_PRODUCT + " (" +
+                COLUMN_ID_PRODUCT + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_ID_CATEGORIES + " INTEGER, " +
+                COLUMN_ID_SHOP + " INTEGER, " +
+                COLUMN_NAME_PRODUCT + " TEXT, " +
+                COLUMN_IMAGE_PRODUCT + " BLOB, " +
+                COLUMN_PRICE_PRODUCT + " INTEGER, " +
+                COLUMN_NOTE_PRODUCT + " TEXT, " +
+                COLUMN_STATUS_PRODUCT + " INTEGER, " +
+                "FOREIGN KEY(" + COLUMN_ID_CATEGORIES + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_ID_CATEGORIES + "), " +
+                "FOREIGN KEY(" + COLUMN_ID_SHOP + ") REFERENCES " + TABLE_SHOP + "(" + COLUMN_ID_SHOP + "))");
 
+        // Create OrderDetails table
+        db.execSQL("CREATE TABLE " + TABLE_ORDER_DETAILS + " (" +
+                COLUMN_ID_ORDER_DETAILS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_ID_PRODUCT + " INTEGER, " +
+                COLUMN_ID_ORDER + " INTEGER, " +
+                COLUMN_QUANTITY_ORDER_DETAILS + " INTEGER, " +
+                COLUMN_PRICE_ORDER_DETAILS + " DOUBLE, " +
+                COLUMN_IMAGE_ORDER_DETAILS + " BLOB, " +
+                COLUMN_NAME_ORDER_DETAILS + " TEXT, " +
+                "FOREIGN KEY(" + COLUMN_ID_PRODUCT + ") REFERENCES " + TABLE_PRODUCT + "(" + COLUMN_ID_PRODUCT + "), " +
+                "FOREIGN KEY(" + COLUMN_ID_ORDER + ") REFERENCES " + TABLE_ORDER + "(" + COLUMN_ID_ORDER + "))");
+
+        // Create Order table
+        db.execSQL("CREATE TABLE " + TABLE_ORDER + " (" +
+                COLUMN_ID_ORDER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_ID_USER + " INTEGER, " +
+                COLUMN_STATUS_ORDER + " INTEGER, " +
+                COLUMN_TOTAL_ORDER + " DATE, " +
+                "FOREIGN KEY(" + COLUMN_ID_USER + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID_USER + "))");
 
 
         // Insert initial data
@@ -108,7 +143,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "('buy1', '1', 'Nguyễn Văn A', '0123456789', '33333333333333', 2), " +
                 "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2)");
 
-        db.execSQL("INSERT INTO " + TABLE_SHOP + " (" + COLUMN_ID_USER + ", " + COLUMN_NAME + ", " + COLUMN_ADDRESS + ") VALUES " +
+        db.execSQL("INSERT INTO " + TABLE_SHOP + " (" + COLUMN_ID_USER + ", " + COLUMN_NAME + ", " + COLUMN_ADDRESS_SHOP + ") VALUES " +
                 "(1, 'Shop Admin', 'Not Selle'), " +
                 "(2, 'Tiệm Cơm Mùa Thu', 'Tử Lâu 88'), " +
                 "(3, 'Tiềm Trà Tháng 4', 'Sảnh S7.02'), " +
@@ -120,34 +155,15 @@ public class DbHelper extends SQLiteOpenHelper {
         insertProduct(db);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOP);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER_DETAILS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER);
         onCreate(db);
-    }
-
-    public Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-
-        float scaleWidth = ((float) maxWidth) / width;
-        float scaleHeight = ((float) maxHeight) / height;
-        float scale = Math.min(scaleWidth, scaleHeight);
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(scale, scale);
-
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
-        bitmap.recycle();
-        return resizedBitmap;
-    }
-
-    public byte[] getBytesFromBitmap(Bitmap bitmap, int quality) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, quality, stream);
-        return stream.toByteArray();
     }
 
     private void insertInitialCategories(SQLiteDatabase db) {
@@ -192,7 +208,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID_SHOP, shopId);
         contentValues.put(COLUMN_NAME, name);
-        contentValues.put(COLUMN_IMAGE, image);
+        contentValues.put(COLUMN_IMAGE_CATEGORIES, image);
         db.insert(TABLE_CATEGORIES, null, contentValues);
     }
 
@@ -203,11 +219,11 @@ public class DbHelper extends SQLiteOpenHelper {
         Bitmap bitmap2 = BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua);
 
         // Convert bitmaps to byte arrays
-        byte[] image1 = getBytesFromBitmap(bitmap1,50);
-        byte[] image2 = getBytesFromBitmap(bitmap2,50);
+        byte[] image1 = getBytesFromBitmap(bitmap1, 50);
+        byte[] image2 = getBytesFromBitmap(bitmap2, 50);
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ID_CATEGORIES_PRODUCT, 6);
+        values.put(COLUMN_ID_CATEGORIES, 6);
         values.put(COLUMN_ID_SHOP_PRODUCT, 1);
         values.put(COLUMN_NAME_PRODUCT, "Trà Sữa Trái Cây");
         values.put(COLUMN_IMAGE_PRODUCT, image2);
@@ -218,7 +234,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         ContentValues values1 = new ContentValues();
-        values1.put(COLUMN_ID_CATEGORIES_PRODUCT, 1);
+        values1.put(COLUMN_ID_CATEGORIES, 1);
         values1.put(COLUMN_ID_SHOP_PRODUCT, 1);
         values1.put(COLUMN_NAME_PRODUCT, "Bún Đậu Mắm Tôm");
         values1.put(COLUMN_IMAGE_PRODUCT, image1);
@@ -228,7 +244,25 @@ public class DbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_PRODUCT, null, values1);
 
     }
-    public byte[] getBytesFromBitmapp(Bitmap bitmap, int quality) {
+
+    // img fofmat
+    public Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float scaleWidth = ((float) maxWidth) / width;
+        float scaleHeight = ((float) maxHeight) / height;
+        float scale = Math.min(scaleWidth, scaleHeight);
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+        bitmap.recycle();
+        return resizedBitmap;
+    }
+
+    public byte[] getBytesFromBitmap(Bitmap bitmap, int quality) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, quality, stream);
         return stream.toByteArray();

@@ -12,7 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.du_an_1.databinding.ActivityMainBinding;
 
-import fragment.CartFragment;
+import fragment.CartBuyFragment;
+import fragment.CartSellFragment;
 import fragment.HomeFragment;
 import fragment.ManageAdminFragment;
 import fragment.ManageBuyerFragment;
@@ -53,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new ManageBuyerFragment());
                 }
             } else if (item.getItemId() == R.id.nav_cart) {
-                replaceFragment(new CartFragment());
+                if (role == 1) {
+                    replaceFragment(new CartSellFragment());
+                } else if (role == 2) {
+                    replaceFragment(new CartBuyFragment());
+                }
             } else if (item.getItemId() == R.id.nav_setting) {
                 replaceFragment(new SettingFragment());
 
