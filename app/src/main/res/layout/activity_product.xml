@@ -123,6 +123,7 @@
             android:text="Mô Tả"
             android:textSize="30dp"></TextView>
         <TextView
+            android:id="@+id/txt_note_product"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="Bánh Tráng phơi sương"></TextView>

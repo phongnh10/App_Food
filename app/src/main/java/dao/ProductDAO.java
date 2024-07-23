@@ -291,40 +291,36 @@ public class ProductDAO {
         return productList;
     }
 
-    public List<Product> getProductsid(int idShop) {
-        List<Product> productList = new ArrayList<>();
+    public Product getProductById(int idProduct) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Product product = null;
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idShop = ? OR idShop = 1", new String[]{String.valueOf(idShop)});
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idProduct=?", new String[]{String.valueOf(idProduct)});
         try {
             if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    int idProductIndex = cursor.getColumnIndex("idProduct");
-                    int idCategoriesIndex = cursor.getColumnIndex("idCategories");
-                    int idShopIndex = cursor.getColumnIndex("idShop");
-                    int nameIndex = cursor.getColumnIndex("name");
-                    int imageIndex = cursor.getColumnIndex("image");
-                    int priceIndex = cursor.getColumnIndex("price");
-                    int noteIndex = cursor.getColumnIndex("note");
-                    int statusIndex = cursor.getColumnIndex("status");
+                int idProductIndex = cursor.getColumnIndex("idProduct");
+                int idCategoriesIndex = cursor.getColumnIndex("idCategories");
+                int idShopIndex = cursor.getColumnIndex("idShop");
+                int nameIndex = cursor.getColumnIndex("name");
+                int imageIndex = cursor.getColumnIndex("image");
+                int priceIndex = cursor.getColumnIndex("price");
+                int noteIndex = cursor.getColumnIndex("note");
+                int statusIndex = cursor.getColumnIndex("status");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
-                        int idProduct = cursor.getInt(idProductIndex);
-                        int idCategories = cursor.getInt(idCategoriesIndex);
-                        int idShopValue = cursor.getInt(idShopIndex);
-                        String name = cursor.getString(nameIndex);
-                        byte[] imageBytes = cursor.getBlob(imageIndex);
-                        int price = cursor.getInt(priceIndex);
-                        String note = cursor.getString(noteIndex);
-                        int status = cursor.getInt(statusIndex);
+                if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    int idCategories = cursor.getInt(idCategoriesIndex);
+                    int idShopValue = cursor.getInt(idShopIndex);
+                    String name = cursor.getString(nameIndex);
+                    byte[] imageBytes = cursor.getBlob(imageIndex);
+                    int price = cursor.getInt(priceIndex);
+                    String note = cursor.getString(noteIndex);
+                    int status = cursor.getInt(statusIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
-                        productList.add(product);
-                    }
-                } while (cursor.moveToNext());
+                    product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                }
             }
         } catch (Exception e) {
-            Log.e("ProductAdapter", "Error while fetching products: " + e.getMessage());
+            Log.e("ProductAdapter", "Error while fetching product: " + e.getMessage());
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -332,7 +328,7 @@ public class ProductDAO {
             db.close();
         }
 
-        return productList;
+        return product;
     }
 
 }
