@@ -14,7 +14,7 @@ import com.example.du_an_1.databinding.ActivityProductBinding;
 import dao.ProductDAO;
 import model.Product;
 
-private ProductDAO productDAO;
+
 public class ProductActivity extends AppCompatActivity {
 
     private ActivityProductBinding binding;
@@ -28,7 +28,6 @@ public class ProductActivity extends AppCompatActivity {
         int productId = intent.getIntExtra("productId", -1);
 
         Product product = new Product();
-        product = productDAO.get
 
 
     }
