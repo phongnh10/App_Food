@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import dao.OrderDetailsDAO;
 import dao.UserDAO;
 import model.User;
 
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private int role, idUser;
     private String user, pass, name;
     private long cccd, phone;
+    private OrderDetailsDAO orderDetailsDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                 checkUserPass();
             }
         });
-
-
     }
 
     public void checkUserPass() {
-
         EditText edtUser = findViewById(R.id.edtUsername);
         EditText edtPass = findViewById(R.id.edtPassword);
 
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         String pass = edtPass.getText().toString();
         UserDAO userDAO = new UserDAO(LoginActivity.this);
 
-        // check user pass
+        // Check user pass
         int check = userDAO.login(user, pass);
 
         switch (check) {
@@ -59,6 +58,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 sharedPreferences();
 
+                // Tạo bảng OrderDetails cho user sau khi đăng nhập thành công
+                orderDetailsDAO = new OrderDetailsDAO(LoginActivity.this);
+                orderDetailsDAO.createOrderDetailsTable(idUser);
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -67,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // share role
+    // Save user information in SharedPreferences
     public void sharedPreferences() {
         EditText edtUser = findViewById(R.id.edtUsername);
         EditText edtPass = findViewById(R.id.edtPassword);
@@ -86,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         cccd = user1.getCccd();
         role = user1.getRole();
 
-        //save role
+        // Save role
         SharedPreferences sharedPreferences = getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("idUser", idUser);
@@ -97,9 +100,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putLong("cccd", cccd);
         editor.putInt("role", role);
         editor.apply();
-
-
     }
+
 
 //    public int getRoleFromSharedPreferences() {
 //        SharedPreferences sharedPreferences = getSharedPreferences("Role_User", Context.MODE_PRIVATE);
