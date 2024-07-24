@@ -21,7 +21,6 @@ import java.util.List;
 
 import adapter.OrderDetailsAdapter;
 import dao.OrderDetailsDAO;
-import model.Order;
 import model.OrderDetails;
 
 
@@ -33,7 +32,6 @@ public class OrdersCurrentFragment extends Fragment {
     private int idUser;
     private int idShop;
     private Double priceTotal;
-    private Order order;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,17 +55,7 @@ public class OrdersCurrentFragment extends Fragment {
         updateTotal();
         updateTotalPrice();
 
-        binding.llOrderDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = getActivity();
-                if (context != null) {
-                    Intent intent = new Intent(context, OrderActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
+       
 
 
 
@@ -84,7 +72,7 @@ public class OrdersCurrentFragment extends Fragment {
         for (OrderDetails orderDetails : orderDetailsList) {
             priceTotal += orderDetails.getTotalPrice();
         }
-        idShop = orderDetailsList.get(0).getIdShop();
+
         DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
         binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
     }
