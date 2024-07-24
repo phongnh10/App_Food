@@ -1,20 +1,22 @@
 package model;
 
 public class OrderDetails {
-    private int idOrderDetails,idProduct,idOrder,quantity;
-    private double price;
+    private int idOrderDetails,idShop,idProduct,idOrder,quantity;
+    private double price,totalPrice;
     private byte[] image;
     private String name;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(int idOrderDetails, int idProduct, int idOrder, int quantity, double price, byte[] image, String name) {
+    public OrderDetails(int idOrderDetails, int idShop, int idProduct, int idOrder, int quantity, double price, double totalPrice, byte[] image, String name) {
         this.idOrderDetails = idOrderDetails;
+        this.idShop = idShop;
         this.idProduct = idProduct;
         this.idOrder = idOrder;
         this.quantity = quantity;
         this.price = price;
+        this.totalPrice = totalPrice;
         this.image = image;
         this.name = name;
     }
@@ -25,6 +27,14 @@ public class OrderDetails {
 
     public void setIdOrderDetails(int idOrderDetails) {
         this.idOrderDetails = idOrderDetails;
+    }
+
+    public int getIdShop() {
+        return idShop;
+    }
+
+    public void setIdShop(int idShop) {
+        this.idShop = idShop;
     }
 
     public int getIdProduct() {
@@ -57,6 +67,14 @@ public class OrderDetails {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public byte[] getImage() {

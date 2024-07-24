@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.du_an_1.OrderActivity;
 import com.example.du_an_1.databinding.FragmentOrdersCurrentBinding;
 
 import java.text.DecimalFormat;
