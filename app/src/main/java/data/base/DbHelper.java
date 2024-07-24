@@ -1,5 +1,6 @@
 package data.base;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,16 +55,20 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // OrderDetails table columns
     private static final String COLUMN_ID_ORDER_DETAILS = "idOrderDetails";
-    private static final String COLUMN_QUANTITY_ORDER_DETAILS = "quantity";
+    private static final String COLUMN_ID_SHOP_DETAILS = "idShop";
+    private static final String COLUMN_ID_PRODUCT_DETAILS = "idProduct";
     private static final String COLUMN_PRICE_ORDER_DETAILS = "price";
-    private static final String COLUMN_IMAGE_ORDER_DETAILS = "image";
+    private static final String COLUMN_TOTAL_PRICE_ORDER_DETAILS = "totalPrice";
+    private static final String COLUMN_QUANTITY_ORDER_DETAILS = "quantity";
     private static final String COLUMN_NAME_ORDER_DETAILS = "name";
+    private static final String COLUMN_IMAGE_ORDER_DETAILS = "image";
 
     // Order table columns
     private static final String COLUMN_ID_ORDER = "idOrder";
     private static final String COLUMN_STATUS_ORDER = "status";
-    private static final String COLUMN_TOTAL_ORDER = "date";
-
+    private static final String COLUMN_TOTAL_ORDER = "totalPrice";
+    private static final String COLUMN_TOTAL_QUANTITY = "quantity";
+    private static final String COLUMN_ORDER_DATE_ORDER= "date";
 
     ///
     private Context context;
@@ -116,10 +121,12 @@ public class DbHelper extends SQLiteOpenHelper {
         // Create OrderDetails table
         db.execSQL("CREATE TABLE " + TABLE_ORDER_DETAILS + " (" +
                 COLUMN_ID_ORDER_DETAILS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_ID_PRODUCT + " INTEGER, " +
+                COLUMN_ID_SHOP_DETAILS + " INTEGER, " +
+                COLUMN_ID_PRODUCT_DETAILS + " INTEGER, " +
                 COLUMN_ID_ORDER + " INTEGER, " +
                 COLUMN_QUANTITY_ORDER_DETAILS + " INTEGER, " +
                 COLUMN_PRICE_ORDER_DETAILS + " DOUBLE, " +
+                COLUMN_TOTAL_PRICE_ORDER_DETAILS + " DOUBLE, " +
                 COLUMN_IMAGE_ORDER_DETAILS + " BLOB, " +
                 COLUMN_NAME_ORDER_DETAILS + " TEXT, " +
                 "FOREIGN KEY(" + COLUMN_ID_PRODUCT + ") REFERENCES " + TABLE_PRODUCT + "(" + COLUMN_ID_PRODUCT + "), " +
@@ -128,9 +135,12 @@ public class DbHelper extends SQLiteOpenHelper {
         // Create Order table
         db.execSQL("CREATE TABLE " + TABLE_ORDER + " (" +
                 COLUMN_ID_ORDER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_ID_SHOP_PRODUCT + " INTEGER, " +
                 COLUMN_ID_USER + " INTEGER, " +
                 COLUMN_STATUS_ORDER + " INTEGER, " +
-                COLUMN_TOTAL_ORDER + " DATE, " +
+                COLUMN_TOTAL_QUANTITY + " INTEGER, " +
+                COLUMN_TOTAL_ORDER + " DOUBLE, " +
+                COLUMN_ORDER_DATE_ORDER + " Text, " +
                 "FOREIGN KEY(" + COLUMN_ID_USER + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID_USER + "))");
 
 
@@ -267,6 +277,39 @@ public class DbHelper extends SQLiteOpenHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, quality, stream);
         return stream.toByteArray();
     }
+
+    public void copyData(int userId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sourceTable = "OrderDetails_" + userId;
+
+        String insertDataQuery = "INSERT INTO " + TABLE_ORDER_DETAILS + " (" +
+                COLUMN_ID_SHOP_DETAILS + ", " +
+                COLUMN_ID_PRODUCT_DETAILS + ", " +
+                COLUMN_ID_ORDER + ", " +
+                COLUMN_QUANTITY_ORDER_DETAILS + ", " +
+                COLUMN_PRICE_ORDER_DETAILS + ", " +
+                COLUMN_TOTAL_PRICE_ORDER_DETAILS + ", " +
+                COLUMN_IMAGE_ORDER_DETAILS + ", " +
+                COLUMN_NAME_ORDER_DETAILS + ") " +
+                "SELECT idShop, " + // Cột idShop từ bảng nguồn
+                "idProduct, " + // Cột idProduct từ bảng nguồn
+                "NULL AS idOrder, " + // Thay đổi nếu cần thiết
+                "quantity, " +
+                "price, " +
+                "totalPrice, " +
+                "image, " +
+                "name " +
+                "FROM " + sourceTable;
+
+        try {
+            db.execSQL(insertDataQuery);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
+
 
 
 }

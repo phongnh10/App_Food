@@ -52,6 +52,13 @@ public class CartBuyFragment extends Fragment {
             binding.txtHistoryOrders.setLayoutParams(paramsLeft);
 
         });
+
+        
+
+
+
+
+
         return view;
 
     }
