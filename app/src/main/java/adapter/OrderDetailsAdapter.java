@@ -49,87 +49,87 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         OrderDetails orderDetails = orderDetailsList.get(position);
 
 
-        holder.img_product.setImageBitmap(convertByteArrayToBitmap(orderDetails.getImage()));
-        holder.txt_name_product.setText(orderDetails.getName());
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
-        holder.txt_price_product.setText(decimalFormat.format(orderDetails.getTotalPrice()));
-        holder.txt_quantity_product.setText(String.valueOf(orderDetails.getQuantity()));
-
-        idUser = getIdUserFromSharedPreferences();
-
-        holder.img_minus_quantity_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final int[] quantity = {orderDetails.getQuantity()};
-                final double[] totalPrice = {orderDetails.getTotalPrice()};
-                if (quantity[0] > 1) {
-                    quantity[0]--;
-                    totalPrice[0] = totalPrice[0] - orderDetails.getPrice();
-
-                    // Cập nhật TextView
-                    holder.txt_price_product.setText(decimalFormat.format(totalPrice[0]));
-                    holder.txt_quantity_product.setText(String.valueOf(quantity[0]));
-
-                    // Cập nhật đối tượng OrderDetails
-                    orderDetails.setQuantity(quantity[0]);
-                    orderDetails.setTotalPrice(totalPrice[0]);
-
-                    // Cập nhật cơ sở dữ liệu
-                    boolean isUpdated = orderDetailsDAO.updateOrderDetails(idUser,orderDetails);
-                    if (!isUpdated) {
-                        Toast.makeText(view.getContext(), "Failed to update the order detail in the database", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-
-        holder.img_plus_quantity_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final int[] quantity = {orderDetails.getQuantity()};
-                final double[] totalPrice = {orderDetails.getTotalPrice()};
-                if (quantity[0] > 0) {
-                    quantity[0]++;
-                    totalPrice[0] = totalPrice[0] + orderDetails.getPrice();
-
-                    // Cập nhật TextView
-                    holder.txt_price_product.setText(decimalFormat.format(totalPrice[0]));
-                    holder.txt_quantity_product.setText(String.valueOf(quantity[0]));
-
-                    // Cập nhật đối tượng OrderDetails
-                    orderDetails.setQuantity(quantity[0]);
-                    orderDetails.setTotalPrice(totalPrice[0]);
+//        holder.img_product.setImageBitmap(convertByteArrayToBitmap(orderDetails.getImage()));
+//        holder.txt_name_product.setText(orderDetails.getName());
+//        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+//        holder.txt_price_product.setText(decimalFormat.format(orderDetails.getTotalPrice()));
+//        holder.txt_quantity_product.setText(String.valueOf(orderDetails.getQuantity()));
+//
+//        idUser = getIdUserFromSharedPreferences();
+//
+//        holder.img_minus_quantity_product.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final int[] quantity = {orderDetails.getQuantity()};
+//                final double[] totalPrice = {orderDetails.getTotalPrice()};
+//                if (quantity[0] > 1) {
+//                    quantity[0]--;
+//                    totalPrice[0] = totalPrice[0] - orderDetails.getPrice();
+//
+//                    // Cập nhật TextView
+//                    holder.txt_price_product.setText(decimalFormat.format(totalPrice[0]));
+//                    holder.txt_quantity_product.setText(String.valueOf(quantity[0]));
+//
+//                    // Cập nhật đối tượng OrderDetails
+//                    orderDetails.setQuantity(quantity[0]);
+//                    orderDetails.setTotalPrice(totalPrice[0]);
+//
+//                    // Cập nhật cơ sở dữ liệu
+//                    boolean isUpdated = orderDetailsDAO.updateOrderDetails(idUser,orderDetails);
+//                    if (!isUpdated) {
+//                        Toast.makeText(view.getContext(), "Failed to update the order detail in the database", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
 
 
-                    boolean isUpdated = orderDetailsDAO.updateOrderDetails(idUser, orderDetails);
-                    if (!isUpdated) {
-                        Toast.makeText(view.getContext(), "Failed to update the order detail in the database", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-
-        int currentPosition = holder.getAdapterPosition();
-        holder.img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                boolean isDeleted = orderDetailsDAO.deleteOrderDetails(idUser, orderDetails.getIdOrderDetails());
-                if (isDeleted) {
-                    orderDetailsList.remove(currentPosition);
-                    notifyItemRemoved(currentPosition);
-                    notifyItemRangeChanged(currentPosition, orderDetailsList.size());
-                } else {
-                    Toast.makeText(view.getContext(), "Failed to delete the order detail", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
-    }
+//        holder.img_plus_quantity_product.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final int[] quantity = {orderDetails.getQuantity()};
+//                final double[] totalPrice = {orderDetails.getTotalPrice()};
+//                if (quantity[0] > 0) {
+//                    quantity[0]++;
+//                    totalPrice[0] = totalPrice[0] + orderDetails.getPrice();
+//
+//                    // Cập nhật TextView
+//                    holder.txt_price_product.setText(decimalFormat.format(totalPrice[0]));
+//                    holder.txt_quantity_product.setText(String.valueOf(quantity[0]));
+//
+//                    // Cập nhật đối tượng OrderDetails
+//                    orderDetails.setQuantity(quantity[0]);
+//                    orderDetails.setTotalPrice(totalPrice[0]);
+//
+//
+//                    boolean isUpdated = orderDetailsDAO.updateOrderDetails(idUser, orderDetails);
+//                    if (!isUpdated) {
+//                        Toast.makeText(view.getContext(), "Failed to update the order detail in the database", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
+//
+//
+//        int currentPosition = holder.getAdapterPosition();
+//        holder.img_back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                boolean isDeleted = orderDetailsDAO.deleteOrderDetails(idUser, orderDetails.getIdOrderDetails());
+//                if (isDeleted) {
+//                    orderDetailsList.remove(currentPosition);
+//                    notifyItemRemoved(currentPosition);
+//                    notifyItemRangeChanged(currentPosition, orderDetailsList.size());
+//                } else {
+//                    Toast.makeText(view.getContext(), "Failed to delete the order detail", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//
+//
+   }
 
     @Override
     public int getItemCount() {

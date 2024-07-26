@@ -87,7 +87,7 @@ public class ManageSellerFragment extends Fragment {
         int idUser = getIdUserFromSharedPreferences();
         if (idUser != -1) {
             shopDAO = new ShopDAO(requireContext());
-            Shop shop = shopDAO.getShopByID(idUser);
+            Shop shop = shopDAO.getShopByIdUser(idUser);
             if (shop != null) {
                 String shopName = shop.getName();
                 String shopAddress = shop.getAddress();

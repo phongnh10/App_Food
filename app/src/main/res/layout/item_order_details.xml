@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_remove_24"
-                android:background="@drawable/custum_price"></ImageView>
+                android:background="@drawable/custom_price"></ImageView>
 
             <TextView
                 android:id="@+id/txt_quantity_product_details"
@@ -98,7 +98,7 @@
                 android:id="@+id/img_plus_quantity_product_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custum_price"
+                android:background="@drawable/custom_price"
                 android:src="@drawable/ic_add_24"></ImageView>
         </LinearLayout>
 

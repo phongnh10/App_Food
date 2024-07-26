@@ -3,9 +3,12 @@ package adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +60,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         private TextView txtIdUser;
         private TextView txtNameShop;
         private TextView txtAddressShop;
+        private ImageView imgShop;
 
         public ShopViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +69,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             txtIdUser = itemView.findViewById(R.id.txt_idUser);
             txtNameShop = itemView.findViewById(R.id.txt_nameShop);
             txtAddressShop = itemView.findViewById(R.id.txt_addressShop);
+            imgShop = itemView.findViewById(R.id.img_image_shop);
 
             ll_manage_booth.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -82,23 +87,34 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             txtIdUser.setText("idUser: " + shop.getIdUser());
             txtNameShop.setText("Name: " + shop.getName());
             txtAddressShop.setText("Address: " + shop.getAddress());
+            imgShop.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
         }
 
         private void showDeleteDialog(Shop shop) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Notification");
-            builder.setMessage("Do you want to delete booth \"" + shop.getName() + "\" with idShop \"" + shop.getIdShop() + "\"?");
+            int status = -1;
+            Shop shop1 = new Shop(shop.getIdShop(),shop.getIdUser(),shop.getAddress(),shop.getImage(),status);
 
-            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Thông Báo");
+            builder.setMessage("Bạn có muốn tạm ngưng hoạt động của shop  \"" + shop.getName() + "\" with idShop \"" + shop.getIdShop() + "\"không ?");
+
+            builder.setPositiveButton("ngưng", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    showConfirmationDialog(shop);
+                    boolean check = shopDAO.SuspendShop(shop1);
+                    if (check) {
+                        shopList.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Delete Failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -108,37 +124,14 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
-        private void showConfirmationDialog(Shop shop) {
-         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Notification");
-            builder.setMessage("Do you want to continue? \n" +
-                    "Once deleted, the store cannot be restored\n"+
-                    "Please pay attention !");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    boolean check = shopDAO.deleteShop(shop.getIdShop());
-                    if (check) {
-                        shopList.remove(getAdapterPosition());
-                        notifyItemRemoved(getAdapterPosition());
-                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Delete Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            });
-            builder.setNegativeButton("Canel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-
-           AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+    }
+    // Helper method to convert byte[] to Bitmap
+    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        } else {
+            // Return a default image or handle null case
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
         }
-
     }
 }

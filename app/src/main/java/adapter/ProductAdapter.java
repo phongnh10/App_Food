@@ -41,7 +41,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.context = context;
         this.productList = productList;
         this.productDAO = productDAO;
-        this.categoriesDao = new CategoriesDao(context); // Initialize CategoriesDao
+        this.categoriesDao = new CategoriesDao(context);
     }
 
     @NonNull

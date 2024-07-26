@@ -34,7 +34,6 @@ public class ManageBoothFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.rcv_fragment_manage_booth);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         loadShopList();
 
         return rootView;
@@ -43,7 +42,7 @@ public class ManageBoothFragment extends Fragment {
 
     private void loadShopList() {
         ShopDAO shopDao = new ShopDAO(getContext());
-        List<Shop> shopList = shopDao.getListShop();
+        List<Shop> shopList = shopDao.getAllShops();
         adapter = new ShopAdapter(shopList, getContext());
         recyclerView.setAdapter(adapter);
     }

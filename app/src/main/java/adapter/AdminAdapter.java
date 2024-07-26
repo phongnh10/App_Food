@@ -7,15 +7,19 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.du_an_1.R;
@@ -59,25 +63,27 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
 
     public class AdapterViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cv_manage_user;
-        private TextView getTxtIdUser;
+        private TextView txt_manage_user;
+        private TextView txt_idUser;
         private TextView txt_user;
         private TextView txt_pass;
         private TextView txt_name;
         private TextView txt_phone;
         private TextView txt_cccd;
         private TextView txt_role;
-
+        private ImageView img_image;
+        private int roleUpdate;
 
         public AdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            cv_manage_user = itemView.findViewById(R.id.cv_manage_user);
+            txt_manage_user = itemView.findViewById(R.id.txt_manage_user);
+            txt_idUser = itemView.findViewById(R.id.txt_id_user);
             txt_name = itemView.findViewById(R.id.txt_name_user);
             txt_phone = itemView.findViewById(R.id.txt_phone_user);
-            txt_cccd = itemView.findViewById(R.id.txt_cccd_user);
             txt_role = itemView.findViewById(R.id.txt_role_user);
+            img_image = itemView.findViewById(R.id.image_user);
 
-            cv_manage_user.setOnClickListener(new View.OnClickListener() {
+            txt_manage_user.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
@@ -90,18 +96,26 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
         }
 
         public void bind(User user) {
-            String role = "";
+            String sRole = "";
             if (user.getRole() == 0) {
-                role = "Admin";
+                sRole = "admin";
+                img_image.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.image_logo_admin));
+
             } else if (user.getRole() == 1) {
-                role = "Seller";
+                sRole = "shop";
+                img_image.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.image_shop_default));
             } else if (user.getRole() == 2) {
-                role = "Buyer";
+                sRole = "user";
+                img_image.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.image_user_default));
+            } else if (user.getRole() == -1) {
+                sRole = "Tài khoản bị khoá";
+                img_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.baseline_remove_24));
             }
+            txt_idUser.setText(String.valueOf(user.getIdUser()));
             txt_name.setText(user.getName());
             txt_phone.setText(String.valueOf(user.getPhone()));
-            txt_cccd.setText(String.valueOf(user.getCccd()));
-            txt_role.setText(role);
+
+            txt_role.setText(sRole);
         }
 
         //dialog user
@@ -110,6 +124,8 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             LayoutInflater inflater = LayoutInflater.from(context);
             View dialogView = inflater.inflate(R.layout.dialog_information_user, null);
             builder.setView(dialogView);
+
+
             ///
             EditText edt_id_user = dialogView.findViewById(R.id.edt_id_user);
             EditText edt_user = dialogView.findViewById(R.id.edt_user);
@@ -118,29 +134,52 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             EditText edt_phone = dialogView.findViewById(R.id.edt_phone);
             EditText edt_cccd = dialogView.findViewById(R.id.edt_cccd);
             EditText edt_role = dialogView.findViewById(R.id.edt_role);
+            Switch switch_role = dialogView.findViewById(R.id.switch_role);
 
-            Button btn_delete1 = dialogView.findViewById(R.id.btn_delete);
+            Button btn_suspend_account = dialogView.findViewById(R.id.btn_suspend_account);
+            Button btn_update = dialogView.findViewById(R.id.btn_update);
 
             // set edt
             edt_id_user.setEnabled(false);
             edt_user.setEnabled(false);
             edt_pass.setEnabled(false);
-            edt_name.setEnabled(false);
-            edt_phone.setEnabled(false);
-            edt_cccd.setEnabled(false);
+//            edt_name.setEnabled(false);
+//            edt_phone.setEnabled(false);
+//            edt_cccd.setEnabled(false);
+            edt_role.setEnabled(false);
+
             // check role
-            int role = getRoleFromSharedPreferences();
-            if (role == user.getRole()) {
-                edt_role.setEnabled(false);
-                btn_delete1.setEnabled(false);
+
+            if (0 == user.getRole()) {
+                switch_role.setEnabled(false);
+                btn_suspend_account.setEnabled(false);
             }
 
-            edt_role.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        showConfirmationDialogRole();
-                    }
+            if (user.getRole() == 1) {
+                switch_role.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                switch_role.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                edt_role.setText("shop");
+            }
+
+            roleUpdate = user.getRole();
+            if(roleUpdate == 1) {
+                switch_role.setChecked(true);
+            }
+            switch_role.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    roleUpdate = 1;
+                    Toast.makeText(context, "Thay đổi thành shop bán hàng", Toast.LENGTH_SHORT).show();
+                    switch_role.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                    switch_role.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                    edt_role.setText("shop");
+
+
+                } else {
+                    roleUpdate = 2;
+                    Toast.makeText(context, "Thay đổi thành người mua hàng", Toast.LENGTH_SHORT).show();
+                    switch_role.setThumbTintList(ContextCompat.getColorStateList(context, R.color.nav_background_color));
+                    switch_role.setTrackTintList(ContextCompat.getColorStateList(context, R.color.default_color));
+                    edt_role.setText("user");
                 }
             });
 
@@ -151,9 +190,17 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             edt_name.setText(user.getName());
             edt_phone.setText(String.valueOf(user.getPhone()));
             edt_cccd.setText(String.valueOf(user.getCccd()));
-            edt_role.setText(String.valueOf(user.getRole()));
-
-
+            String sRole = "";
+            if (user.getRole() == 0) {
+                sRole = "admin";
+            } else if (user.getRole() == 1) {
+                sRole = "shop";
+            } else if (user.getRole() == 2) {
+                sRole = "user";
+            } else if (user.getRole() == -1) {
+                sRole = "Tài khoản đã khoá";
+            }
+            edt_role.setText(sRole);
             //
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
@@ -168,7 +215,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             });
 
             //update user
-            Button btn_update = dialogView.findViewById(R.id.btn_update);
             btn_update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -178,7 +224,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                     String name = edt_name.getText().toString();
                     String phoneS = edt_phone.getText().toString();
                     String cccdS = edt_cccd.getText().toString();
-                    String roleS = edt_role.getText().toString();
+                    String roleS = String.valueOf(roleUpdate);
 
                     // check role not int
                     try {
@@ -189,33 +235,31 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                         //
                         if (user.isEmpty() || pass.isEmpty() || name.isEmpty() || roleS.isEmpty()) {
                             Toast.makeText(context, "Import full information", Toast.LENGTH_SHORT).show();
-                        } else if (role < 1 || role > 2) {
-                            Toast.makeText(context, "Role must be is 1 or 2", Toast.LENGTH_SHORT).show();
                         } else {
-                            final User user1 = new User(idUser, user, pass, name, phone, cccd, role);
+                            final User user1 = new User(idUser, user, pass, name, phone, cccd, roleUpdate);
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Notification");
-                            builder.setMessage("Do you want to continue updating?");
-                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            builder.setTitle("Thông Báo");
+                            builder.setMessage("Bạn có muốn cập nhập User?");
+                            builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // update
                                     boolean check = userDAO.upDateUser(user1);
                                     if (check) {
-                                        Toast.makeText(context, "Edited successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Cập nhập người dùng thành công", Toast.LENGTH_SHORT).show();
                                         // Load data
                                         userList.clear();
                                         userList.addAll(userDAO.getListUser());
                                         notifyDataSetChanged();
                                     } else {
-                                        Toast.makeText(context, "Edit failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Cập nhập thất bại", Toast.LENGTH_SHORT).show();
                                     }
                                     // exit dialog
                                     dialog.dismiss();
                                 }
                             });
-                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // exit dialog
@@ -232,101 +276,49 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                 }
             });
 
-            Button btn_delete = dialogView.findViewById(R.id.btn_delete);
-            btn_delete.setOnClickListener(new View.OnClickListener() {
+
+            btn_suspend_account.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showDeleteDialog(user);
-                    alertDialog.dismiss();
+                    // check role
+                    int roleSuspendAccount = -1;
+                    final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Thông Báo");
+                    builder.setMessage("Bạn có muốn tạm ngưng tài khoản này khoản với id là " + user.getIdUser() +" Name là " + user.getName() + " không ?");
+                    builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // update
+                            boolean check = userDAO.SuspendAccount(user2);
+                            if (check) {
+                                Toast.makeText(context, "Ngưng tài khoản thành công", Toast.LENGTH_SHORT).show();
+                                // Load data
+                                userList.clear();
+                                userList.addAll(userDAO.getListUser());
+                                notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(context, "Ngưng tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                            // exit dialog
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // exit dialog
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
-
-
         }
 
-        //
-        private void showConfirmationDialogRole() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Notification");
-            builder.setMessage("Do you want to continue? \n" +
-                    "When changing roles, user rights will change\n" +
-                    "Please pay attention !");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-            builder.setNegativeButton("Canel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
-        private void showConfirmationDialogDelete(User user) {
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
-            builder.setTitle("Notification");
-            builder.setMessage("Do you want to continue? \n" +
-                    "Once deleted, the account cannot be restored\n"+
-                    "Please pay attention !");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    boolean check = userDAO.deleteUser(user.getIdUser());
-                    if (check) {
-                        userList.remove(getAdapterPosition());
-                        notifyItemRemoved(getAdapterPosition());
-                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Delete Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            });
-            builder.setNegativeButton("Canel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-
-            androidx.appcompat.app.AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
-
-        //delete user
-        private void showDeleteDialog(User user) {
-
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
-            builder.setTitle("Notification");
-            builder.setMessage("Do you want to delete user \"" + user.getUser() + "\" with idUser \"" + user.getIdUser() + "\"?");
-
-            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    showConfirmationDialogDelete(user);
-                }
-            });
-
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-
-            android.app.AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
         // get role
         public int getRoleFromSharedPreferences() {
             SharedPreferences sharedPreferences = context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);

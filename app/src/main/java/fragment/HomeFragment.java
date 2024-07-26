@@ -45,8 +45,8 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcv_eat_home);
         recyclerView1 = view.findViewById(R.id.rcv_drink_home);
         recyclerView2 = view.findViewById(R.id.rcv_categories_home);
-        StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerCategories = new StaggeredGridLayoutManager(6, StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManagerEat);

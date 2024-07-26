@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:backgroundTint="@null"
-        android:background="@drawable/custum_edittext_seach"
+        android:background="@drawable/custom_edittext_seach"
         android:hint="Tìm kiếm sản phẩm"
         android:layout_marginHorizontal="10dp"></EditText>
 
@@ -55,7 +55,7 @@
             android:textSize="20dp"
             android:gravity="center"
             app:background="@null"
-            android:background="@drawable/custum_categories_search"></TextView>
+            android:background="@drawable/custom_categories_search"></TextView>
 
         <TextView
             android:id="@+id/show_menu2_textview"
@@ -67,7 +67,7 @@
             android:textSize="20dp"
             android:gravity="center"
             app:background="@null"
-            android:background="@drawable/custum_categories_search"></TextView>
+            android:background="@drawable/custom_categories_search"></TextView>
 
         <TextView
             android:id="@+id/show_menu3_textview"
@@ -79,7 +79,7 @@
             android:textSize="20dp"
             android:gravity="center"
             app:background="@null"
-            android:background="@drawable/custum_categories_search"></TextView>
+            android:background="@drawable/custom_categories_search"></TextView>
 
     </LinearLayout>
     <TextView

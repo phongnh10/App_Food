@@ -33,7 +33,7 @@ public class ManegeBoothNewFragment extends Fragment {
         rcv_shopListNew.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ShopDAO shopDao = new ShopDAO(getContext());
-        List<Shop> shopList = shopDao.getListShopNew();
+        List<Shop> shopList = shopDao.getAllShopsNew();
 
         adapter = new ShopNewAdapter(shopList, getContext());
         rcv_shopListNew.setAdapter(adapter);
