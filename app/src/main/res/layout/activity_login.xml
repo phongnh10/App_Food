@@ -19,7 +19,7 @@
         android:textSize="26dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="#0B6E4F" />
+        android:textColor="#9F0000" />
 
     <LinearLayout
         android:layout_width="wrap_content"
