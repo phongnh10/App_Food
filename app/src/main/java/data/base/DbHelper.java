@@ -203,16 +203,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private void insertInitialCategories(SQLiteDatabase db) {
         // Load images from resources and resize them
-        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_comtron), 400, 200);
-        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_mytom), 400, 200);
-        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
-        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_doanvat), 400, 200);
-        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 200);
-        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 200);
-        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_caphe), 400, 200);
-        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_nuocngot), 400, 200);
-        Bitmap bitmap9 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_sua), 400, 200);
-        Bitmap bitmap10 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac_1), 400, 200);
+        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu1), 400, 200);
+        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu2), 400, 200);
+        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu3), 400, 200);
+        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu4), 400, 200);
+        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu5), 400, 200);
+        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu6), 400, 200);
+        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu7), 400, 200);
+        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu8), 400, 200);
 
         // Convert bitmaps to byte arrays
         byte[] image1 = getBytesFromBitmap(bitmap1, 50);
@@ -223,34 +221,28 @@ public class DbHelper extends SQLiteOpenHelper {
         byte[] image6 = getBytesFromBitmap(bitmap6, 50);
         byte[] image7 = getBytesFromBitmap(bitmap7, 50);
         byte[] image8 = getBytesFromBitmap(bitmap8, 50);
-        byte[] image9 = getBytesFromBitmap(bitmap9, 50);
-        byte[] image10 = getBytesFromBitmap(bitmap10, 50);
 
         // Insert categories into the database
-        insertCategory(db, 1, "Cơm", image1);
-        insertCategory(db, 1, "Mỳ", image2);
-        insertCategory(db, 1, "Bánh Mỳ", image3);
-        insertCategory(db, 1, "Đồ Ăn Vặt", image4);
-        insertCategory(db, 1, "Đồ Ăn Khác", image5);
-        insertCategory(db, 1, "Trà Sữa", image6);
-        insertCategory(db, 1, "Cà Phê", image7);
-        insertCategory(db, 1, "Nước Ngọt", image8);
-        insertCategory(db, 1, "Sữa", image9);
-        insertCategory(db, 1, "Nước Khác", image10);
+        insertCategory(db, 1, "ĂN CHÍNH", image1);
+        insertCategory(db, 1, "ĂN VẶT", image2);
+        insertCategory(db, 1, "COMBO", image3);
+        insertCategory(db, 1, "ĐỒ ĂN KHÁC", image4);
+        insertCategory(db, 1, "CÀ PHÊ", image5);
+        insertCategory(db, 1, "TRÀ SỮA", image6);
+        insertCategory(db, 1, "NƯỚC NGỌT", image7);
+        insertCategory(db, 1, "ĐỒ UỐNG KHÁC", image8);
     }
 
     private void insertProduct(SQLiteDatabase db) {
         // Load images from resources and resize them
         Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_comtron), 400, 200);
-        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_mytom), 400, 200);
-        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
-        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_doanvat), 400, 200);
-        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 200);
-        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 200);
-        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_caphe), 400, 200);
-        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_nuocngot), 400, 200);
-        Bitmap bitmap9 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_sua), 400, 200);
-        Bitmap bitmap10 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac_1), 400, 200);
+        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_mixao), 400, 200);
+        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_mihop), 400, 200);
+        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
+        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
+        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 200);
+        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 200);
+        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_banhtrang), 400, 200);
 
         // Convert bitmaps to byte arrays
         byte[] image1 = getBytesFromBitmap(bitmap1, 50);
@@ -261,8 +253,6 @@ public class DbHelper extends SQLiteOpenHelper {
         byte[] image6 = getBytesFromBitmap(bitmap6, 50);
         byte[] image7 = getBytesFromBitmap(bitmap7, 50);
         byte[] image8 = getBytesFromBitmap(bitmap8, 50);
-        byte[] image9 = getBytesFromBitmap(bitmap9, 50);
-        byte[] image10 = getBytesFromBitmap(bitmap10, 50);
 
         // Insert categories into the database
         // Giả sử bạn đã có đối tượng SQLiteDatabase db
@@ -299,13 +289,6 @@ public class DbHelper extends SQLiteOpenHelper {
         insertProduct(db, 8, 1, "Nước Ngọt Cola", image8, 12000.0, "Nước ngọt cola với hương vị đặc trưng và sủi bọt.", 1);
         insertProduct(db, 8, 1, "Nước Ngọt Cam", image8, 13000.0, "Nước ngọt cam với vị chua ngọt thanh mát.", 1);
 
-// Sữa
-        insertProduct(db, 9, 1, "Sữa Tươi", image9, 15000.0, "Sữa tươi nguyên chất, giàu canxi và vitamin.", 1);
-        insertProduct(db, 9, 1, "Sữa Socola", image9, 17000.0, "Sữa socola ngọt ngào với hương vị socola đậm đà.", 1);
-
-// Nước Khác
-        insertProduct(db, 10, 1, "Nước Dừa", image10, 20000.0, "Nước dừa tươi mát, giàu vitamin và khoáng chất.", 1);
-        insertProduct(db, 10, 1, "Nước Chanh", image10, 18000.0, "Nước chanh tươi với hương vị chua ngọt và tinh khiết.", 1);
 
     }
     private void insertProduct(SQLiteDatabase db, int idCategories, int idShop,String name, byte[] image,Double price,String note, int status) {
