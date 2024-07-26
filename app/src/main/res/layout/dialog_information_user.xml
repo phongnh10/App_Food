@@ -1,49 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    app:cardCornerRadius="20dp">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_back"
-            android:layout_margin="10dp">
-        </ImageView>
+        android:layout_alignParentTop="true"
+        android:background="#FFB576">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="100dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"></ImageView>
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/baseline_arrow_back_ios_24"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Người Dùng"
+                    android:textSize="25dp"></TextView>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="750dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_boder_top_admin"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Id User:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -53,21 +74,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="1"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="User:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -76,22 +97,21 @@
                 android:id="@+id/edt_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="admin"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Pass:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -100,22 +120,22 @@
                 android:id="@+id/edt_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="1"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Name:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -124,22 +144,27 @@
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="Nguyen Hong Phong"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_pent_edit"></ImageView>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Phone:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -148,11 +173,18 @@
                 android:id="@+id/edt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="0123456789"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_pent_edit"></ImageView>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -161,9 +193,8 @@
             android:weightSum="4">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Cccd:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -172,22 +203,27 @@
                 android:id="@+id/edt_cccd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="88888888888888"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_pent_edit"></ImageView>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:text="Role:"
                 android:textSize="20dp"
                 android:textStyle="bold"></TextView>
@@ -196,50 +232,59 @@
                 android:id="@+id/edt_role"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@drawable/custom_boder_edit_user_admin"
                 android:text="1"
                 android:textSize="20dp"
                 android:textStyle="bold"></EditText>
 
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="10dp"
-            android:text="Note: Role admin = 0, sell = 1, buy =2"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="#E91E63"
-            >
 
-        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Bán Hàng"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+            <Switch
+                android:id="@+id/switch_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"></Switch>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp">
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
             <Button
-                android:id="@+id/btn_delete"
+                android:id="@+id/btn_suspend_account"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="30dp"
-                android:text="Delete"
-                ></Button>
+                android:layout_height="60dp"
+                android:text="Tạm Ngưng Tài Khoản"
+                app:backgroundTint="@null"
+                android:background="@drawable/custom_boder_delete_user"
+                android:textColor="@color/black"
+                android:layout_marginBottom="20dp"></Button>
+
             <Button
                 android:id="@+id/btn_update"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="25dp"
-                android:text="Update"
-                ></Button>
+                android:layout_height="60dp"
+                android:text="Cập Nhập"
+                app:backgroundTint="@null"
+                android:background="@drawable/custom_boder_update_user"></Button>
 
         </LinearLayout>
 
     </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

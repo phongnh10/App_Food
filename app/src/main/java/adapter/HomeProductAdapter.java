@@ -50,7 +50,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         DecimalFormat decimalFormat = new DecimalFormat("#,### VND");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
         int idShop = product.getIdShop();
-        String nameShop = shopDAO.getNameShop(idShop).getName();
+        String nameShop = shopDAO.getShopByIdShop(idShop).getName();
         holder.txt_name_shop.setText(nameShop);
     }
 

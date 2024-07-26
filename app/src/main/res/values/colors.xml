@@ -6,4 +6,5 @@
     <color name="nav_background_color">#FFFFFF</color>
     <color name="selected_color">#FF5722</color>
     <color name="default_color">#000000</color>
+    <color name="green_color">#4CAF50</color>
 </resources>

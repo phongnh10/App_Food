@@ -99,45 +99,45 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (orderDetailsList == null) {
-                    orderDetailsList = new ArrayList<>();
-                }
-                if (adapter == null) {
-                    adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
-                }
-                OrderDetails orderDetails = new OrderDetails();
-                orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
-
-                idUser = getIdUserFromSharedPreferences();
-                orderDetails.setIdProduct(product.getIdProduct());
-                orderDetails.setIdOrder(idUser);
-                orderDetails.setIdShop(product.getIdShop());
-                orderDetails.setQuantity(quantity);
-                orderDetails.setPrice(price);
-                orderDetails.setTotalPrice(totalPrice);
-                orderDetails.setImage(product.getImage());
-                orderDetails.setName(product.getName());
-
-
-
-                long check = orderDetailsDAO.addOrderDetails(idUser,product.getIdShop(), product.getIdProduct(), price, totalPrice, quantity, product.getName(), product.getImage());
-                if (check == 1) {
-                    orderDetailsList.add(orderDetails);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng" +product.getIdShop(), Toast.LENGTH_SHORT).show();
-                } else if (check == 0) {
-                    Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
-                } else if (check == -1) {
-                    Toast.makeText(ProductActivity.this, "Lỗi khi thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                }
-
-                finish();
-            }
-
-        });
+//        binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (orderDetailsList == null) {
+//                    orderDetailsList = new ArrayList<>();
+//                }
+//                if (adapter == null) {
+//                    adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
+//                }
+//                OrderDetails orderDetails = new OrderDetails();
+//                orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
+//
+//                idUser = getIdUserFromSharedPreferences();
+//                orderDetails.setIdProduct(product.getIdProduct());
+//                orderDetails.setIdOrder(idUser);
+//                orderDetails.setIdShop(product.getIdShop());
+//                orderDetails.setQuantity(quantity);
+//                orderDetails.setPrice(price);
+//                orderDetails.setTotalPrice(totalPrice);
+//                orderDetails.setImage(product.getImage());
+//                orderDetails.setName(product.getName());
+//
+//
+//
+//                long check = orderDetailsDAO.addOrderDetails(idUser,product.getIdShop(), product.getIdProduct(), price, totalPrice, quantity, product.getName(), product.getImage());
+//                if (check == 1) {
+//                    orderDetailsList.add(orderDetails);
+//                    adapter.notifyDataSetChanged();
+//                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng " +product.getIdShop(), Toast.LENGTH_SHORT).show();
+//                } else if (check == 0) {
+//                    Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
+//                } else if (check == -1) {
+//                    Toast.makeText(ProductActivity.this, "Lỗi khi thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                finish();
+//            }
+//
+//        });
 
     }
 

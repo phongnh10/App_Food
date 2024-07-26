@@ -19,6 +19,7 @@
             app:cardCornerRadius="125dp"
             android:background="@color/black">
             <ImageView
+                android:id="@+id/img_image_shop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@mipmap/image_booth"

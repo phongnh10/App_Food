@@ -1,7 +1,6 @@
 package fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -30,7 +29,6 @@ public class OrdersCurrentFragment extends Fragment {
     private OrderDetailsAdapter adapter;
     private List<OrderDetails> orderDetailsList;
     private int idUser;
-    private int idShop;
     private Double priceTotal;
 
     @Override
@@ -46,49 +44,45 @@ public class OrdersCurrentFragment extends Fragment {
         RecyclerView recyclerView = binding.rcvLitsOrderDetails;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize data and adapter
-        idUser = getRoleFromSharedPreferences();
-        orderDetailsList = orderDetailsDAO.getOrderDetailsForUser(idUser);
-        adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
-        recyclerView.setAdapter(adapter);
-
-        updateTotal();
-        updateTotalPrice();
-
-       
-
-
+//        // Initialize data and adapter
+//        idUser = getRoleFromSharedPreferences();
+//        orderDetailsList = orderDetailsDAO.getOrderDetailsForUser(idUser);
+//        adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
+//        recyclerView.setAdapter(adapter);
+//
+//        updateTotal();
+//        updateTotalPrice();
 
         return view;
     }
-
-    public int getRoleFromSharedPreferences() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
-        return sharedPreferences.getInt("idUser", -1);
-    }
-
-    private void updateTotalPrice() {
-        priceTotal = 0.0;
-        for (OrderDetails orderDetails : orderDetailsList) {
-            priceTotal += orderDetails.getTotalPrice();
-        }
-
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
-        binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
-    }
-
-    private void updateTotal() {
-
-        Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                updateTotalPrice();
-                handler.postDelayed(this, 500);
-            }
-        };
-        handler.postDelayed(runnable, 500);
-    }
+//
+//    public int getRoleFromSharedPreferences() {
+//        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+//        return sharedPreferences.getInt("idUser", -1);
+//    }
+//
+//    private void updateTotalPrice() {
+//        priceTotal = 0.0;
+//        for (OrderDetails orderDetails : orderDetailsList) {
+//            priceTotal += orderDetails.getTotalPrice();
+//        }
+//
+//        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+//        binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
+//    }
+//
+//    private void updateTotal() {
+//
+//        Handler handler = new Handler();
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                updateTotalPrice();
+//                handler.postDelayed(this, 500);
+//            }
+//        };
+//        handler.postDelayed(runnable, 500);
+//    }
 
 }
 

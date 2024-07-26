@@ -37,16 +37,21 @@ public class UserDAO {
         return true;
     }
 
-    // delete
-    public boolean deleteUser(int idUser){
+    public boolean SuspendAccount(User user){
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        int check = sqLiteDatabase.delete("user","idUser=?", new String[]{String.valueOf(idUser)});
 
-        if( check <=0) return false;
+        ContentValues values = new ContentValues();
+        values.put("user", user.getUser());
+        values.put("pass", user.getPass());
+        values.put("name", user.getName());
+        values.put("phone", user.getPhone());
+        values.put("cccd", user.getCccd());
+        values.put("role", user.getRole());
+
+        int check = sqLiteDatabase.update("user",values,"idUser=?",new String[]{String.valueOf(user.getIdUser())});
+        if (check <= 0) return false;
         return true;
-
     }
-
 
     //Login
     public int login(String user, String pass) {

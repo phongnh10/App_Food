@@ -1,17 +1,14 @@
 package adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -46,7 +43,7 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
     @NonNull
     @Override
     public ShopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_manage_booth, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_manage_booth_new, parent, false);
         return new ShopViewHolder(view);
     }
 
@@ -57,6 +54,8 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
         holder.txtIdUser.setText("idUser: " + shop.getIdUser());
         holder.txtNameShop.setText("Name: " + shop.getName());
         holder.txtAddressShop.setText("Address: " + shop.getAddress());
+        holder.image.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
+
     }
 
     @Override
@@ -71,18 +70,21 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
         private TextView txtIdUser;
         private TextView txtNameShop;
         private TextView txtAddressShop;
+        private ImageView image;
 
 
         public ShopViewHolder(@NonNull View itemView) {
             super(itemView);
             // view item
-            txtIdShop = itemView.findViewById(R.id.txt_idShop);
-            txtIdUser = itemView.findViewById(R.id.txt_idUser);
-            txtNameShop = itemView.findViewById(R.id.txt_nameShop);
-            txtAddressShop = itemView.findViewById(R.id.txt_addressShop);
+            txtIdShop = itemView.findViewById(R.id.txt_idShop_new);
+            txtIdUser = itemView.findViewById(R.id.txt_idUser_new);
+            txtNameShop = itemView.findViewById(R.id.txt_nameShop_new);
+            txtAddressShop = itemView.findViewById(R.id.txt_addressShop_new);
+            image = itemView.findViewById(R.id.img_image_shop_new);
+
 
             //click item
-            ll_manage_booth = itemView.findViewById(R.id.ll_magane_booth);
+            ll_manage_booth = itemView.findViewById(R.id.ll_magane_booth_new);
             ll_manage_booth.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -93,6 +95,15 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
                 }
             });
 
+        }
+    }
+    // Helper method to convert byte[] to Bitmap
+    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        } else {
+            // Return a default image or handle null case
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
         }
     }
 

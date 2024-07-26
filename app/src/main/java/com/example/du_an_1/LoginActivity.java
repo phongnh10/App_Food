@@ -58,10 +58,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 sharedPreferences();
 
-                // Tạo bảng OrderDetails cho user sau khi đăng nhập thành công
-                orderDetailsDAO = new OrderDetailsDAO(LoginActivity.this);
-                orderDetailsDAO.createOrderDetailsTable(idUser);
-
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

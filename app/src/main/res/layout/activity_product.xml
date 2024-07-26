@@ -99,7 +99,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/baseline_remove_24"
-                android:background="@drawable/custum_price"></ImageView>
+                android:background="@drawable/custom_price"></ImageView>
             <TextView
                 android:id="@+id/txt_quantity_product"
                 android:layout_width="60dp"
@@ -113,7 +113,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_add_24"
-                android:background="@drawable/custum_price"></ImageView>
+                android:background="@drawable/custom_price"></ImageView>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
