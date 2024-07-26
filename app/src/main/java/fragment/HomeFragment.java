@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 
         viewFlipper = view.findViewById(R.id.viewFlipper);
         if (viewFlipper != null) {
-            viewFlipper.setFlipInterval(2000);
+            viewFlipper.setFlipInterval(4000);
             viewFlipper.startFlipping();
         }
 
@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         recyclerView2 = view.findViewById(R.id.rcv_categories_home);
         StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
-        StaggeredGridLayoutManager layoutManagerCategories = new StaggeredGridLayoutManager(6, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManagerCategories = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
 
         recyclerView.setLayoutManager(layoutManagerEat);
         recyclerView1.setLayoutManager(layoutManagerDrink);
