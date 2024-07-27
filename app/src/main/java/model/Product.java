@@ -7,11 +7,13 @@ public class Product {
     private int price;
     private String note;
     private int status;
+    private int sold;
+
 
     public Product() {
     }
 
-    public Product(int idProduct, int idCategories, int idShop, String name, byte[] image, int price, String note, int status) {
+    public Product(int idProduct, int idCategories, int idShop, String name, byte[] image, int price, String note, int status, int sold) {
         this.idProduct = idProduct;
         this.idCategories = idCategories;
         this.idShop = idShop;
@@ -20,6 +22,7 @@ public class Product {
         this.price = price;
         this.note = note;
         this.status = status;
+        this.sold = sold;
     }
 
     public int getIdProduct() {
@@ -84,5 +87,13 @@ public class Product {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getSold() {
+        return sold;
+    }
+
+    public void setSold(int sold) {
+        this.sold = sold;
     }
 }

@@ -3,105 +3,121 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:orientation="horizontal"
-    android:layout_marginTop="5dp"
     android:layout_marginHorizontal="5dp"
+    android:layout_marginTop="5dp"
     android:background="#E0DFDF">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="20dp">
-
-        <ImageView
-            android:id="@+id/img_product_details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/image_goivit"></ImageView>
-
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_margin="5dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txt_name_product_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Bánh Tráng Trộn"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:layout_marginBottom="20dp"></TextView>
-
-        <TextView
-            android:id="@+id/txt_shop_product_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nino Shop"
-            android:textColor="#FF5722"
-            android:textSize="10dp"
-            android:layout_marginBottom="10dp"></TextView>
-
-        <TextView
-            android:id="@+id/txt_price_product_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FF5722"
-            android:textStyle="bold"
-            android:text="đ 15.000"
-            android:textSize="20dp"></TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/img_back_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_back"></ImageView>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp">
-            <ImageView
-                android:id="@+id/img_minus_quantity_product_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_remove_24"
-                android:background="@drawable/custom_price"></ImageView>
+            android:layout_alignParentTop="true">
 
-            <TextView
-                android:id="@+id/txt_quantity_product_details"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
-                android:gravity="center"
-                android:text="1"
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                app:cardCornerRadius="20dp">
 
-            <ImageView
-                android:id="@+id/img_plus_quantity_product_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_price"
-                android:src="@drawable/ic_add_24"></ImageView>
+                <ImageView
+                    android:id="@+id/img_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/image_goivit"></ImageView>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_name_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="Bánh Tráng Trộn"
+                    android:textSize="15dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/txt_shop_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Nino Shop"
+                    android:textColor="#FF5722"
+                    android:textSize="10dp"></TextView>
+
+                <TextView
+                    android:id="@+id/txt_price_product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="đ 15.000"
+                    android:textColor="#FF5722"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/img_back_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_back"></ImageView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_minus_quantity_product_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_price"
+                    android:src="@drawable/baseline_remove_24"></ImageView>
+
+                <TextView
+                    android:id="@+id/txt_quantity_product_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+
+                <ImageView
+                    android:id="@+id/img_plus_quantity_product_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_price"
+                    android:src="@drawable/ic_add_24"></ImageView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 </LinearLayout>

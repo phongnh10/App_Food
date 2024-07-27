@@ -1,5 +1,7 @@
 package com.example.du_an_1;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -80,9 +83,6 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 quantity++;
-                if (price > 0) {
-                    totalPrice = quantity * price;
-                }
 
                 DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
                 String formattedTotalPrice = decimalFormat.format(totalPrice);
@@ -99,45 +99,51 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-//        binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (orderDetailsList == null) {
-//                    orderDetailsList = new ArrayList<>();
-//                }
-//                if (adapter == null) {
-//                    adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
-//                }
-//                OrderDetails orderDetails = new OrderDetails();
-//                orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
-//
-//                idUser = getIdUserFromSharedPreferences();
-//                orderDetails.setIdProduct(product.getIdProduct());
-//                orderDetails.setIdOrder(idUser);
-//                orderDetails.setIdShop(product.getIdShop());
-//                orderDetails.setQuantity(quantity);
-//                orderDetails.setPrice(price);
-//                orderDetails.setTotalPrice(totalPrice);
-//                orderDetails.setImage(product.getImage());
-//                orderDetails.setName(product.getName());
-//
-//
-//
-//                long check = orderDetailsDAO.addOrderDetails(idUser,product.getIdShop(), product.getIdProduct(), price, totalPrice, quantity, product.getName(), product.getImage());
-//                if (check == 1) {
-//                    orderDetailsList.add(orderDetails);
-//                    adapter.notifyDataSetChanged();
-//                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng " +product.getIdShop(), Toast.LENGTH_SHORT).show();
-//                } else if (check == 0) {
-//                    Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
-//                } else if (check == -1) {
-//                    Toast.makeText(ProductActivity.this, "Lỗi khi thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                finish();
-//            }
-//
-//        });
+        binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (orderDetailsList == null) {
+                    orderDetailsList = new ArrayList<>();
+                }
+                if (adapter == null) {
+                    adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
+                }
+                OrderDetails orderDetails = new OrderDetails();
+                orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
+
+                idUser = getIdUserFromSharedPreferences();
+//                public long addOrderDetails(int idShop,int idOder, int idProduct, int quantity, double price, double totalPrice, byte[] image, String name,int  status) {
+
+                int idOrder = idUser;
+                int statusOderDetail = 0;
+
+                orderDetails.setIdShop(product.getIdShop());
+                orderDetails.setIdOrder(idOrder);
+                orderDetails.setIdProduct(product.getIdProduct());
+                orderDetails.setIdOrder(idUser);
+                orderDetails.setQuantity(quantity);
+                orderDetails.setPrice(product.getPrice());
+                orderDetails.setTotalPrice(totalPrice);
+                orderDetails.setImage(product.getImage());
+                orderDetails.setName(product.getName());
+                orderDetails.setStatus(statusOderDetail);
+
+
+                long check = orderDetailsDAO.addOrderDetails(product.getIdShop(), idOrder, product.getIdProduct(), quantity, price, totalPrice, product.getImage(), product.getName(), statusOderDetail);
+                if (check == 1) {
+                    orderDetailsList.add(orderDetails);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng ", Toast.LENGTH_SHORT).show();
+                } else if (check == 0) {
+                    Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                } else if (check == -1) {
+                    Toast.makeText(ProductActivity.this, "Lỗi khi thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                }
+
+                finish();
+            }
+
+        });
 
     }
 

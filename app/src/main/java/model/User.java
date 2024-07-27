@@ -8,6 +8,7 @@ public class User {
     private long phone;
     private long cccd;
     private int role;
+    private String address;
 
     public User() {
     }
@@ -21,7 +22,7 @@ public class User {
         this.pass = pass;
     }
 
-    public User(int idUser, String user, String pass, String name, long phone, long cccd, int role) {
+    public User(int idUser, String user, String pass, String name, long phone, long cccd, int role, String address) {
         this.idUser = idUser;
         this.user = user;
         this.pass = pass;
@@ -29,6 +30,7 @@ public class User {
         this.phone = phone;
         this.cccd = cccd;
         this.role = role;
+        this.address = address;
     }
 
     public int getIdUser() {
@@ -85,5 +87,13 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

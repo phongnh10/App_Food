@@ -84,7 +84,7 @@ public class ManageBuyerFragment extends Fragment {
                             Toast.makeText(getContext(), "Enter complete information", Toast.LENGTH_SHORT).show();
                         } else {
 
-                            int check = shopDAO.addShop(idUser, name, address,null,0);
+                            int check = shopDAO.addShop(idUser, name, address,null,1);
                             switch (check) {
                                 case 1:
 

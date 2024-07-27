@@ -177,7 +177,7 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                             product.setIdShop(idShop);
                             product.setNote(productNote);
 
-                            long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote);
+                            long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote,0);
 
                             if (check == 1) {
                                 productList.add(product);
@@ -240,7 +240,7 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
     private void loadProductList() {
         idUser = getIdUserFromSharedPreferences();
         idShop = categoriesDao.getIdShop(idUser);
-        productList = productDAO.getProducts(idShop);
+        productList = productDAO.getProductsByIdShop(idShop);
         adapter = new ProductAdapter(context, productList, productDAO);
         recyclerView.setAdapter(adapter);
     }
@@ -251,8 +251,6 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
         nameCategories = categories.getName();
         txt_categories.setText(nameCategories);
         sidCategories = String.valueOf(idCategories);
-
-
         Toast.makeText(context, "SelectedID: " + idCategories + " SelectedName: " + nameCategories, Toast.LENGTH_SHORT).show();
 
     }

@@ -117,7 +117,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         if (check) {
                             Toast.makeText(context, "Edited successfully", Toast.LENGTH_SHORT).show();
                             productList.clear();
-                            productList.addAll(productDAO.getProducts(product.getIdShop()));
+                            productList.addAll(productDAO.getProductsByIdShop(product.getIdShop()));
                             notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "Edit failed", Toast.LENGTH_SHORT).show();

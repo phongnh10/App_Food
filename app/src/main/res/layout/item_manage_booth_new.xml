@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="10dp"
-                    android:text="Trang Thái: Chờ xác nhận"
+                    android:text="Status: Chờ xác nhận"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     >
@@ -102,7 +102,7 @@
                 android:layout_marginEnd="15dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/txt_manage_ok_shop"
+                    android:id="@+id/txt_manage_ok_shop_new"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_edit_user_admin"
@@ -113,7 +113,7 @@
                     android:textColor="@color/white"
                     android:layout_marginBottom="8dp"></TextView>
                 <TextView
-                    android:id="@+id/txt_manage_canel_shop"
+                    android:id="@+id/txt_manage_canel_shop_new"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_edit_booth_canel"

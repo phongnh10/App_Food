@@ -1,9 +1,12 @@
 package dao;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +56,9 @@ public class ShopDAO {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<Shop> shopList = new ArrayList<>();
 
-        String[] columns = {"idShop", "idUser", "name", "address", "image", "status"};
+        String query = "SELECT shop.idShop, shop.idUser, shop.name, shop.address, shop.image, shop.status " + "FROM shop " + "INNER JOIN user ON shop.idUser = user.idUser " + "WHERE user.role = 1";
 
-        Cursor cursor = db.query("shop", columns, null, null, null, null, null);
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -165,7 +168,7 @@ public class ShopDAO {
         return shop;
     }
 
-    public boolean SuspendShop(Shop shop) {
+    public boolean UpdateShop(Shop shop) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -180,4 +183,19 @@ public class ShopDAO {
         if (check <= 0) return false;
         return true;
     }
+
+    public boolean deleteShop(int idShop) {
+
+        try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
+            int check = sqLiteDatabase.delete("Shop", "idShop=?", new String[]{String.valueOf(idShop)});
+            if (check <= 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLiteException e) {
+            Log.e("ShopDAO", "SQLiteException: " + e.getMessage());
+            return false;
+        }
+    }
+
 }
