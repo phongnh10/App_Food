@@ -24,9 +24,19 @@
         <activity
             android:name=".InforActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".InformationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_information"
+            android:theme="@style/Theme.Du_An_1" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
         <activity
             android:name=".StatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderActivity"
             android:exported="false" />
         <activity
             android:name=".ProductActivity"
