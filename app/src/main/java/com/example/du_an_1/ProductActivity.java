@@ -59,6 +59,7 @@ public class ProductActivity extends AppCompatActivity {
             binding.txtPriceProduct.setText(formattedPrice);
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
+            binding.txtSoldProduct.setText(String.valueOf(product.getSold()+" Lượt mua"));
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
