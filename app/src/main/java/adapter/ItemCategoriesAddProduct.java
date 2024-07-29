@@ -1,12 +1,9 @@
 package adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,9 +42,8 @@ public class ItemCategoriesAddProduct extends RecyclerView.Adapter<ItemCategorie
     public void onBindViewHolder(@NonNull AdapterViewHolder holder, int position) {
         Categories categories = categoriesList.get(position);
         holder.txt_name.setText(categories.getName());
-        holder.img_icon.setImageBitmap(convertByteArrayToBitmap(categories.getImage()));
 
-        holder.txt_name.setOnClickListener(new View.OnClickListener() {
+        holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
@@ -64,25 +60,16 @@ public class ItemCategoriesAddProduct extends RecyclerView.Adapter<ItemCategorie
 
     public class AdapterViewHolder extends RecyclerView.ViewHolder {
         TextView txt_name;
-        ImageView img_icon;
+        LinearLayout ll_item;
 
         public AdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_name = itemView.findViewById(R.id.txt_name_categories_add_product);
-            img_icon = itemView.findViewById(R.id.img_icon);
+            ll_item = itemView.findViewById(R.id.ll_item_categories_add_product);
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(Categories categories);
-    }
-
-    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
-        if (imageBytes != null && imageBytes.length > 0) {
-            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        } else {
-            // Return a default image or handle null case
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
-        }
     }
 }

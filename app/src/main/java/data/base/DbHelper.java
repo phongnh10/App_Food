@@ -33,8 +33,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PHONE = "phone";
     private static final String COLUMN_CCCD = "cccd";
     private static final String COLUMN_ROLE = "role";
-    private static final String COLUMN_ADDRESS = "address";
-
 
     // Shop table columns
     private static final String COLUMN_ID_SHOP = "idShop";
@@ -55,7 +53,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGE_PRODUCT = "image";
     private static final String COLUMN_PRICE_PRODUCT = "price";
     private static final String COLUMN_NOTE_PRODUCT = "note";
-    private static final String COLUMN_PRODUCT_SOLD = "sold";
     private static final String COLUMN_STATUS_PRODUCT = "status";
 
     // OrderDetails table columns
@@ -95,8 +92,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_PHONE + " LONG, " +
                 COLUMN_CCCD + " LONG, " +
-                COLUMN_ROLE + " INTEGER, " +
-                COLUMN_ADDRESS + " TEXT)");
+                COLUMN_ROLE + " INTEGER)");
 
         // Create Shop table
         db.execSQL("CREATE TABLE " + TABLE_SHOP + " (" +
@@ -126,7 +122,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_IMAGE_PRODUCT + " BLOB, " +
                 COLUMN_PRICE_PRODUCT + " INTEGER, " +
                 COLUMN_NOTE_PRODUCT + " TEXT, " +
-                COLUMN_PRODUCT_SOLD + " INTEGER, " +
                 COLUMN_STATUS_PRODUCT + " INTEGER, " +
                 "FOREIGN KEY(" + COLUMN_ID_CATEGORIES + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_ID_CATEGORIES + "), " +
                 "FOREIGN KEY(" + COLUMN_ID_SHOP + ") REFERENCES " + TABLE_SHOP + "(" + COLUMN_ID_SHOP + "))");
@@ -135,17 +130,14 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_ORDER_DETAILS + " (" +
                 COLUMN_ID_ORDER_DETAILS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_ID_SHOP_DETAILS + " INTEGER, " +
-                COLUMN_ID_ORDER + " INTEGER, " +
                 COLUMN_ID_PRODUCT_DETAILS + " INTEGER, " +
+                COLUMN_ID_ORDER + " INTEGER, " +
                 COLUMN_QUANTITY_ORDER_DETAILS + " INTEGER, " +
                 COLUMN_PRICE_ORDER_DETAILS + " DOUBLE, " +
                 COLUMN_TOTAL_PRICE_ORDER_DETAILS + " DOUBLE, " +
                 COLUMN_IMAGE_ORDER_DETAILS + " BLOB, " +
                 COLUMN_NAME_ORDER_DETAILS + " TEXT, " +
                 COLUMN_STATUS_ORDER_DETAILS + " INTEGER, " +
-
-                //    public OrderDetails(int idOrderDetails, int idShop, int idOrder, int idProduct, int quantity, double price, double totalPrice, byte[] image, String name, int status) {
-
 
                 "FOREIGN KEY(" + COLUMN_ID_PRODUCT + ") REFERENCES " + TABLE_PRODUCT + "(" + COLUMN_ID_PRODUCT + "), " +
                 "FOREIGN KEY(" + COLUMN_ID_ORDER + ") REFERENCES " + TABLE_ORDER + "(" + COLUMN_ID_ORDER + "))");
@@ -165,22 +157,21 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         // Insert initial data
-        db.execSQL("INSERT INTO " + TABLE_USER + " (" + COLUMN_USER + ", " + COLUMN_PASS + ", " + COLUMN_NAME + ", " + COLUMN_PHONE + ", " + COLUMN_CCCD + ", " + COLUMN_ROLE + ", " + COLUMN_ADDRESS + ") VALUES " +
-                "('admin', '1', 'Phong Nguyễn', '0936887373', '04420020000000', 0, 'admin'), " +
-                "('sell1', '1', 'Mỹ Huyền', '0123456789', '03745923622222', 1, 'Quận 1'), " +
-                "('sell2', '1', 'Anh Tuấn', '0978654123', '03745923622222', 1, 'Lầu 2, Toà T'), " +
-                "('sell3', '1', 'Nguyễn Dung', '0972396789', '66666666666666', 1, 'Lầu 3, Toà T'), " +
-                "('buy1', '1', 'Nguyễn Văn A', '0123456789', '33333333333333', 2, 'Lầu 8, Toà T'), " +
-                "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2, 'Lầu 9, Toà 10')");
+        db.execSQL("INSERT INTO " + TABLE_USER + " (" + COLUMN_USER + ", " + COLUMN_PASS + ", " + COLUMN_NAME + ", " + COLUMN_PHONE + ", " + COLUMN_CCCD + ", " + COLUMN_ROLE + ") VALUES " +
+                "('admin', '1', 'Nguyễn Hồng Phong', '0999999999', '88888888888888', 0), " +
+                "('sell1', '1', 'Nguyễn Thị Mỹ Huyền', '0123456789', '22222222222222', 1), " +
+                "('sell2', '1', 'Phạm Anh Tuấn', '0978654123', '22222222222222', 1), " +
+                "('sell3', '1', 'Nguyễn Nguyễn Thị Dung', '0972396789', '66666666666666', 1), " +
+                "('buy1', '1', 'Nguyễn Văn A', '0123456789', '33333333333333', 2), " +
+                "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2)");
 
 
-        //insertshop
-        insertShops(db);
         // Insert initial categories with image
         insertInitialCategories(db);
         //product
         insertProduct(db);
-
+       //insertshop
+        insertShops(db);
 
     }
 
@@ -212,16 +203,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private void insertInitialCategories(SQLiteDatabase db) {
         // Load images from resources and resize them
-        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_comtron), 400, 400);
-        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_mytom), 400, 400);
-        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 400);
-        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_doanvat), 400, 400);
-        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 400);
-        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 400);
-        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_caphe), 400, 400);
-        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_nuocngot), 400, 400);
-        Bitmap bitmap9 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_sua), 400, 400);
-        Bitmap bitmap10 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac_1), 400, 400);
+        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu1), 400, 200);
+        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu2), 400, 200);
+        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu3), 400, 200);
+        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu4), 400, 200);
+        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu5), 400, 200);
+        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu6), 400, 200);
+        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu7), 400, 200);
+        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.anhmenu8), 400, 200);
 
         // Convert bitmaps to byte arrays
         byte[] image1 = getBytesFromBitmap(bitmap1, 50);
@@ -232,34 +221,28 @@ public class DbHelper extends SQLiteOpenHelper {
         byte[] image6 = getBytesFromBitmap(bitmap6, 50);
         byte[] image7 = getBytesFromBitmap(bitmap7, 50);
         byte[] image8 = getBytesFromBitmap(bitmap8, 50);
-        byte[] image9 = getBytesFromBitmap(bitmap9, 50);
-        byte[] image10 = getBytesFromBitmap(bitmap10, 50);
 
         // Insert categories into the database
-        insertCategory(db, 1, "Cơm", image1);
-        insertCategory(db, 1, "Mỳ", image2);
-        insertCategory(db, 1, "Bánh Mỳ", image3);
-        insertCategory(db, 1, "Đồ Ăn Vặt", image4);
-        insertCategory(db, 1, "Đồ Ăn Khác", image5);
-        insertCategory(db, 1, "Trà Sữa", image6);
-        insertCategory(db, 1, "Cà Phê", image7);
-        insertCategory(db, 1, "Nước Ngọt", image8);
-        insertCategory(db, 1, "Sữa", image9);
-        insertCategory(db, 1, "Nước Khác", image10);
+        insertCategory(db, 1, "ĂN CHÍNH", image1);
+        insertCategory(db, 1, "ĂN VẶT", image2);
+        insertCategory(db, 1, "COMBO", image3);
+        insertCategory(db, 1, "ĐỒ ĂN KHÁC", image4);
+        insertCategory(db, 1, "CÀ PHÊ", image5);
+        insertCategory(db, 1, "TRÀ SỮA", image6);
+        insertCategory(db, 1, "NƯỚC NGỌT", image7);
+        insertCategory(db, 1, "ĐỒ UỐNG KHÁC", image8);
     }
 
     private void insertProduct(SQLiteDatabase db) {
         // Load images from resources and resize them
-        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_comtron), 400, 400);
-        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_mytom), 400, 400);
-        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 400);
-        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_doanvat), 400, 400);
-        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 400);
-        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 400);
-        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_caphe), 400, 400);
-        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_nuocngot), 400, 400);
-        Bitmap bitmap9 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_sua), 400, 400);
-        Bitmap bitmap10 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac_1), 400, 400);
+        Bitmap bitmap1 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_comtron), 400, 200);
+        Bitmap bitmap2 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_mixao), 400, 200);
+        Bitmap bitmap3 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_mihop), 400, 200);
+        Bitmap bitmap4 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
+        Bitmap bitmap5 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_banhmy), 400, 200);
+        Bitmap bitmap6 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_khac), 400, 200);
+        Bitmap bitmap7 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.img_trasua), 400, 200);
+        Bitmap bitmap8 = resizeBitmap(BitmapFactory.decodeResource(context.getResources(), R.mipmap.image_banhtrang), 400, 200);
 
         // Convert bitmaps to byte arrays
         byte[] image1 = getBytesFromBitmap(bitmap1, 50);
@@ -270,54 +253,45 @@ public class DbHelper extends SQLiteOpenHelper {
         byte[] image6 = getBytesFromBitmap(bitmap6, 50);
         byte[] image7 = getBytesFromBitmap(bitmap7, 50);
         byte[] image8 = getBytesFromBitmap(bitmap8, 50);
-        byte[] image9 = getBytesFromBitmap(bitmap9, 50);
-        byte[] image10 = getBytesFromBitmap(bitmap10, 50);
 
         // Insert categories into the database
         // Giả sử bạn đã có đối tượng SQLiteDatabase db
 
 // Cơm
-        insertProduct(db, 1, 1, "Cơm Tấm Sườn Nướng", image1, 30000.0, "Cơm tấm với sườn nướng thơm ngon, kèm trứng ốp la và dưa leo, cà chua. Món ăn truyền thống đầy hương vị.", 1,999);
-        insertProduct(db, 1, 1, "Cơm Chiên Dương Châu", image1, 32000.0, "Cơm chiên với tôm, thịt heo, rau củ và trứng. Hương vị đậm đà và đầy đủ dinh dưỡng.", 1,100);
+        insertProduct(db, 1, 1, "Cơm Tấm Sườn Nướng", image1, 30000.0, "Cơm tấm với sườn nướng thơm ngon, kèm trứng ốp la và dưa leo, cà chua. Món ăn truyền thống đầy hương vị.", 1);
+        insertProduct(db, 1, 1, "Cơm Chiên Dương Châu", image1, 32000.0, "Cơm chiên với tôm, thịt heo, rau củ và trứng. Hương vị đậm đà và đầy đủ dinh dưỡng.", 1);
 
 // Mỳ
-        insertProduct(db, 2, 1, "Mỳ Xào Thập Cẩm", image2, 35000.0, "Mỳ xào với nhiều loại hải sản tươi ngon và rau củ, nước sốt đặc biệt.", 1,200);
-        insertProduct(db, 2, 1, "Mỳ Ý Bolognese", image2, 37000.0, "Mỳ Ý với sốt Bolognese truyền thống, thịt bằm và phô mai parmesan.", 1,300);
+        insertProduct(db, 2, 1, "Mỳ Xào Thập Cẩm", image2, 35000.0, "Mỳ xào với nhiều loại hải sản tươi ngon và rau củ, nước sốt đặc biệt.", 1);
+        insertProduct(db, 2, 1, "Mỳ Ý Bolognese", image2, 37000.0, "Mỳ Ý với sốt Bolognese truyền thống, thịt bằm và phô mai parmesan.", 1);
 
 // Bánh Mỳ
-        insertProduct(db, 3, 1, "Bánh Mỳ Kẹp Thịt Nướng", image3, 20000.0, "Bánh mì kẹp thịt nướng với rau sống tươi ngon và sốt đặc biệt.", 1,500);
-        insertProduct(db, 3, 1, "Bánh Mỳ Pate Đặc Biệt", image3, 22000.0, "Bánh mì với pate và thịt nguội, kèm rau sống và sốt mayonnaise.", 1,700);
+        insertProduct(db, 3, 1, "Bánh Mỳ Kẹp Thịt Nướng", image3, 20000.0, "Bánh mì kẹp thịt nướng với rau sống tươi ngon và sốt đặc biệt.", 1);
+        insertProduct(db, 3, 1, "Bánh Mỳ Pate Đặc Biệt", image3, 22000.0, "Bánh mì với pate và thịt nguội, kèm rau sống và sốt mayonnaise.", 1);
 
 // Đồ Ăn Vặt
-        insertProduct(db, 4, 1, "Khoai Tây Chiên Giòn", image4, 15000.0, "Khoai tây chiên giòn rụm, kèm sốt mayonnaise và ketchup.", 1,800);
-        insertProduct(db, 4, 1, "Chả Giò Hải Sản", image4, 18000.0, "Chả giò với hải sản tươi ngon, rau củ và nước chấm chua ngọt.", 1,10);
+        insertProduct(db, 4, 1, "Khoai Tây Chiên Giòn", image4, 15000.0, "Khoai tây chiên giòn rụm, kèm sốt mayonnaise và ketchup.", 1);
+        insertProduct(db, 4, 1, "Chả Giò Hải Sản", image4, 18000.0, "Chả giò với hải sản tươi ngon, rau củ và nước chấm chua ngọt.", 1);
 
 // Đồ Ăn Khác
-        insertProduct(db, 5, 1, "Gỏi Cuốn Tôm Thịt", image5, 20000.0, "Gỏi cuốn với tôm, thịt heo, rau sống và nước chấm đậu phộng.", 1,55);
-        insertProduct(db, 5, 1, "Bánh Xèo", image5, 22000.0, "Bánh xèo với nhân thịt heo, tôm và giá đỗ, ăn kèm rau sống và nước chấm.", 1,1000);
+        insertProduct(db, 5, 1, "Gỏi Cuốn Tôm Thịt", image5, 20000.0, "Gỏi cuốn với tôm, thịt heo, rau sống và nước chấm đậu phộng.", 1);
+        insertProduct(db, 5, 1, "Bánh Xèo", image5, 22000.0, "Bánh xèo với nhân thịt heo, tôm và giá đỗ, ăn kèm rau sống và nước chấm.", 1);
 
 // Trà Sữa
-        insertProduct(db, 6, 1, "Trà Sữa Đen", image6, 35000.0, "Trà sữa đen với trân châu mềm mịn và vị ngọt thanh.", 1,2100);
-        insertProduct(db, 6, 1, "Trà Sữa Matcha", image6, 38000.0, "Trà sữa matcha thơm ngon với lớp bọt sữa mịn và trân châu.", 1,1543);
+        insertProduct(db, 6, 1, "Trà Sữa Đen", image6, 35000.0, "Trà sữa đen với trân châu mềm mịn và vị ngọt thanh.", 1);
+        insertProduct(db, 6, 1, "Trà Sữa Matcha", image6, 38000.0, "Trà sữa matcha thơm ngon với lớp bọt sữa mịn và trân châu.", 1);
 
 // Cà Phê
-        insertProduct(db, 7, 1, "Cà Phê Espresso", image7, 25000.0, "Cà phê espresso đậm đà, phục vụ với một lớp crema dày và mịn.", 1,1234);
-        insertProduct(db, 7, 1, "Cà Phê Americano", image7, 27000.0, "Cà phê Americano với hương vị mạnh mẽ, pha với nước nóng.", 1,12412);
+        insertProduct(db, 7, 1, "Cà Phê Espresso", image7, 25000.0, "Cà phê espresso đậm đà, phục vụ với một lớp crema dày và mịn.", 1);
+        insertProduct(db, 7, 1, "Cà Phê Americano", image7, 27000.0, "Cà phê Americano với hương vị mạnh mẽ, pha với nước nóng.", 1);
 
 // Nước Ngọt
-        insertProduct(db, 8, 1, "Nước Ngọt Cola", image8, 12000.0, "Nước ngọt cola với hương vị đặc trưng và sủi bọt.", 1,124);
-        insertProduct(db, 8, 1, "Nước Ngọt Cam", image8, 13000.0, "Nước ngọt cam với vị chua ngọt thanh mát.", 1,124);
+        insertProduct(db, 8, 1, "Nước Ngọt Cola", image8, 12000.0, "Nước ngọt cola với hương vị đặc trưng và sủi bọt.", 1);
+        insertProduct(db, 8, 1, "Nước Ngọt Cam", image8, 13000.0, "Nước ngọt cam với vị chua ngọt thanh mát.", 1);
 
-// Sữa
-        insertProduct(db, 9, 1, "Sữa Tươi", image9, 15000.0, "Sữa tươi nguyên chất, giàu canxi và vitamin.", 1,14);
-        insertProduct(db, 9, 1, "Sữa Socola", image9, 17000.0, "Sữa socola ngọt ngào với hương vị socola đậm đà.", 1,124);
-
-// Nước Khác
-        insertProduct(db, 10, 1, "Nước Dừa", image10, 20000.0, "Nước dừa tươi mát, giàu vitamin và khoáng chất.", 1,124);
-        insertProduct(db, 10, 1, "Nước Chanh", image10, 18000.0, "Nước chanh tươi với hương vị chua ngọt và tinh khiết.", 1,14);
 
     }
-    private void insertProduct(SQLiteDatabase db, int idCategories, int idShop,String name, byte[] image,Double price,String note, int status,int sold) {
+    private void insertProduct(SQLiteDatabase db, int idCategories, int idShop,String name, byte[] image,Double price,String note, int status) {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_ID_CATEGORIES, idCategories);
@@ -326,7 +300,6 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_IMAGE_PRODUCT, image);
         values.put(COLUMN_PRICE_PRODUCT, price);
         values.put(COLUMN_NOTE_PRODUCT, note);
-        values.put(COLUMN_PRODUCT_SOLD, sold);
         values.put(COLUMN_STATUS_PRODUCT, status);
 
         db.insert(TABLE_PRODUCT, null, values);

@@ -1,12 +1,9 @@
 package dao;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +53,9 @@ public class ShopDAO {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<Shop> shopList = new ArrayList<>();
 
-        String query = "SELECT shop.idShop, shop.idUser, shop.name, shop.address, shop.image, shop.status " + "FROM shop " + "INNER JOIN user ON shop.idUser = user.idUser " + "WHERE user.role = 1";
+        String[] columns = {"idShop", "idUser", "name", "address", "image", "status"};
 
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.query("shop", columns, null, null, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -144,7 +141,7 @@ public class ShopDAO {
 
         db = dbHelper.getWritableDatabase();
 
-        String[] columns = {"idShop", "idUser", "address", "image", "name","status"};
+        String[] columns = {"idShop", "idUser", "address", "image", "status", "name"};
         String selection = "idShop = ?";
         String[] selectionArgs = {String.valueOf(idShop)};
 
@@ -168,7 +165,7 @@ public class ShopDAO {
         return shop;
     }
 
-    public boolean UpdateShop(Shop shop) {
+    public boolean SuspendShop(Shop shop) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -182,40 +179,5 @@ public class ShopDAO {
         int check = sqLiteDatabase.update("Shop", contentValues, "idShop=?", new String[]{String.valueOf(shop.getIdShop())});
         if (check <= 0) return false;
         return true;
-    }
-
-    public boolean deleteShop(int idShop) {
-
-        try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
-            int check = sqLiteDatabase.delete("Shop", "idShop=?", new String[]{String.valueOf(idShop)});
-            if (check <= 0) {
-                return false;
-            }
-            return true;
-        } catch (SQLiteException e) {
-            Log.e("ShopDAO", "SQLiteException: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public int getIdShop(int idUser) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        int idShop = -1;
-
-        String[] columns = {"idShop"};
-        String selection = "idUser = ?";
-        String[] selectionArgs = { String.valueOf(idUser) };
-
-        try (Cursor cursor = db.query("Shop", columns, selection, selectionArgs, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                idShop = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
-            }
-        } catch (Exception e) {
-            Log.e("DatabaseError", "Error while fetching idShop for idUser " + idUser, e);
-        } finally {
-            db.close();
-        }
-
-        return idShop;
     }
 }

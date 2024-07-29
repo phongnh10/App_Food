@@ -2,7 +2,6 @@ package fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,9 +59,7 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
     private ProductAdapter adapter;
     private ItemCategoriesAddProduct adapter1;
     private CategoriesDao categoriesDao;
-    private TextView txt_categories;
-    private int statusProduct;
-    private Dialog dialog1;
+    TextView txt_categories;
 
 
     @Override
@@ -84,17 +79,16 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
         recyclerView = view.findViewById(R.id.rcv_manage_product);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
-        loadProductList();
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Theme_AppCompat_Light);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View dialogView = inflater.inflate(R.layout.dialog_information_product, null);
-
-                dialog.setContentView(dialogView);
+                builder.setView(dialogView);
+                AlertDialog alertDialog = builder.create();
 
                 idUser = getIdUserFromSharedPreferences();
                 idShop = categoriesDao.getIdShop(idUser);
@@ -108,42 +102,41 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                 txt_categories = dialogView.findViewById(R.id.txt_categories_product);
                 Button btn_select_image = dialogView.findViewById(R.id.btn_select_image);
                 Button btn_save = dialogView.findViewById(R.id.btn_save_product);
-                Switch switch1 = dialogView.findViewById(R.id.sw_status_product);
 
                 img_back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        alertDialog.dismiss();
                     }
                 });
 
                 txt_categories.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog1 = new Dialog(context, androidx.appcompat.R.style.Theme_AppCompat_Light);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         LayoutInflater inflater = LayoutInflater.from(context);
                         View dialogView = inflater.inflate(R.layout.dialog_add_categories_product, null);
-                        dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        dialog1.setContentView(dialogView);
-
-
                         ImageView img_back1 = dialogView.findViewById(R.id.img_add_categories_back);
+                        builder.setView(dialogView);
+                        AlertDialog alertDialog1 = builder.create();
+
                         img_back1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                dialog1.dismiss();
+                                alertDialog1.dismiss();
                             }
                         });
 
                         recyclerView1 = dialogView.findViewById(R.id.rcv_item_categories_add_product);
                         recyclerView1.setLayoutManager(new GridLayoutManager(context, 1));
 
-                        categoriesList = categoriesDao.getAllCategories();
+                        categoriesList = categoriesDao.getAllCategoriesName();
                         adapter1 = new ItemCategoriesAddProduct(context, categoriesList);
                         adapter1.setOnItemClickListener(ManageProductFragment.this);
                         recyclerView1.setAdapter(adapter1);
 
-                        dialog1.show();
+
+                        alertDialog1.show();
 
                     }
 
@@ -157,74 +150,52 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                     }
                 });
 
-                switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (switch1.isChecked()) {
-                            statusProduct = 1;
-                            switch1.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
-                            switch1.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
-                            Toast.makeText(context, "Còn hàng", Toast.LENGTH_SHORT).show();
-                        } else {
-                            statusProduct = 0;
-                            switch1.setThumbTintList(ContextCompat.getColorStateList(context, R.color.default_color));
-                            switch1.setTrackTintList(ContextCompat.getColorStateList(context, R.color.default_color));
-                            Toast.makeText(context, "Hết hàng", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-
                 btn_save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String productName = edt_name.getText().toString();
-                        String sProductPrice = edt_price.getText().toString();
+                        String sproductPrice = edt_price.getText().toString();
+                        int productPrice = 0;
+                        try {
+                            productPrice = Integer.parseInt(sproductPrice);
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(context, "Invalid price format!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         String productNote = edt_note.getText().toString();
-                        String sStatusProduct = String.valueOf(statusProduct);
-
-
-                        int sold = 0;
-                        int productPrice = Integer.parseInt(sProductPrice);
-
-                        if (bitmap != null && !productName.isEmpty() && !sProductPrice.isEmpty() && !sidCategories.isEmpty() && !sStatusProduct.isEmpty()) {
-                            int targetWidth = 600;
+                        int status = 0;
+                        if (bitmap != null && !productName.isEmpty() && !sproductPrice.isEmpty() && sidCategories != null) {
+                            int targetWidth = 800;
                             int targetHeight = 600;
                             bitmap = resizeBitmap(bitmap, targetWidth, targetHeight);
                             byte[] imageBytes = getBitmapAsByteArray(bitmap);
-
                             Product product = new Product();
                             product.setName(productName);
                             product.setImage(imageBytes);
-                            product.setStatus(statusProduct);
+                            product.setStatus(status);
                             product.setPrice(productPrice);
                             product.setIdShop(idShop);
                             product.setNote(productNote);
-                            product.setSold(sold);
-                            product.setIdCategories(idCategories);
 
-                            long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote, statusProduct, sold);
+                            long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote);
 
                             if (check == 1) {
                                 productList.add(product);
                                 adapter.notifyDataSetChanged();
-                                loadProductList();
-                                Toast.makeText(context, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Product saved successfully!", Toast.LENGTH_SHORT).show();
                             } else if (check == 0) {
-                                Toast.makeText(context, "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Failed to save product! The product name already exists.", Toast.LENGTH_SHORT).show();
                             }
-                            dialog.dismiss();
+                            alertDialog.dismiss();
                         } else {
-                            Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Please select an image and enter product details.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-
-                dialog.show();
+                alertDialog.show();
             }
         });
-
 
         return view;
     }
@@ -269,7 +240,7 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
     private void loadProductList() {
         idUser = getIdUserFromSharedPreferences();
         idShop = categoriesDao.getIdShop(idUser);
-        productList = productDAO.getProductsByIdShop(idShop);
+        productList = productDAO.getProducts(idShop);
         adapter = new ProductAdapter(context, productList, productDAO);
         recyclerView.setAdapter(adapter);
     }
@@ -280,8 +251,9 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
         nameCategories = categories.getName();
         txt_categories.setText(nameCategories);
         sidCategories = String.valueOf(idCategories);
-        Toast.makeText(context, "Bạn đã chọn Id thể loại: " + idCategories + " Tên: " + nameCategories, Toast.LENGTH_SHORT).show();
-        dialog1.dismiss();
+
+
+        Toast.makeText(context, "SelectedID: " + idCategories + " SelectedName: " + nameCategories, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -290,6 +262,4 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
         super.onResume();
         loadProductList();
     }
-
-
 }
