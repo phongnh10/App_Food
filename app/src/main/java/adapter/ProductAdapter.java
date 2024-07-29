@@ -1,14 +1,25 @@
 package adapter;
 
+import static android.app.Activity.RESULT_OK;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
+
+import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -16,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,20 +38,26 @@ import java.util.List;
 import dao.CategoriesDao;
 import dao.ProductDAO;
 
+import model.Categories;
 import model.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    Context context;
-    List<Product> productList;
-    ProductDAO productDAO;
-    CategoriesDao categoriesDao;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Context context;
+    private List<Product> productList;
+    private ProductDAO productDAO;
+    private CategoriesDao categoriesDao;
+    private Categories categories;
+    private int statusProduct;
+
 
     public ProductAdapter(Context context, List<Product> productList, ProductDAO productDAO) {
         this.context = context;
         this.productList = productList;
         this.productDAO = productDAO;
         this.categoriesDao = new CategoriesDao(context);
+        this.categories = new Categories();
     }
 
     @NonNull
@@ -63,6 +79,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         int idUser = getIdUserFromSharedPreferences();
         int idShop = categoriesDao.getIdShop(idUser);
 
+
         int status = product.getStatus();
         if (status == 1) {
             holder.txt_status_product.setText("Còn Hàng");
@@ -76,93 +93,83 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Theme_AppCompat_Light);
                 LayoutInflater inflater = LayoutInflater.from(context);
-                View dialogView = inflater.inflate(R.layout.dialog_statust_product, null);
-                builder.setView(dialogView);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                View dialogView = inflater.inflate(R.layout.dialog_information_product, null);
 
-                ImageView img_back = dialogView.findViewById(R.id.img_back_statust);
-                Switch sw_statust = dialogView.findViewById(R.id.sw_statuts);
+                dialog.setContentView(dialogView);
+
+                EditText edt_name = dialogView.findViewById(R.id.edt_name_product);
+                EditText edt_price = dialogView.findViewById(R.id.edt_price_product);
+                EditText edt_note = dialogView.findViewById(R.id.edt_note_product);
+                ImageView imageView = dialogView.findViewById(R.id.img_selected);
+                ImageView img_back = dialogView.findViewById(R.id.img_back_information);
+                TextView txt_categories = dialogView.findViewById(R.id.txt_categories_product);
+                Button btn_select_image = dialogView.findViewById(R.id.btn_select_image);
+                Button btn_save = dialogView.findViewById(R.id.btn_save_product);
+                Switch switch_status = dialogView.findViewById(R.id.sw_status_product);
+
+                categories = categoriesDao.getCategoryById(product.getIdCategories());
+                edt_name.setText(product.getName());
+                edt_price.setText(String.valueOf(product.getPrice()));
+                edt_note.setText(product.getNote());
+                imageView.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
+                txt_categories.setText(String.valueOf(categories.getName()));
+                statusProduct = product.getStatus();
 
                 img_back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        alertDialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
 
-                if (status == 1) {
-                    sw_statust.setChecked(true);
-                    sw_statust.setThumbTintList(ContextCompat.getColorStateList(context, R.color.selected_color));
-
-                } else {
-                    sw_statust.setChecked(false);
-                    sw_statust.setThumbTintList(ContextCompat.getColorStateList(context, R.color.default_color));
-                }
-
-                sw_statust.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                switch_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                        if (isChecked) {
-                            product.setStatus(1);
-                            holder.txt_status_product.setText("Còn Hàng");
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (switch_status.isChecked()) {
+                            statusProduct = 1;
+                            switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                            switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                            Toast.makeText(context, "Còn hàng", Toast.LENGTH_SHORT).show();
                         } else {
-                            product.setStatus(0);
-                            holder.txt_status_product.setText("Hết Hàng");
-                        }
-
-                        boolean check = productDAO.upStatust(product);
-                        if (check) {
-                            Toast.makeText(context, "Edited successfully", Toast.LENGTH_SHORT).show();
-                            productList.clear();
-                            productList.addAll(productDAO.getProducts(product.getIdShop()));
-                            notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(context, "Edit failed", Toast.LENGTH_SHORT).show();
+                            statusProduct = 0;
+                            switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.default_color));
+                            switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.default_color));
+                            Toast.makeText(context, "Hết hàng", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
 
+                if (statusProduct == 1) {
+                    switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                    switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
+                    switch_status.setChecked(true);
+                }
+                btn_save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final Product product1 = new Product(product.getIdProduct(),product.getIdCategories(),product.getIdShop(),edt_name.getText().toString(),null,Integer.parseInt(edt_price.getText().toString()),edt_note.getText().toString(),statusProduct,statusProduct);
+                        boolean check = productDAO.upProduct(product1);
+                        if(check){
+                            productList.clear();
+                            productList.addAll(productDAO.getProductsListAll());
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Cập nhập sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(context, "Cập nhập sản phẩm thất bại", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                        }
+                        dialog.dismiss();
+                    }
+                });
 
-        holder.ll_item.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Xác nhận xóa")
-                        .setMessage("Bạn có chắc chắn muốn xóa sản phẩm này?")
-                        .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                int adapterPosition = holder.getAdapterPosition();
-                                if (adapterPosition != RecyclerView.NO_POSITION) {
-                                    Product product1 = productList.get(adapterPosition);
-                                    boolean check = productDAO.deleteProduct(idProduct, idShop);
-                                    if (check) {
-                                        productList.remove(adapterPosition);
-                                        notifyItemRemoved(adapterPosition);
-                                        Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(context, "Delete Failed", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        })
-                        .setNegativeButton("Hủy bỏ", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
                 dialog.show();
-
-                return true;
             }
         });
+
 
     }
 
@@ -187,17 +194,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
     }
 
-    // Helper method to convert byte[] to Bitmap
-    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
-        if (imageBytes != null && imageBytes.length > 0) {
-            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        } else {
-            // Return a default image or handle null case
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
-        }
-    }
-
-    // Method to update the dataset with new products
     public void updateData(List<Product> newProductList) {
         productList.clear();
         productList.addAll(newProductList);
@@ -208,4 +204,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         SharedPreferences sharedPreferences = context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }
+    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        } else {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
+        }
+    }
+
 }

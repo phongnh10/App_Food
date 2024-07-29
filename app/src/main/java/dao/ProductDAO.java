@@ -12,7 +12,6 @@ import java.util.List;
 
 import data.base.DbHelper;
 import model.Product;
-import model.User;
 
 public class ProductDAO {
     DbHelper dbHelper;
@@ -22,7 +21,7 @@ public class ProductDAO {
     }
 
 
-    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note) {
+    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int sold, int i) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE name = ?", new String[]{name});
 //        if (cursor.getCount() > 0) {
@@ -33,12 +32,14 @@ public class ProductDAO {
 
         // Nếu danh mục chưa tồn tại, thêm mới vào cơ sở dữ liệu
         ContentValues contentValues = new ContentValues();
-        contentValues.put("idCategories",idCategories);
+        contentValues.put("idCategories", idCategories);
         contentValues.put("idShop", idShop);
         contentValues.put("name", name);
         contentValues.put("image", image);
-        contentValues.put("price",price);
-        contentValues.put("note",note);
+        contentValues.put("price", price);
+        contentValues.put("note", note);
+        contentValues.put("sold", sold);
+
 
         long check = db.insert("Product", null, contentValues);
 
@@ -47,11 +48,11 @@ public class ProductDAO {
         return (check == -1) ? -1 : 1; // Trả về -1 nếu thêm mới không thành công, ngược lại trả về 1
     }
 
-    public List<Product> getProducts(int idShop) {
+    public List<Product> getProductsByIdShop(int idShop) {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idShop = ? OR idShop = 1", new String[]{String.valueOf(idShop)});
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold FROM Product WHERE idShop = ?", new String[]{String.valueOf(idShop)});
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -63,8 +64,9 @@ public class ProductDAO {
                     int priceIndex = cursor.getColumnIndex("price");
                     int noteIndex = cursor.getColumnIndex("note");
                     int statusIndex = cursor.getColumnIndex("status");
+                    int soldIndex = cursor.getColumnIndex("sold");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                         int idProduct = cursor.getInt(idProductIndex);
                         int idCategories = cursor.getInt(idCategoriesIndex);
                         int idShopValue = cursor.getInt(idShopIndex);
@@ -73,8 +75,9 @@ public class ProductDAO {
                         int price = cursor.getInt(priceIndex);
                         String note = cursor.getString(noteIndex);
                         int status = cursor.getInt(statusIndex);
+                        int sold = cursor.getInt(soldIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                         productList.add(product);
                     }
                 } while (cursor.moveToNext());
@@ -90,7 +93,6 @@ public class ProductDAO {
 
         return productList;
     }
-
     public boolean deleteProduct(int idProduct, int idShop) {
         try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
             int check = sqLiteDatabase.delete("Product", "idProduct=? AND idShop=?", new String[]{String.valueOf(idProduct), String.valueOf(idShop)});
@@ -104,13 +106,39 @@ public class ProductDAO {
             return false;
         }
     }
-    public boolean upStatust(Product product){
+
+    public boolean upStatust(Product product) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put("status", product.getStatus());
 
-        int check = sqLiteDatabase.update("Product",values,"idProduct=?",new String[]{String.valueOf(product.getIdProduct())});
+        int check = sqLiteDatabase.update("Product", values, "idProduct=?", new String[]{String.valueOf(product.getIdProduct())});
+        if (check <= 0) return false;
+        return true;
+    }
+
+    public boolean upProduct(Product product) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("name", product.getName());
+        values.put("price", product.getPrice());
+        values.put("note", product.getNote());
+        values.put("status", product.getStatus());
+
+        int check = sqLiteDatabase.update("Product", values, "idProduct=?", new String[]{String.valueOf(product.getIdProduct())});
+        if (check <= 0) return false;
+        return true;
+    }
+
+    public boolean upSold(Product product) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("sold", product.getStatus());
+
+        int check = sqLiteDatabase.update("Product", values, "idProduct=?", new String[]{String.valueOf(product.getIdProduct())});
         if (check <= 0) return false;
         return true;
     }
@@ -119,7 +147,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product where status == 1 AND idCategories IN (1,2,3,4,5) ", null);
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold FROM Product where status == 1 AND idCategories IN (1,2,3,4,5) ", null);
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -131,8 +159,9 @@ public class ProductDAO {
                     int priceIndex = cursor.getColumnIndex("price");
                     int noteIndex = cursor.getColumnIndex("note");
                     int statusIndex = cursor.getColumnIndex("status");
+                    int soldIndex = cursor.getColumnIndex("sold");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                         int idProduct = cursor.getInt(idProductIndex);
                         int idCategories = cursor.getInt(idCategoriesIndex);
                         int idShopValue = cursor.getInt(idShopIndex);
@@ -141,8 +170,9 @@ public class ProductDAO {
                         int price = cursor.getInt(priceIndex);
                         String note = cursor.getString(noteIndex);
                         int status = cursor.getInt(statusIndex);
+                        int sold = cursor.getInt(soldIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                         productList.add(product);
                     }
                 } while (cursor.moveToNext());
@@ -163,7 +193,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product where status == 1 AND idCategories IN (6,7,8,9,10) ", null);
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold FROM Product where status == 1 AND idCategories IN (6,7,8,9,10) ", null);
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -175,8 +205,9 @@ public class ProductDAO {
                     int priceIndex = cursor.getColumnIndex("price");
                     int noteIndex = cursor.getColumnIndex("note");
                     int statusIndex = cursor.getColumnIndex("status");
+                    int soldIndex = cursor.getColumnIndex("sold");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                         int idProduct = cursor.getInt(idProductIndex);
                         int idCategories = cursor.getInt(idCategoriesIndex);
                         int idShopValue = cursor.getInt(idShopIndex);
@@ -185,8 +216,9 @@ public class ProductDAO {
                         int price = cursor.getInt(priceIndex);
                         String note = cursor.getString(noteIndex);
                         int status = cursor.getInt(statusIndex);
+                        int sold = cursor.getInt(soldIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                         productList.add(product);
                     }
                 } while (cursor.moveToNext());
@@ -202,11 +234,12 @@ public class ProductDAO {
 
         return productList;
     }
+
     public List<Product> getProductsListAll() {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product", null);
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status,sold FROM Product where status = 1", null);
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -218,8 +251,9 @@ public class ProductDAO {
                     int priceIndex = cursor.getColumnIndex("price");
                     int noteIndex = cursor.getColumnIndex("note");
                     int statusIndex = cursor.getColumnIndex("status");
+                    int soldIndex = cursor.getColumnIndex("sold");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                         int idProduct = cursor.getInt(idProductIndex);
                         int idCategories = cursor.getInt(idCategoriesIndex);
                         int idShopValue = cursor.getInt(idShopIndex);
@@ -228,8 +262,9 @@ public class ProductDAO {
                         int price = cursor.getInt(priceIndex);
                         String note = cursor.getString(noteIndex);
                         int status = cursor.getInt(statusIndex);
+                        int sold = cursor.getInt(soldIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                         productList.add(product);
                     }
                 } while (cursor.moveToNext());
@@ -245,11 +280,12 @@ public class ProductDAO {
 
         return productList;
     }
+
     public List<Product> getProductsByName(String query) {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String sql = "SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE name LIKE ?";
+        String sql = "SELECT idProduct, idCategories, idShop, name, image, price, note, status,sold FROM Product WHERE name LIKE ?";
         Cursor cursor = db.rawQuery(sql, new String[]{"%" + query + "%"});
 
         try {
@@ -263,8 +299,9 @@ public class ProductDAO {
                     int priceIndex = cursor.getColumnIndex("price");
                     int noteIndex = cursor.getColumnIndex("note");
                     int statusIndex = cursor.getColumnIndex("status");
+                    int soldIndex = cursor.getColumnIndex("sold");
 
-                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                    if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                         int idProduct = cursor.getInt(idProductIndex);
                         int idCategories = cursor.getInt(idCategoriesIndex);
                         int idShopValue = cursor.getInt(idShopIndex);
@@ -273,8 +310,9 @@ public class ProductDAO {
                         int price = cursor.getInt(priceIndex);
                         String note = cursor.getString(noteIndex);
                         int status = cursor.getInt(statusIndex);
+                        int sold = cursor.getInt(soldIndex);
 
-                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                        Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                         productList.add(product);
                     }
                 } while (cursor.moveToNext());
@@ -294,9 +332,11 @@ public class ProductDAO {
     public Product getProductById(int idProduct) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Product product = null;
+        Cursor cursor = null;
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idProduct=?", new String[]{String.valueOf(idProduct)});
         try {
+            cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold FROM Product WHERE idProduct=?", new String[]{String.valueOf(idProduct)});
+
             if (cursor != null && cursor.moveToFirst()) {
                 int idProductIndex = cursor.getColumnIndex("idProduct");
                 int idCategoriesIndex = cursor.getColumnIndex("idCategories");
@@ -306,8 +346,9 @@ public class ProductDAO {
                 int priceIndex = cursor.getColumnIndex("price");
                 int noteIndex = cursor.getColumnIndex("note");
                 int statusIndex = cursor.getColumnIndex("status");
+                int soldIndex = cursor.getColumnIndex("sold");
 
-                if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0) {
+                if (idProductIndex >= 0 && idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0 && priceIndex >= 0 && noteIndex >= 0 && statusIndex >= 0 && soldIndex >= 0) {
                     int idCategories = cursor.getInt(idCategoriesIndex);
                     int idShopValue = cursor.getInt(idShopIndex);
                     String name = cursor.getString(nameIndex);
@@ -315,8 +356,9 @@ public class ProductDAO {
                     int price = cursor.getInt(priceIndex);
                     String note = cursor.getString(noteIndex);
                     int status = cursor.getInt(statusIndex);
+                    int sold = cursor.getInt(soldIndex);
 
-                    product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status);
+                    product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                 }
             }
         } catch (Exception e) {
@@ -330,5 +372,4 @@ public class ProductDAO {
 
         return product;
     }
-
 }

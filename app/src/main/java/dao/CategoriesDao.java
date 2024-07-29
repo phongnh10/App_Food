@@ -6,13 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import data.base.DbHelper;
 import model.Categories;
 
 public class CategoriesDao {
     DbHelper dbHelper;
+
     public CategoriesDao(Context context) {
         dbHelper = new DbHelper(context);
     }
@@ -58,15 +61,13 @@ public class CategoriesDao {
     }
 
 
-
-
     public int getIdShop(int idUser) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         int idShop = -1;
 
         String[] columns = {"idShop"};
         String selection = "idUser = ?";
-        String[] selectionArgs = { String.valueOf(idUser) };
+        String[] selectionArgs = {String.valueOf(idUser)};
 
         Cursor cursor = null;
         try {
@@ -92,7 +93,7 @@ public class CategoriesDao {
 
         String[] columns = {"idCategories"};
         String selection = "idShop = ?";
-        String[] selectionArgs = { String.valueOf(idCategories) };
+        String[] selectionArgs = {String.valueOf(idCategories)};
 
         Cursor cursor = null;
         try {
@@ -181,38 +182,39 @@ public class CategoriesDao {
 
         return categoriesList;
     }
-    public List<Categories> getAllCategoriesName() {
-        List<Categories> categoriesList = new ArrayList<>();
+
+
+    public Categories getCategoryById(int idCategories) {
+        Categories category = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idCategories, idShop, name FROM Categories", null);
+        Cursor cursor = db.rawQuery("SELECT idCategories, idShop, name, image FROM Categories WHERE idCategories = ?", new String[]{String.valueOf(idCategories)});
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            if (cursor.moveToFirst()) {
                 int idCategoriesIndex = cursor.getColumnIndex("idCategories");
                 int idShopIndex = cursor.getColumnIndex("idShop");
                 int nameIndex = cursor.getColumnIndex("name");
+                int imageIndex = cursor.getColumnIndex("image");
 
                 // Check if column indices are valid
-                if (idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0) {
-                    int idCategories = cursor.getInt(idCategoriesIndex);
+                if (idCategoriesIndex >= 0 && idShopIndex >= 0 && nameIndex >= 0 && imageIndex >= 0) {
+                    int idCategoriesValue = cursor.getInt(idCategoriesIndex);
                     int idShopValue = cursor.getInt(idShopIndex);
                     String name = cursor.getString(nameIndex);
+                    byte[] imageBytes = cursor.getBlob(imageIndex);
 
-
-                    Categories category = new Categories();
-                    category.setIdCategories(idCategories);
+                    category = new Categories();
+                    category.setIdCategories(idCategoriesValue);
                     category.setIdShop(idShopValue);
                     category.setName(name);
-
-
-                    categoriesList.add(category);
+                    category.setImage(imageBytes);
                 }
             }
             cursor.close();
         }
         db.close();
 
-        return categoriesList;
+        return category;
     }
 
 
