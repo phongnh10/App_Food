@@ -269,7 +269,7 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
     private void loadProductList() {
         idUser = getIdUserFromSharedPreferences();
         idShop = categoriesDao.getIdShop(idUser);
-        productList = productDAO.getProducts(idShop);
+        productList = productDAO.getProductsByIdShop(idShop);
         adapter = new ProductAdapter(context, productList, productDAO);
         recyclerView.setAdapter(adapter);
     }

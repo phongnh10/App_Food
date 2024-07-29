@@ -36,6 +36,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
     private List<User> userList;
     private Context context;
     private UserDAO userDAO;
+    private int checkUser = 1;
 
     public AdminAdapter(List<User> userList, Context context, UserDAO userDAO) {
         this.userList = userList;
@@ -162,9 +163,15 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             }
 
             roleUpdate = user.getRole();
-            if(roleUpdate == 1) {
+            if (roleUpdate == 1) {
                 switch_role.setChecked(true);
             }
+
+            int idShop = userDAO.getIdShop(user.getIdUser());
+            if (idShop == -1) {
+                switch_role.setEnabled(false);
+            }
+
             switch_role.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     roleUpdate = 1;
@@ -199,18 +206,22 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                 sRole = "user";
             } else if (user.getRole() == -1) {
                 sRole = "Tài khoản đã khoá";
+                btn_suspend_account.setText("Mở Tài Khoản");
+                checkUser = 0;
             }
+
+
             edt_role.setText(sRole);
             //
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            AlertDialog alertDialog11 = builder.create();
+            alertDialog11.show();
 
             // back diaglog
             ImageView iv_Back = dialogView.findViewById(R.id.iv_back);
             iv_Back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    alertDialog.dismiss();
+                    alertDialog11.dismiss();
                 }
             });
 
@@ -234,9 +245,9 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
 
                         //
                         if (user.isEmpty() || pass.isEmpty() || name.isEmpty() || roleS.isEmpty()) {
-                            Toast.makeText(context, "Import full information", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         } else {
-                            final User user1 = new User(idUser, user, pass, name, phone, cccd, roleUpdate);
+                            final User user1 = new User(idUser, user, pass, name, phone, cccd, roleUpdate, null);
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
                             builder.setTitle("Thông Báo");
@@ -257,6 +268,8 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                                     }
                                     // exit dialog
                                     dialog.dismiss();
+                                    alertDialog11.dismiss();
+
                                 }
                             });
                             builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
@@ -273,6 +286,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                     } catch (NumberFormatException e) {
                         Toast.makeText(context, "Role must be an integer", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
 
@@ -281,42 +295,84 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                 @Override
                 public void onClick(View view) {
                     // check role
-                    int roleSuspendAccount = -1;
-                    final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount);
+                    if (checkUser == 1) {
+                        int roleSuspendAccount = -1;
+                        final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount,null);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Thông Báo");
-                    builder.setMessage("Bạn có muốn tạm ngưng tài khoản này khoản với id là " + user.getIdUser() +" Name là " + user.getName() + " không ?");
-                    builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // update
-                            boolean check = userDAO.SuspendAccount(user2);
-                            if (check) {
-                                Toast.makeText(context, "Ngưng tài khoản thành công", Toast.LENGTH_SHORT).show();
-                                // Load data
-                                userList.clear();
-                                userList.addAll(userDAO.getListUser());
-                                notifyDataSetChanged();
-                            } else {
-                                Toast.makeText(context, "Ngưng tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Thông Báo");
+                        builder.setMessage("Bạn có muốn tạm ngưng tài khoản này khoản với id là " + user.getIdUser() + " Name là " + user.getName() + " không ?");
+                        builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // update
+                                boolean check = userDAO.SuspendAccount(user2);
+                                if (check) {
+                                    Toast.makeText(context, "Ngưng tài khoản thành công", Toast.LENGTH_SHORT).show();
+                                    // Load data
+                                    userList.clear();
+                                    userList.addAll(userDAO.getListUser());
+                                    notifyDataSetChanged();
+                                } else {
+                                    Toast.makeText(context, "Ngưng tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                                // exit dialog
+                                dialog.dismiss();
                             }
-                            // exit dialog
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // exit dialog
-                            dialog.dismiss();
-                        }
-                    });
+                        });
+                        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // exit dialog
+                                dialog.dismiss();
+                            }
+                        });
 
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                        alertDialog11.dismiss();
+                    }
+                    else if (checkUser == 0) {
+
+                        int roleSuspendAccount = 2;
+                        final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount,null);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Thông Báo");
+                        builder.setMessage("Bạn có muốn Mở tài khoản này khoản với id là " + user.getIdUser() + " Name là " + user.getName() + " không ?\n Sau khi mở nhớ cập nhập lại  role bán hàng");
+                        builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // update
+                                boolean check = userDAO.SuspendAccount(user2);
+                                if (check) {
+                                    Toast.makeText(context, "Mở tài khoản thành công", Toast.LENGTH_SHORT).show();
+                                    // Load data
+                                    userList.clear();
+                                    userList.addAll(userDAO.getListUser());
+                                    notifyDataSetChanged();
+                                } else {
+                                    Toast.makeText(context, "Mở tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                                // exit dialog
+                                dialog.dismiss();
+                                alertDialog11.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // exit dialog
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
                 }
             });
+
         }
 
         // get role
