@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,27 +10,23 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/cardView"></FrameLayout>
+        android:layout_above="@id/cardView"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:elevation="8dp"
-        app:cardCornerRadius="20dp"
-        android:layout_marginHorizontal="2dp"
-        android:translationZ="5dp">
+        android:layout_alignParentBottom="true">
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/menu_nav_bottom_home"
-            app:itemTextColor="@color/selected_color"
-            app:itemIconTint="@color/selected_color"
-            app:labelVisibilityMode="selected"
-            android:background="@color/white"
-            />
+            app:itemTextColor="@color/navigation_item_color"
+            app:itemIconTint="@color/navigation_item_color"
+            app:labelVisibilityMode="labeled"
+            android:background="#FFFFFF"
+            app:itemActiveIndicatorStyle=""/>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
