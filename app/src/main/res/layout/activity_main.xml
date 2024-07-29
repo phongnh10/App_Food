@@ -26,7 +26,7 @@
             app:itemIconTint="@color/navigation_item_color"
             app:labelVisibilityMode="labeled"
             android:background="#FFFFFF"
-            app:itemActiveIndicatorStyle=""/>
+            app:itemActiveIndicatorStyle="@color/white"/>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
