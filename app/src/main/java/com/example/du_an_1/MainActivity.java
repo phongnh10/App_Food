@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     nav_shop.setTitle("Manage");
                     nav_shop.setIcon(R.drawable.ic_item_manage);
                 }
+                MenuItem nav_cart = binding.bottomNavigation.getMenu().findItem(R.id.nav_cart);
+                nav_cart.setVisible(false);
                 break;
             //sell
             case 1:

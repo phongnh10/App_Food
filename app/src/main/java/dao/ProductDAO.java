@@ -12,7 +12,6 @@ import java.util.List;
 
 import data.base.DbHelper;
 import model.Product;
-import model.User;
 
 public class ProductDAO {
     DbHelper dbHelper;
@@ -22,7 +21,7 @@ public class ProductDAO {
     }
 
 
-    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int sold) {
+    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int sold, int i) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE name = ?", new String[]{name});
 //        if (cursor.getCount() > 0) {
@@ -53,7 +52,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status FROM Product WHERE idShop = ?", new String[]{String.valueOf(idShop)});
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold FROM Product WHERE idShop = ?", new String[]{String.valueOf(idShop)});
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -94,7 +93,6 @@ public class ProductDAO {
 
         return productList;
     }
-
     public boolean deleteProduct(int idProduct, int idShop) {
         try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
             int check = sqLiteDatabase.delete("Product", "idProduct=? AND idShop=?", new String[]{String.valueOf(idProduct), String.valueOf(idShop)});
@@ -113,6 +111,20 @@ public class ProductDAO {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put("status", product.getStatus());
+
+        int check = sqLiteDatabase.update("Product", values, "idProduct=?", new String[]{String.valueOf(product.getIdProduct())});
+        if (check <= 0) return false;
+        return true;
+    }
+
+    public boolean upProduct(Product product) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("name", product.getName());
+        values.put("price", product.getPrice());
+        values.put("note", product.getNote());
         values.put("status", product.getStatus());
 
         int check = sqLiteDatabase.update("Product", values, "idProduct=?", new String[]{String.valueOf(product.getIdProduct())});
@@ -227,7 +239,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status,sold FROM Product", null);
+        Cursor cursor = db.rawQuery("SELECT idProduct, idCategories, idShop, name, image, price, note, status,sold FROM Product where status = 1", null);
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -344,7 +356,7 @@ public class ProductDAO {
                     int price = cursor.getInt(priceIndex);
                     String note = cursor.getString(noteIndex);
                     int status = cursor.getInt(statusIndex);
-                    int sold = cursor.getInt(soldIndex); // Sửa từ statusIndex thành soldIndex
+                    int sold = cursor.getInt(soldIndex);
 
                     product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
                 }

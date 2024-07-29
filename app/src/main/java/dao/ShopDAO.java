@@ -144,7 +144,7 @@ public class ShopDAO {
 
         db = dbHelper.getWritableDatabase();
 
-        String[] columns = {"idShop", "idUser", "address", "image", "status", "name"};
+        String[] columns = {"idShop", "idUser", "address", "image", "name","status"};
         String selection = "idShop = ?";
         String[] selectionArgs = {String.valueOf(idShop)};
 
@@ -198,4 +198,24 @@ public class ShopDAO {
         }
     }
 
+    public int getIdShop(int idUser) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int idShop = -1;
+
+        String[] columns = {"idShop"};
+        String selection = "idUser = ?";
+        String[] selectionArgs = { String.valueOf(idUser) };
+
+        try (Cursor cursor = db.query("Shop", columns, selection, selectionArgs, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                idShop = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
+            }
+        } catch (Exception e) {
+            Log.e("DatabaseError", "Error while fetching idShop for idUser " + idUser, e);
+        } finally {
+            db.close();
+        }
+
+        return idShop;
+    }
 }

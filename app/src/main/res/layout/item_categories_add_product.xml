@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_item_categories_add_product"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:gravity="center">
-    <TextView
-        android:id="@+id/txt_name_categories_add_product"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@android:color/white"
+    app:background="?attr/selectableItemBackground">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|left"
-        android:text="banh canh cua"
-        android:layout_marginLeft="20dp"></TextView>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp">
 
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_question_mark" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt_name_categories_add_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginStart="20dp"
+            android:text="Banh Canh Cua"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>

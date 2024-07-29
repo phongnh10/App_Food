@@ -9,12 +9,12 @@
     <!-- Header with Address Information -->
     <RelativeLayout
         android:id="@+id/top"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/background_light"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_corner_top"
+        android:padding="16dp">
 
         <LinearLayout
             android:id="@+id/midtop"
@@ -28,37 +28,37 @@
                 android:text="Địa Chỉ giao hàng:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_name_order_curent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nguyễn Văn A"
-                    android:textStyle="italic"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/txt_phone_order_curent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0987654321"
-                    android:textStyle="italic"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/txt_address_order_curent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lầu 8, toà T"
-                    android:textStyle="italic"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
             </LinearLayout>
         </LinearLayout>
 
@@ -67,10 +67,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/custom_button_background"
             android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:gravity="center">
+            android:background="@drawable/custom_button_background"
+            android:gravity="center"
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,24 +78,34 @@
                 android:text="Thay đổi"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/midtop"
-            android:background="@color/gray_light"/>
+            android:background="@color/gray_light" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/mid"
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Sản phẩm"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        ></TextView>
     <!-- RecyclerView for Order Details -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_lits_order_details"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/linear_layout_footer"
-        android:layout_below="@+id/top"
-        android:layout_marginTop="16dp"
+        android:layout_below="@+id/mid"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="16dp"/>
 
     <!-- Footer with Total Price and Order Button -->

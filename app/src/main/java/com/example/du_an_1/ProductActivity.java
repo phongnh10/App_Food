@@ -62,6 +62,7 @@ public class ProductActivity extends AppCompatActivity {
             binding.txtPriceProduct.setText(formattedPrice);
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
+            binding.txtSoldProduct.setText(String.valueOf(product.getSold()+" Lượt mua"));
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,9 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 quantity++;
+                if (price > 0) {
+                    totalPrice = quantity * price;
+                }
 
                 DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
                 String formattedTotalPrice = decimalFormat.format(totalPrice);
