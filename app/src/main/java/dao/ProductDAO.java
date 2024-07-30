@@ -21,7 +21,7 @@ public class ProductDAO {
     }
 
 
-    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int sold, int i) {
+    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int status, int sold) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE name = ?", new String[]{name});
 //        if (cursor.getCount() > 0) {
@@ -38,6 +38,7 @@ public class ProductDAO {
         contentValues.put("image", image);
         contentValues.put("price", price);
         contentValues.put("note", note);
+        contentValues.put("status", status);
         contentValues.put("sold", sold);
 
 
@@ -93,6 +94,7 @@ public class ProductDAO {
 
         return productList;
     }
+
     public boolean deleteProduct(int idProduct, int idShop) {
         try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
             int check = sqLiteDatabase.delete("Product", "idProduct=? AND idShop=?", new String[]{String.valueOf(idProduct), String.valueOf(idShop)});
@@ -225,6 +227,83 @@ public class ProductDAO {
             }
         } catch (Exception e) {
             Log.e("ProductAdapter", "Error while fetching products: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return productList;
+    }
+
+    public List<Product> getProductsListEatShop(int idShop) {
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " +
+                "FROM Product " +
+                "WHERE status = 1 AND idCategories IN (1, 2, 3, 4, 5) AND idShop = ?";
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(idShop)});
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int idProduct = cursor.getInt(cursor.getColumnIndexOrThrow("idProduct"));
+                    int idCategories = cursor.getInt(cursor.getColumnIndexOrThrow("idCategories"));
+                    int idShopValue = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                    byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
+                    int price = cursor.getInt(cursor.getColumnIndexOrThrow("price"));
+                    String note = cursor.getString(cursor.getColumnIndexOrThrow("note"));
+                    int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+                    int sold = cursor.getInt(cursor.getColumnIndexOrThrow("sold"));
+
+                    Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
+                    productList.add(product);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ProductDAO", "Error while fetching products: " + e.getMessage(), e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return productList;
+    }
+
+    public List<Product> getProductsListDrinksShop(int idShop) {
+        // Tương tự như phương thức trên, thay đổi idCategories và các điều kiện nếu cần
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " +
+                "FROM Product " +
+                "WHERE status = 1 AND idCategories IN (6, 7, 8, 9, 10) AND idShop = ?";
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(idShop)});
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    int idProduct = cursor.getInt(cursor.getColumnIndexOrThrow("idProduct"));
+                    int idCategories = cursor.getInt(cursor.getColumnIndexOrThrow("idCategories"));
+                    int idShopValue = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                    byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
+                    int price = cursor.getInt(cursor.getColumnIndexOrThrow("price"));
+                    String note = cursor.getString(cursor.getColumnIndexOrThrow("note"));
+                    int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+                    int sold = cursor.getInt(cursor.getColumnIndexOrThrow("sold"));
+
+                    Product product = new Product(idProduct, idCategories, idShopValue, name, imageBytes, price, note, status, sold);
+                    productList.add(product);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ProductDAO", "Error while fetching products: " + e.getMessage(), e);
         } finally {
             if (cursor != null) {
                 cursor.close();

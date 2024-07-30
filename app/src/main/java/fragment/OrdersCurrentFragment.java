@@ -179,7 +179,7 @@ public class OrdersCurrentFragment extends Fragment {
 
                         boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
                         if (!isUpdated) {
-                            Toast.makeText(getContext(), "Cập nhật OrderDetails thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                     loadlist();
@@ -261,8 +261,8 @@ public class OrdersCurrentFragment extends Fragment {
         final UserDAO userDAO = new UserDAO(getContext());
         final User user = userDAO.getUserByID(idUser);
 
-        binding.txtNameOrderCurent.setText(user.getAddress());
-        binding.txtPhoneOrderCurent.setText("0" + String.valueOf(user.getPhone()));
         binding.txtNameOrderCurent.setText(user.getName());
+        binding.txtPhoneOrderCurent.setText("0" + String.valueOf(user.getPhone()));
+        binding.txtAddressOrderCurent.setText(user.getAddress());
     }
 }

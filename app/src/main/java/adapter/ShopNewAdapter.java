@@ -68,7 +68,7 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
                 int roleUpdate = 1;
                 User user = userDAO.getUserByID(idUser);
                 if (user != null) {
-                    final User updatedUser = new User(roleUpdate);
+                    final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleUpdate,null);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Thông Báo");
@@ -76,7 +76,7 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
                     builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            boolean check = userDAO.SuspendAccount(updatedUser);
+                            boolean check = userDAO.SuspendAccount(user2);
                             if (check) {
                                 Toast.makeText(context, "Cập nhật người dùng thành công", Toast.LENGTH_SHORT).show();
                                 loadShops();
