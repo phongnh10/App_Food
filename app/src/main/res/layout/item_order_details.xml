@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginTop="5dp"
-    android:background="#E0DFDF">
+    android:background="@color/white"
+    android:layout_marginTop="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,37 +33,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp">
 
                 <TextView
                     android:id="@+id/txt_name_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:text="Bánh Tráng Trộn"
-                    android:textSize="15dp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="18dp"/>
 
                 <TextView
                     android:id="@+id/txt_shop_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="Nino Shop"
-                    android:textColor="#FF5722"
-                    android:textSize="10dp"></TextView>
+                    android:textColor="#333333"
+                    android:textSize="13dp"></TextView>
 
                 <TextView
                     android:id="@+id/txt_price_product_details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="đ 15.000"
+                    android:layout_height="match_parent"
+                    android:text="15.000 vnđ"
                     android:textColor="#FF5722"
-                    android:textSize="20dp"
-                    android:textStyle="bold"></TextView>
+                    android:gravity="center_vertical"
+                    android:textSize="22dp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -79,22 +77,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_back"></ImageView>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="42dp"
+                android:background="@drawable/bogocmauxam"
+                android:layout_marginRight="-40dp">
 
                 <ImageView
                     android:id="@+id/img_minus_quantity_product_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_price"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:padding="5dp"
                     android:src="@drawable/baseline_remove_24"></ImageView>
 
@@ -105,15 +101,14 @@
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"
                     android:text="1"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textStyle="bold"></TextView>
 
                 <ImageView
                     android:id="@+id/img_plus_quantity_product_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:padding="5dp"
-                    android:background="@drawable/custom_price"
                     android:src="@drawable/ic_add_24"></ImageView>
             </LinearLayout>
 
