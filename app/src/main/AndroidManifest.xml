@@ -16,7 +16,7 @@
             android:name=".SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".StarActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ChangepassActivity"
@@ -25,19 +25,9 @@
             android:name=".InforActivity"
             android:exported="false" />
         <activity
-            android:name=".InformationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_information"
-            android:theme="@style/Theme.Du_An_1" />
-        <activity
-            android:name=".SignInActivity"
-            android:exported="false" />
-        <activity
             android:name=".StatisticsActivity"
             android:exported="false" />
-        <activity
-            android:name=".OrderActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ProductActivity"
             android:exported="false" />
@@ -45,7 +35,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".StarActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
