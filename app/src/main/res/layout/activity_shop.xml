@@ -14,7 +14,7 @@
         <LinearLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="120dp"
             android:layout_alignParentTop="true"
             android:background="#FFA459"
             android:elevation="2dp"
@@ -24,7 +24,7 @@
             <RelativeLayout
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_margin="50dp"
+                android:layout_margin="30dp"
                 android:layout_weight="1"
                 android:gravity="left">
 
@@ -51,7 +51,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="50dp"
+                android:layout_margin="30dp"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:src="@drawable/ic_back_figma">
@@ -87,57 +87,62 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="100dp">
-
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:cardBackgroundColor="@android:color/transparent">
-
+                        android:layout_height="wrap_content">
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:cardBackgroundColor="@android:color/transparent">
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Món Ăn"
-                                android:textSize="20dp"
-                                android:textStyle="bold"></TextView>
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_shop_eat_buy"
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="Món Ăn"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold"></TextView>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcv_shop_eat_buy"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Đồ uống"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold"></TextView>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rcv_shop_drink_buy"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                    </ScrollView>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Đồ uống"
-                                android:textSize="20dp"
-                                android:textStyle="bold"></TextView>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcv_shop_drink_buy"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"></androidx.recyclerview.widget.RecyclerView>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
                 </FrameLayout>
             </RelativeLayout>
 
@@ -148,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/top"
-            android:layout_marginTop="-70dp"
+            android:layout_marginTop="-80dp"
             android:elevation="100dp"
             android:gravity="center"
             android:orientation="vertical"> <!-- Sử dụng elevation -->

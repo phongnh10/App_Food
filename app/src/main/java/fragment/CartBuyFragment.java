@@ -43,9 +43,9 @@ public class CartBuyFragment extends Fragment {
             binding.txtCurrentOrders.setTypeface(null, Typeface.NORMAL); // Đặt kiểu chữ Bold
             binding.txtHistoryOrders.setTypeface(null, Typeface.BOLD);
 
-
         });
-            return view;
+        
+        return view;
 
     }
 

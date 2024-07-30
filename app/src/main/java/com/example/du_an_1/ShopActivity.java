@@ -20,7 +20,10 @@ import java.util.List;
 import adapter.SearchAdapter;
 import dao.ProductDAO;
 import dao.ShopDAO;
+import dao.UserDAO;
 import model.Product;
+import model.Shop;
+import model.User;
 
 public class ShopActivity extends AppCompatActivity {
     private ActivityShopBinding binding;
@@ -47,11 +50,11 @@ public class ShopActivity extends AppCompatActivity {
 
 
         rcvEat = binding.rcvShopEatBuy;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         rcvEat.setLayoutManager(layoutManager);
 
         rcvDrink = binding.rcvShopDrinkBuy;
-        StaggeredGridLayoutManager layoutManager1 = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager1 = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rcvDrink.setLayoutManager(layoutManager1);
 
 
@@ -59,6 +62,23 @@ public class ShopActivity extends AppCompatActivity {
         loadProductList1();
 
         binding.imgBackProduct.setOnClickListener(view -> finish());
+
+        Shop shop = new Shop();
+        shopDAO = new ShopDAO(this);
+        shop = shopDAO.getShopByIdShop(idShop);
+
+        idUser = shop.getIdUser();
+        UserDAO userDAO = new UserDAO(this);
+        userDAO = new UserDAO(this);
+        User user = new User();
+        user = userDAO.getUserByID(idUser);
+
+        binding.txtAddressShopBuy.setText("Địa Chỉ: "+shop.getAddress());
+        binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: "+user.getPhone()));
+        binding.txtNameShopBuy.setText(shop.getName());
+
+
+
     }
 
     public void loadProductList() {
@@ -75,9 +95,4 @@ public class ShopActivity extends AppCompatActivity {
         rcvDrink.setAdapter(searchAdapter2);
     }
 
-
-    public int getIdUserFromSharedPreferences() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
-        return sharedPreferences.getInt("idUser", -1);
-    }
 }

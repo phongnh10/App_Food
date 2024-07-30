@@ -23,7 +23,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import dao.ProductDAO;
+import dao.ShopDAO;
 import model.Product;
+import model.Shop;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     Context context;
@@ -56,12 +58,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
 
+        int idShop= product.getIdShop();
+        ShopDAO shopDAO = new ShopDAO(context);
+        Shop shop = shopDAO.getShopByIdShop(idShop);
+
+        holder.txt_name_shop.setText(shop.getName());
+
+        holder.txt_sold_shop_home.setText(String.valueOf(product.getSold())+" lượt bán");
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductActivity.class);
                 intent.putExtra("productId", product.getIdProduct());
-                // Thêm các dữ liệu khác nếu cần
                 context.startActivity(intent);
             }
         });
@@ -75,7 +84,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_name,txt_price;
+        TextView txt_name,txt_price,txt_name_shop,txt_sold_shop_home;
         ImageView img;
         LinearLayout item;
 
@@ -84,7 +93,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             txt_name = itemView.findViewById(R.id.txt_name_product_search);
             txt_price = itemView.findViewById(R.id.txt_price_product_search);
             img = itemView.findViewById(R.id.img_product_search);
+            txt_name_shop = itemView.findViewById(R.id.txt_name_shop_search);
             item = itemView.findViewById(R.id.ll_item_product_search);
+            txt_sold_shop_home = itemView.findViewById(R.id.txt_sold_shop_home);
         }
     }
     //img
