@@ -233,13 +233,13 @@ public class OrdersCurrentFragment extends Fragment {
             priceTotal += orderDetails.getTotalPrice();
         }
 
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
         binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
 
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText(String.valueOf(quantityProduct) + " Sản Phẩm");
+            binding.txtQuantityProduct.setText(String.valueOf(quantityProduct) + " món ăn");
         }
     }
 
@@ -253,7 +253,7 @@ public class OrdersCurrentFragment extends Fragment {
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
         if(orderDetailsList.isEmpty() || (orderDetailsList == null)){
-            binding.txtQuantityProduct.setText( "0 Sản Phẩm");
+            binding.txtQuantityProduct.setText( "0 món ăn");
         }
     }
 

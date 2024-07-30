@@ -4,34 +4,36 @@
     android:layout_height="match_parent"
     tools:context="fragment.CartBuyFragment"
     android:orientation="vertical"
-    android:background="#D98A72">
+    android:background="@color/background_dark">
     <LinearLayout
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
+
             <TextView
                 android:id="@+id/txt_current_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="25dp"
-                android:text="Đơn hàng hiện tại"
-                android:gravity="bottom"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:layout_alignParentLeft="true"
-                android:layout_weight="1"></TextView>
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Đơn hàng hiện tại"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
             <TextView
                 android:id="@+id/txt_history_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="bottom"
-                android:textSize="25dp"
-                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
                 android:text="Lịch sử"
                 android:layout_weight="1"></TextView>
         </RelativeLayout>
@@ -41,7 +43,7 @@
     <FrameLayout
         android:id="@+id/fragment_oder"
         android:layout_width="match_parent"
-        android:background="@drawable/top_rounded_card"
+        android:background="@drawable/rounded_corner_top"
         android:layout_height="match_parent"></FrameLayout>
 
 </LinearLayout>
