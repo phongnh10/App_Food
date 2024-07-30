@@ -23,7 +23,6 @@ dành cho giảng viên và sinh viên FPL"
         android:textColor="#0A0B0A"
         android:textSize="18dp" />
     <Button
-        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đăng ký"
