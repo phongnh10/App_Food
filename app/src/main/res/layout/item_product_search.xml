@@ -76,40 +76,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:gravity="center">
 
 
         <TextView
-            android:id="@+id/txt_price_product_search"
+            android:id="@+id/txt_name_product_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#FF5722"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:text="đ 10.000"></TextView>
+            android:text="Bánh tráng trộn"
+            android:textColor="@color/black"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center">
 
 
             <TextView
+                android:id="@+id/txt_price_product_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#FF5722"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="đ 10.000"></TextView>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:text="4.5"
-                android:textSize="15dp"
-                android:textColor="#FFC107"
-                ></TextView>
+                android:layout_gravity="bottom|right"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_gravity="center|right"
-                android:src="@drawable/ic_star_rate_24"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:text="4.5"
+                    android:textSize="15dp"
+                    android:textColor="#FFC107"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center|right"
+                    android:src="@drawable/ic_star_rate_24"></ImageView>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </LinearLayout>

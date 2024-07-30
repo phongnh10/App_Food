@@ -40,6 +40,7 @@ public class ProductActivity extends AppCompatActivity {
     private int price;
     private int totalPrice;
     private int idUser;
+    private int idShopList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class ProductActivity extends AppCompatActivity {
             binding.txtPriceProduct.setText(formattedPrice);
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
-            binding.txtSoldProduct.setText(String.valueOf(product.getSold()+" Lượt mua"));
+            binding.txtSoldProduct.setText(String.valueOf(product.getSold() + " Lượt mua"));
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
@@ -102,29 +103,28 @@ public class ProductActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         binding.btnAddProductCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (orderDetailsList == null) {
                     orderDetailsList = new ArrayList<>();
+
                 }
                 if (adapter == null) {
                     adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
                 }
+
                 OrderDetails orderDetails = new OrderDetails();
                 orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
 
                 idUser = getIdUserFromSharedPreferences();
-//                public long addOrderDetails(int idShop,int idOder, int idProduct, int quantity, double price, double totalPrice, byte[] image, String name,int  status) {
-
                 int idOrder = idUser;
                 int statusOderDetail = 0;
+                idShopList = -1;
 
                 orderDetails.setIdShop(product.getIdShop());
                 orderDetails.setIdOrder(idOrder);
                 orderDetails.setIdProduct(product.getIdProduct());
-                orderDetails.setIdOrder(idUser);
                 orderDetails.setQuantity(quantity);
                 orderDetails.setPrice(product.getPrice());
                 orderDetails.setTotalPrice(totalPrice);
@@ -132,12 +132,24 @@ public class ProductActivity extends AppCompatActivity {
                 orderDetails.setName(product.getName());
                 orderDetails.setStatus(statusOderDetail);
 
+                orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(idUser,0);
+                if (orderDetailsList.size() > 0 && orderDetailsList != null && !orderDetailsList.isEmpty()) {
+                    OrderDetails firstOrderDetail = orderDetailsList.get(0);
+                    if (firstOrderDetail.getIdShop() != product.getIdShop()) {
+                        Toast.makeText(ProductActivity.this, "Bạn phải thêm sản phẩm cùng 1 shop ", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
 
                 long check = orderDetailsDAO.addOrderDetails(product.getIdShop(), idOrder, product.getIdProduct(), quantity, price, totalPrice, product.getImage(), product.getName(), statusOderDetail);
                 if (check == 1) {
                     orderDetailsList.add(orderDetails);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng ", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(ProductActivity.this, ShopActivity.class);
+                    intent1.putExtra("idShop", product.getIdShop());
+                    startActivity(intent1);
                 } else if (check == 0) {
                     Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
                 } else if (check == -1) {
@@ -146,7 +158,6 @@ public class ProductActivity extends AppCompatActivity {
 
                 finish();
             }
-
         });
 
     }
@@ -170,4 +181,6 @@ public class ProductActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         return outputStream.toByteArray();
     }
+
+
 }

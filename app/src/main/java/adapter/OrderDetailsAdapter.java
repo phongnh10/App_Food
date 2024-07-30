@@ -108,7 +108,6 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         holder.img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean isDeleted = orderDetailsDAO.deleteOrderDetails(orderDetails.getIdOrderDetails());
                 if (isDeleted) {
                     orderDetailsList.remove(currentPosition);
