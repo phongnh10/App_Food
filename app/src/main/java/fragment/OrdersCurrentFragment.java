@@ -171,8 +171,8 @@ public class OrdersCurrentFragment extends Fragment {
 
                 long check = orderDAO.addOrder(order.getIdShop(), idUser, quantityProduct, priceTotal, formattedDate, "Đặt Hàng", 0);
                 if (check == 1) {
+                    loadlist();
                     orderList.add(order);
-
                     for (OrderDetails orderDetails : orderDetailsList) {
                         orderDetails.setIdOrder(order.getIdOrder());
                         orderDetails.setStatus(1);
@@ -182,7 +182,6 @@ public class OrdersCurrentFragment extends Fragment {
                             Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    loadlist();
                     Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
