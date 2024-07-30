@@ -26,39 +26,25 @@ public class CartBuyFragment extends Fragment {
 
         replaceFragment(new OrdersCurrentFragment());
 
-        RelativeLayout.LayoutParams paramsLeft = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsLeft.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        RelativeLayout.LayoutParams paramsRight = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        binding.txtCurrentOrders.setTypeface(null, Typeface.BOLD); // Đặt kiểu chữ Bold
 
         // Handle TextView clicks to change fragments
 
         binding.txtCurrentOrders.setOnClickListener(v -> {
             replaceFragment(new OrdersCurrentFragment());
 
-            binding.txtCurrentOrders.setTypeface(null, Typeface.BOLD);
+            binding.txtCurrentOrders.setTypeface(null, Typeface.BOLD); // Đặt kiểu chữ Bold
             binding.txtHistoryOrders.setTypeface(null, Typeface.NORMAL);
-            binding.txtCurrentOrders.setLayoutParams(paramsLeft);
-            binding.txtHistoryOrders.setLayoutParams(paramsRight);
 
         });
 
         binding.txtHistoryOrders.setOnClickListener(v -> {
             replaceFragment(new OrderHistoryFragment());
-
-            binding.txtCurrentOrders.setTypeface(null, Typeface.NORMAL);
+            binding.txtCurrentOrders.setTypeface(null, Typeface.NORMAL); // Đặt kiểu chữ Bold
             binding.txtHistoryOrders.setTypeface(null, Typeface.BOLD);
-            binding.txtCurrentOrders.setLayoutParams(paramsRight);
-            binding.txtHistoryOrders.setLayoutParams(paramsLeft);
 
         });
-
         
-
-
-
-
-
         return view;
 
     }

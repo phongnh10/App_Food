@@ -15,10 +15,10 @@
 
 
     <TextView
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng nhập"
+        android:text="Thông tin cá nhân"
         android:textSize="26dp"
         android:gravity="center"
         android:textColor="#0C0C0C"
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tài khoản"
+            android:text="Họ và tên "
             android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:textColor="#0C0C0C" />
@@ -48,13 +48,11 @@
         android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập tài khoản"
+        android:hint="Nhập họ và tên cảu bạn "
         android:padding="16dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:background="@drawable/custom_boder_right_lefrt"
-        />
-
+        android:background="@drawable/custom_boder_right_lefrt" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,26 +67,57 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mật khẩu"
+            android:text="CCCD"
             android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:textColor="#0C0C0C" />
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edtPassword"
+        android:id="@+id/edtaId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập mật khẩu"
+        android:hint="Nhập CCCD"
         android:padding="16dp"
-        android:background="@drawable/custom_boder_right_lefrt"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
+        android:layout_marginRight="40dp"
+        android:background="@drawable/custom_boder_right_lefrt" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#0C0C0C" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập số điện thoại của "
+        android:padding="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/custom_boder_right_lefrt" />
+
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng nhập"
+        android:text="Cập nhật thông tin"
         android:textColor="#9D9999"
         android:textSize="17dp"
         android:padding="16dp"
@@ -96,41 +125,8 @@
         android:backgroundTint="#CFD0CF"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"/>
-    <TextView
-        android:id="@+id/txtChangePass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Quên mật khẩu ?"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="18dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#050505" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bạn chưa có tài khoản ?"
-            android:textStyle="italic"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#050505" />
-        <TextView
-            android:id="@+id/txtSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đăng ký?"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#050505" />
-    </LinearLayout>
+
+
 
 
 </LinearLayout>

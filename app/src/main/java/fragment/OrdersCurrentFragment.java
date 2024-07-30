@@ -179,7 +179,7 @@ public class OrdersCurrentFragment extends Fragment {
 
                         boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
                         if (!isUpdated) {
-                            Toast.makeText(getContext(), "Cập nhật OrderDetails thất bại", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                     loadlist();
@@ -233,13 +233,13 @@ public class OrdersCurrentFragment extends Fragment {
             priceTotal += orderDetails.getTotalPrice();
         }
 
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
         binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
 
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText(String.valueOf(quantityProduct) + " Sản Phẩm");
+            binding.txtQuantityProduct.setText(String.valueOf(quantityProduct) + " món ăn");
         }
     }
 
@@ -253,7 +253,7 @@ public class OrdersCurrentFragment extends Fragment {
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
         if(orderDetailsList.isEmpty() || (orderDetailsList == null)){
-            binding.txtQuantityProduct.setText( "0 Sản Phẩm");
+            binding.txtQuantityProduct.setText( "0 món ăn");
         }
     }
 
@@ -261,8 +261,8 @@ public class OrdersCurrentFragment extends Fragment {
         final UserDAO userDAO = new UserDAO(getContext());
         final User user = userDAO.getUserByID(idUser);
 
-        binding.txtNameOrderCurent.setText(user.getAddress());
-        binding.txtPhoneOrderCurent.setText("0" + String.valueOf(user.getPhone()));
         binding.txtNameOrderCurent.setText(user.getName());
+        binding.txtPhoneOrderCurent.setText("0" + String.valueOf(user.getPhone()));
+        binding.txtAddressOrderCurent.setText(user.getAddress());
     }
 }

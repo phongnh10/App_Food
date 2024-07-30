@@ -9,6 +9,9 @@ public class Shop {
     private byte[] image;
     private int status;
 
+    public Shop() {
+    }
+
     public Shop(int idShop, int idUser, String address, byte[] image, int status) {
     }
 

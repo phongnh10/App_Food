@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 //    public int getRoleFromSharedPreferences() {
-//        SharedPreferences sharedPreferences = getSharedPreferences("Role_User", Context.MODE_PRIVATE);
+//        SharedPreferences sharedPreferences = getSharedPreferences("User_Login", Context.MODE_PRIVATE);
 //        return sharedPreferences.getInt("role", -1);
 //    }
 

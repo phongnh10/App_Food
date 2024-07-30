@@ -208,8 +208,8 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                             if (check == 1) {
                                 productList.add(product);
                                 adapter.notifyDataSetChanged();
-                                loadProductList();
                                 Toast.makeText(context, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                                loadProductList();
                             } else if (check == 0) {
                                 Toast.makeText(context, "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
                             }
@@ -219,9 +219,8 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                         }
                     }
                 });
-
-
                 dialog.show();
+                loadProductList();
             }
         });
 

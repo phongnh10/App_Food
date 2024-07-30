@@ -1,17 +1,20 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.du_an_1.ProductActivity;
 import com.example.du_an_1.R;
 
 import java.text.DecimalFormat;
@@ -20,6 +23,7 @@ import java.util.List;
 import dao.ProductDAO;
 import dao.ShopDAO;
 import model.Product;
+import model.Shop;
 
 public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.ViewHolder> {
     Context context;
@@ -49,9 +53,23 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.txt_name.setText(product.getName());
         DecimalFormat decimalFormat = new DecimalFormat("#,### vnđ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
-        int idShop = product.getIdShop();
-        String nameShop = shopDAO.getShopByIdShop(idShop).getName();
-        holder.txt_name_shop.setText(nameShop);
+
+        int idShop= product.getIdShop();
+        ShopDAO shopDAO = new ShopDAO(context);
+        Shop shop = shopDAO.getShopByIdShop(idShop);
+
+        holder.txt_name_shop.setText(shop.getName());
+
+        holder.txt_luotban_shop_home.setText(String.valueOf(product.getSold())+" lượt bán");
+        holder.ll_item_product_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductActivity.class);
+                intent.putExtra("productId", product.getIdProduct());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -60,14 +78,17 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_name, txt_price, txt_name_shop;
+        TextView txt_name, txt_price, txt_luotban_shop_home,txt_name_shop;
         ImageView img_product_home;
+        LinearLayout ll_item_product_search;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_name = itemView.findViewById(R.id.txt_name_product_home);
             txt_price = itemView.findViewById(R.id.txt_price_product_home);
             txt_name_shop = itemView.findViewById(R.id.txt_name_shop_home);
             img_product_home = itemView.findViewById(R.id.img_product_home);
+            txt_luotban_shop_home = itemView.findViewById(R.id.txt_luotban_shop_home);
+            ll_item_product_search = itemView.findViewById(R.id.ll_item_product_search);
         }
     }
 

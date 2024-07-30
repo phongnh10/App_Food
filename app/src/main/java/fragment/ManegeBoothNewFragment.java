@@ -42,7 +42,7 @@ public class ManegeBoothNewFragment extends Fragment {
         load();
     }
 
-    private void load() {
+    public void load() {
         ShopDAO shopDao = new ShopDAO(getContext());
         List<Shop> shopList = shopDao.getAllShopsNew();
 
