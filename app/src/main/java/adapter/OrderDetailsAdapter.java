@@ -44,7 +44,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
         holder.img_product.setImageBitmap(convertByteArrayToBitmap(orderDetails.getImage()));
         holder.txt_name_product.setText(orderDetails.getName());
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
         holder.txt_price_product.setText(decimalFormat.format(orderDetails.getTotalPrice()));
         holder.txt_quantity_product.setText(String.valueOf(orderDetails.getQuantity()));
 

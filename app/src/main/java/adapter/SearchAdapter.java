@@ -53,7 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         holder.img.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
         holder.txt_name.setText(product.getName());
-        DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
 
         holder.item.setOnClickListener(new View.OnClickListener() {
