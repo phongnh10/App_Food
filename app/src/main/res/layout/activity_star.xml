@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".StarActivity"
+    android:id="@+id/activityStar"
+    android:background="#F8D9AB">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="269dp"
+        android:layout_marginTop="110dp"
+        android:src="@mipmap/logof" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="App đặt món ăn
+dành cho giảng viên và sinh viên FPL"
+        android:textColor="#0A0B0A"
+        android:textSize="18dp" />
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký"
+        android:textColor="#F1F0EF"
+        android:textSize="17dp"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#F5643A"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng nhập"
+        android:textColor="#212020"
+        android:textSize="17dp"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FBFBFB"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ của FFood và xác nhận rằng bạn đã đọc Chính sách quyền riêng tư của chúng tôi."
+            android:textStyle="italic"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#050505" />
+        <TextView
+            android:id="@+id/txtSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký?"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#050505" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
