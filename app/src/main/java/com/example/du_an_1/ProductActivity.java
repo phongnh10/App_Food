@@ -56,14 +56,14 @@ public class ProductActivity extends AppCompatActivity {
             productDAO = new ProductDAO(this);
             product = productDAO.getProductById(productId);
             binding.txtNameProduct.setText(product.getName());
-            DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+            DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
             String formattedPrice = decimalFormat.format(product.getPrice());
             price = product.getPrice();
             totalPrice = quantity * price;
             binding.txtPriceProduct.setText(formattedPrice);
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
-            binding.txtSoldProduct.setText(String.valueOf(product.getSold() + " Lượt mua"));
+            binding.txtSoldProduct.setText(String.valueOf(product.getSold() + " lượt mua"));
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +75,7 @@ public class ProductActivity extends AppCompatActivity {
                         totalPrice = quantity * price;
                     }
                 }
-                DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+                DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
                 String formattedTotalPrice = decimalFormat.format(totalPrice);
                 binding.txtQuantityProduct.setText(String.valueOf(quantity));
                 binding.txtPriceProduct.setText(formattedTotalPrice);
@@ -89,7 +89,7 @@ public class ProductActivity extends AppCompatActivity {
                     totalPrice = quantity * price;
                 }
 
-                DecimalFormat decimalFormat = new DecimalFormat("đ #,###,###");
+                DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
                 String formattedTotalPrice = decimalFormat.format(totalPrice);
                 binding.txtQuantityProduct.setText(String.valueOf(quantity));
                 binding.txtPriceProduct.setText(formattedTotalPrice);

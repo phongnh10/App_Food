@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -27,8 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ImageView btnBack = findViewById(R.id.btnBack);
         Button btnLogin = findViewById(R.id.btnLogin);
+        TextView txtChangePass = findViewById(R.id.txtChangePass);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +39,22 @@ public class LoginActivity extends AppCompatActivity {
                 checkUserPass();
             }
         });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, StarActivity.class);
+                startActivity(intent);
+            }
+        });
+        txtChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ChangepassActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 
     public void checkUserPass() {
         EditText edtUser = findViewById(R.id.edtUsername);

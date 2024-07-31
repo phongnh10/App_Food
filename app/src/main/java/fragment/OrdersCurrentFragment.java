@@ -36,6 +36,7 @@ import dao.UserDAO;
 import model.Order;
 import model.OrderDetails;
 import model.User;
+import bottomRecycleview.BottomSpaceItemDecoration;
 
 public class OrdersCurrentFragment extends Fragment {
     private FragmentOrdersCurrentBinding binding;
@@ -190,6 +191,7 @@ public class OrdersCurrentFragment extends Fragment {
         });
 
 
+
         // Update total price
         updateTotalPrice();
 
@@ -232,7 +234,7 @@ public class OrdersCurrentFragment extends Fragment {
             priceTotal += orderDetails.getTotalPrice();
         }
 
-        DecimalFormat decimalFormat = new DecimalFormat("#,###,### vnđ");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
         binding.txtTotalPrice.setText(decimalFormat.format(priceTotal));
 
         quantityProduct = 0;

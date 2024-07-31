@@ -51,7 +51,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
         holder.img_product_home.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
         holder.txt_name.setText(product.getName());
-        DecimalFormat decimalFormat = new DecimalFormat("#,### vnđ");
+        DecimalFormat decimalFormat = new DecimalFormat("#,### đ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
 
         int idShop= product.getIdShop();
