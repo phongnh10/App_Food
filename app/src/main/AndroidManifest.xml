@@ -22,6 +22,9 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangepassActivity"
             android:exported="false" />
         <activity

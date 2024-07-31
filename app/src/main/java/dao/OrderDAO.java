@@ -124,19 +124,19 @@ public class OrderDAO {
         return orderList;
     }
 
-    public List<Order> getOrderByIdShop(int idShop) {
-        List<Order> orderList = new ArrayList<>();
+    public Order getOrderByIdOrder(int idOrder) {
+        Order order = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery(
                 "SELECT idOrder, idShop, idUser, quantity, totalPrice, date, note, name, phone, address, status " +
                         "FROM OrderTable " +
-                        "WHERE idShop = ? " +
-                        "ORDER BY CASE WHEN status >= 0 THEN 1 ELSE -1 END DESC, date DESC",
-                new String[]{String.valueOf(idShop)})) {
-            while (cursor.moveToNext()) {
+                        "WHERE idOrder = ?",
+                new String[]{String.valueOf(idOrder)})) {
+
+            if (cursor.moveToFirst()) {
                 try {
-                    Order order = new Order(
+                    order = new Order(
                             cursor.getInt(cursor.getColumnIndexOrThrow("idOrder")),
                             cursor.getInt(cursor.getColumnIndexOrThrow("idShop")),
                             cursor.getInt(cursor.getColumnIndexOrThrow("idUser")),
@@ -149,18 +149,17 @@ public class OrderDAO {
                             cursor.getString(cursor.getColumnIndexOrThrow("address")),
                             cursor.getInt(cursor.getColumnIndexOrThrow("status"))
                     );
-                    orderList.add(order);
                 } catch (Exception e) {
                     Log.e("OrderDAO", "Error parsing order from cursor: " + e.getMessage());
                 }
             }
         } catch (Exception e) {
-            Log.e("OrderDAO", "Error while fetching orders: " + e.getMessage());
+            Log.e("OrderDAO", "Error while fetching order: " + e.getMessage());
         } finally {
             db.close();
         }
 
-        return orderList;
+        return order;
     }
 
     public List<Order> getOrderByIdShopStatus(int idShop, int status) {

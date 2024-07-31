@@ -10,13 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.du_an_1.R;
+
 import java.text.DecimalFormat;
 import java.util.List;
+
 import dao.OrderDetailsDAO;
+import dao.ShopDAO;
 import model.OrderDetails;
+import model.Shop;
 
 public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder> {
     private Context context;
@@ -47,6 +53,11 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
         holder.txt_price_product.setText(decimalFormat.format(orderDetails.getTotalPrice()));
         holder.txt_quantity_product.setText(String.valueOf(orderDetails.getQuantity()));
+        Shop shop = new Shop();
+        ShopDAO shopDAO = new ShopDAO(context);
+        shop = shopDAO.getShopByIdShop(orderDetails.getIdShop());
+        holder.txt_shop_product_details.setText(shop.getName());
+
 
         idUser = getIdUserFromSharedPreferences();
 
@@ -129,7 +140,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_product, img_back, img_minus_quantity_product, img_plus_quantity_product;
-        TextView txt_name_product, txt_price_product, txt_quantity_product;
+        TextView txt_name_product, txt_price_product, txt_quantity_product,txt_shop_product_details;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -140,6 +151,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
             txt_quantity_product = itemView.findViewById(R.id.txt_quantity_product_details);
             img_minus_quantity_product = itemView.findViewById(R.id.img_minus_quantity_product_details);
             img_plus_quantity_product = itemView.findViewById(R.id.img_plus_quantity_product_details);
+            txt_shop_product_details = itemView.findViewById(R.id.txt_shop_product_details);
         }
     }
 

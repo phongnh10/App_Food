@@ -83,6 +83,38 @@ public class OrderDetailsDAO {
         return orderDetailsList;
     }
 
+    public List<OrderDetails> getOrderDetailsIdOrder(int idOrder) {
+        List<OrderDetails> orderDetailsList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Correct SQL query with parameterized arguments
+        String query = "SELECT * FROM OrderDetails WHERE  idOrder = ? AND status = 1";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idOrder)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                OrderDetails orderDetails = new OrderDetails();
+
+                // Use getColumnIndexOrThrow to ensure the column exists
+                orderDetails.setIdOrderDetails(cursor.getInt(cursor.getColumnIndexOrThrow("idOrderDetails")));
+                orderDetails.setIdShop(cursor.getInt(cursor.getColumnIndexOrThrow("idShop")));
+                orderDetails.setIdOrder(cursor.getInt(cursor.getColumnIndexOrThrow("idOrder")));
+                orderDetails.setIdProduct(cursor.getInt(cursor.getColumnIndexOrThrow("idProduct")));
+                orderDetails.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow("quantity")));
+                orderDetails.setPrice(cursor.getDouble(cursor.getColumnIndexOrThrow("price")));
+                orderDetails.setTotalPrice(cursor.getDouble(cursor.getColumnIndexOrThrow("totalPrice")));
+                orderDetails.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow("image")));
+                orderDetails.setName(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+                orderDetails.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+
+                orderDetailsList.add(orderDetails);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orderDetailsList;
+    }
+
 
     public boolean deleteOrderDetails(int idOrderDetails) {
         try (SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase()) {
