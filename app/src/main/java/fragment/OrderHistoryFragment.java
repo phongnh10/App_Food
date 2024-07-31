@@ -105,7 +105,7 @@ public class OrderHistoryFragment extends Fragment {
 
     public void loaddata() {
         orderDAO = new OrderDAO(getContext());
-        orderList = orderDAO.getOrderByIdStatus(idUser, status);
+        orderList = orderDAO.getOrderByIdUserStatus(idUser, status);
         orderAdapter = new OrderAdapter(getContext(), orderList, orderDAO);
         recyclerView.setAdapter(orderAdapter);
     }

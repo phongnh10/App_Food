@@ -48,8 +48,46 @@ public class OrderDAO {
 
         return id;
     }
+    public List<Order> getOrderByIdUser(int idUser) {
+        List<Order> orderList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-    public List<Order> getOrderByIdStatus(int idUser, int status) {
+        try (Cursor cursor = db.rawQuery(
+                "SELECT idOrder, idShop, idUser, quantity, totalPrice, date, note, name, phone, address, status " +
+                        "FROM OrderTable " +
+                        "WHERE idShop = ?" +
+                        "ORDER BY date DESC",
+                new String[]{String.valueOf(idUser)})) {
+            while (cursor.moveToNext()) {
+                try {
+                    Order order = new Order(
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idOrder")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idShop")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idUser")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("quantity")),
+                            cursor.getDouble(cursor.getColumnIndexOrThrow("totalPrice")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("date")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("note")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                            cursor.getLong(cursor.getColumnIndexOrThrow("phone")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("address")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("status"))
+                    );
+                    orderList.add(order);
+                } catch (Exception e) {
+                    Log.e("OrderDAO", "Error parsing order from cursor: " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            Log.e("OrderDAO", "Error while fetching orders: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        return orderList;
+    }
+
+    public List<Order> getOrderByIdUserStatus(int idUser, int status) {
         List<Order> orderList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -86,15 +124,15 @@ public class OrderDAO {
         return orderList;
     }
 
-    public List<Order> getOrderByIdShopStatus(int idShop) {
+    public List<Order> getOrderByIdShop(int idShop) {
         List<Order> orderList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         try (Cursor cursor = db.rawQuery(
                 "SELECT idOrder, idShop, idUser, quantity, totalPrice, date, note, name, phone, address, status " +
                         "FROM OrderTable " +
-                        "WHERE idShop = ?" +
-                        "ORDER BY date DESC",
+                        "WHERE idShop = ? " +
+                        "ORDER BY CASE WHEN status >= 0 THEN 1 ELSE -1 END DESC, date DESC",
                 new String[]{String.valueOf(idShop)})) {
             while (cursor.moveToNext()) {
                 try {
@@ -125,7 +163,7 @@ public class OrderDAO {
         return orderList;
     }
 
-    public List<Order> getOrderByIdShop(int idShop, int status) {
+    public List<Order> getOrderByIdShopStatus(int idShop, int status) {
         List<Order> orderList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

@@ -43,7 +43,7 @@ public class OrderHistorySellFragment extends Fragment {
         TextView txt_order_in_delivery = view.findViewById(R.id.txt_order_in_delivery);
         TextView txt_order_delivered = view.findViewById(R.id.txt_order_delivered);
         TextView txt_order_cancelled = view.findViewById(R.id.txt_order_cancelled);
-        TextView txt_order_all = view.findViewById(R.id.txt_order_all);
+
 
 
         idUser = getIdUserFromSharedPreferences();
@@ -77,7 +77,7 @@ public class OrderHistorySellFragment extends Fragment {
                 txt_order_in_delivery.setBackgroundResource(R.drawable.custom_button_background);
                 txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_all.setBackgroundResource(R.drawable.custom_describe);
+
                 loaddata();
             }
         });
@@ -89,7 +89,6 @@ public class OrderHistorySellFragment extends Fragment {
                 txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_delivered.setBackgroundResource(R.drawable.custom_button_background);
                 txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_all.setBackgroundResource(R.drawable.custom_describe);
                 loaddata();
             }
         });
@@ -101,27 +100,10 @@ public class OrderHistorySellFragment extends Fragment {
                 txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_cancelled.setBackgroundResource(R.drawable.custom_button_background);
-                txt_order_all.setBackgroundResource(R.drawable.custom_describe);
+                
                 loaddata();
             }
         });
-        txt_order_all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                txt_order_confirmation.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_all.setBackgroundResource(R.drawable.custom_button_background);
-
-                orderDAO = new OrderDAO(getContext());
-                orderList = orderDAO.getOrderByIdShop(idShop, status);
-                sellAdapter = new OrderSellAdapter(getContext(), orderList, orderDAO);
-                recyclerView.setAdapter(sellAdapter);
-            }
-        });
-
 
         return view;
     }
@@ -133,7 +115,7 @@ public class OrderHistorySellFragment extends Fragment {
 
     public void loaddata() {
         orderDAO = new OrderDAO(getContext());
-        orderList = orderDAO.getOrderByIdShop(idShop, status);
+        orderList = orderDAO.getOrderByIdShopStatus(idShop, status);
         sellAdapter = new OrderSellAdapter(getContext(), orderList, orderDAO);
         recyclerView.setAdapter(sellAdapter);
     }
