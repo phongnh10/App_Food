@@ -202,6 +202,7 @@ public class OrdersCurrentFragment extends Fragment {
                 }
             }
         });
+
         // Update total price
         updateTotalPrice();
 

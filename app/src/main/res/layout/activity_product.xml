@@ -240,7 +240,7 @@
             android:id="@+id/btn_add_product_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="0dp"
             android:background="@drawable/custom_button_background"
             android:padding="10dp"
             android:text="Thêm Vào Giỏ Hàng"
