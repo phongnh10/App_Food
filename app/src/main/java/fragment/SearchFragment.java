@@ -28,6 +28,7 @@ import dao.ProductDAO;
 import dao.ShopDAO;
 import model.Product;
 import model.Shop;
+import bottomRecycleview.BottomSpaceItemDecoration;
 
 public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
@@ -138,6 +139,9 @@ public class SearchFragment extends Fragment {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         loadProductList();
+
+        int spaceHeight = getResources().getDimensionPixelSize(R.dimen.space_height);
+        recyclerView.addItemDecoration(new BottomSpaceItemDecoration(spaceHeight));
 
         binding.edtSearchProduct.addTextChangedListener(new TextWatcher() {
             @Override

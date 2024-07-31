@@ -16,6 +16,7 @@ import java.util.List;
 
 import adapter.CategoriesHomeAdapter;
 import adapter.HomeProductAdapter;
+import bottomRecycleview.RightSpaceItemDecoration;
 import dao.CategoriesDao;
 import dao.ProductDAO;
 import dao.ShopDAO;
@@ -52,7 +53,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManagerEat);
         recyclerView1.setLayoutManager(layoutManagerDrink);
         recyclerView2.setLayoutManager(layoutManagerCategories);
-
+        int rightSpaceWidth = getResources().getDimensionPixelSize(R.dimen.right_space_width);
+        recyclerView2.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
+        recyclerView1.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
+        recyclerView.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
         loadProductList();
         loadProductList1();
         loadProductList2();

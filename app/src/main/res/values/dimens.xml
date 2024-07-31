@@ -6,4 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="extra_height">80dp</dimen>
+    <dimen name="space_height">100dp</dimen>
+    <dimen name="space_height_200">200dp</dimen>
+    <dimen name="right_space_width">20dp</dimen>
 </resources>
