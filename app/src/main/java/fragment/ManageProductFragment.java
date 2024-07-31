@@ -9,13 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +21,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.du_an_1.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,8 +34,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import adapter.ProductAdapter;
 import adapter.ItemCategoriesAddProduct;
+import adapter.ProductAdapter;
 import dao.CategoriesDao;
 import dao.ProductDAO;
 import model.Categories;
@@ -205,12 +204,12 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
 
                             long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote, statusProduct, sold);
 
-                            if (check == 1) {
+                            if (check > 0) {
                                 productList.add(product);
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(context, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
                                 loadProductList();
-                            } else if (check == 0) {
+                            } else if (check < 1) {
                                 Toast.makeText(context, "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
                             }
                             dialog.dismiss();

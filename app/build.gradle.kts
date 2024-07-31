@@ -6,6 +6,7 @@ android {
     namespace = "com.example.du_an_1"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.du_an_1"
         minSdk = 24
