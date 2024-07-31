@@ -2,11 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragment.OrderHistoryFragment">
+    tools:context="fragment.OrderHistorySellFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-
     <HorizontalScrollView
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -73,6 +71,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
     </androidx.recyclerview.widget.RecyclerView>
-
 
 </RelativeLayout>

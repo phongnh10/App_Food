@@ -59,6 +59,9 @@ public class OrdersCurrentFragment extends Fragment {
         binding = FragmentOrdersCurrentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        idUser = getIdUsserFromSharedPreferences();
+
+
         // Initialize DAO
         orderDetailsDAO = new OrderDetailsDAO(getContext());
         orderDAO = new OrderDAO(getContext());
@@ -88,8 +91,8 @@ public class OrdersCurrentFragment extends Fragment {
                 final TextView txtCancel = dialog.findViewById(R.id.txt_cancel_edit_address);
                 final TextView txtUpdate = dialog.findViewById(R.id.txt_update_edit_address);
 
-                final UserDAO userDAO = new UserDAO(getContext());
-                final User user = userDAO.getUserByID(idUser);
+                UserDAO userDAO = new UserDAO(getContext());
+                User user = userDAO.getUserByID(idUser);
 
                 //set data
                 editName.setText(user.getName());
@@ -154,6 +157,7 @@ public class OrdersCurrentFragment extends Fragment {
                     return;
                 }
 
+                // Tạo đối tượng Order và set các thuộc tính
                 Order order = new Order();
                 OrderDetails orderDetails1 = orderDetailsList.get(0);
                 idShopShare = orderDetails1.getIdShop();
@@ -162,18 +166,25 @@ public class OrdersCurrentFragment extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formattedDate = sdf.format(date);
 
+                UserDAO userDAO = new UserDAO(getContext());
+                User user = userDAO.getUserByID(idUser);
+
                 order.setIdShop(idShopShare);
                 order.setIdUser(idUser);
                 order.setQuantity(quantityProduct);
                 order.setTotalPrice(priceTotal);
                 order.setDate(formattedDate);
                 order.setNote("Đặt Hàng");
+                order.setName(user.getName());
+                order.setPhone(user.getPhone());
+                order.setAddress(user.getAddress());
                 order.setStatus(0);
 
-                long check = orderDAO.addOrder(order.getIdShop(), idUser, quantityProduct, priceTotal, formattedDate, "Đặt Hàng", 0);
-                if (check == 1) {
-                    orderList.add(order);
+                long orderId = orderDAO.addOrder(order.getIdShop(), order.getIdUser(), order.getQuantity(), order.getTotalPrice(), order.getDate(), order.getNote(), order.getName(), order.getPhone(), order.getAddress(), order.getStatus());
 
+                if (orderId != -1) {
+                    order.setIdOrder((int) orderId);
+                    orderList.add(order);
                     for (OrderDetails orderDetails : orderDetailsList) {
                         orderDetails.setIdOrder(order.getIdOrder());
                         orderDetails.setStatus(1);
@@ -183,15 +194,14 @@ public class OrdersCurrentFragment extends Fragment {
                             Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    loadlist();
+                    adapter.notifyDataSetChanged();
+                    orderDetailsList.clear();
                     Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
 
         // Update total price
         updateTotalPrice();
@@ -221,7 +231,8 @@ public class OrdersCurrentFragment extends Fragment {
         handler.removeCallbacks(runnable);
     }
 
-    private int getRoleFromSharedPreferences() {
+
+    private int getIdUsserFromSharedPreferences() {
         if (getContext() != null) {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
             return sharedPreferences.getInt("idUser", -1);
@@ -245,17 +256,17 @@ public class OrdersCurrentFragment extends Fragment {
         }
     }
 
+
     public void loadlist() {
         RecyclerView recyclerView = binding.rcvLitsOrderDetails;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize data and adapter
-        idUser = getRoleFromSharedPreferences();
         orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(idUser, 0);
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
-        if(orderDetailsList.isEmpty() || (orderDetailsList == null)){
-            binding.txtQuantityProduct.setText( "0 món ăn");
+        if (orderDetailsList.isEmpty() || (orderDetailsList == null)) {
+            binding.txtQuantityProduct.setText("0 món ăn");
         }
     }
 

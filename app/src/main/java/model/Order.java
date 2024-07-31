@@ -5,12 +5,15 @@ public class Order {
     private int idOrder, idShop,idUser, quantity;
     private Double totalPrice;
     private String date, note;
+    private String name;
+    private Long phone;
+    private String address;
     private int status;
 
     public Order() {
     }
 
-    public Order(int idOrder, int idShop, int idUser, int quantity, Double totalPrice, String date, String note, int status) {
+    public Order(int idOrder, int idShop, int idUser, int quantity, Double totalPrice, String date, String note, String name, Long phone, String address, int status) {
         this.idOrder = idOrder;
         this.idShop = idShop;
         this.idUser = idUser;
@@ -18,6 +21,9 @@ public class Order {
         this.totalPrice = totalPrice;
         this.date = date;
         this.note = note;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
         this.status = status;
     }
 
@@ -75,6 +81,30 @@ public class Order {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getStatus() {

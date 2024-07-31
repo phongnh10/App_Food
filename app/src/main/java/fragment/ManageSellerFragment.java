@@ -101,7 +101,12 @@ public class ManageSellerFragment extends Fragment {
         return sharedPreferences.getInt("idUser", -1);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Giải phóng binding để tránh rò rỉ bộ nhớ
+        binding = null;
+    }
 
 
 }

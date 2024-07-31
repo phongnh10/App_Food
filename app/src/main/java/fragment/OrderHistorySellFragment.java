@@ -13,33 +13,42 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.du_an_1.R;
+import com.example.du_an_1.databinding.FragmentOrderHistorySellBinding;
 
 import java.util.List;
 
-import adapter.OrderAdapter;
+import adapter.OrderSellAdapter;
 import dao.OrderDAO;
+import dao.ShopDAO;
 import model.Order;
 
-public class OrderHistoryFragment extends Fragment {
 
+public class OrderHistorySellFragment extends Fragment {
+    private FragmentOrderHistorySellBinding binding;
     private OrderDAO orderDAO;
-    private OrderAdapter orderAdapter;
+    private OrderSellAdapter sellAdapter;
     private List<Order> orderList;
     private RecyclerView recyclerView;
     private int idUser;
     private int status;
-
+    private int idShop;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_history, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentOrderHistorySellBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         TextView txt_order_confirmation = view.findViewById(R.id.txt_order_confirmation);
         TextView txt_order_in_delivery = view.findViewById(R.id.txt_order_in_delivery);
         TextView txt_order_delivered = view.findViewById(R.id.txt_order_delivered);
         TextView txt_order_cancelled = view.findViewById(R.id.txt_order_cancelled);
 
+
+
         idUser = getIdUserFromSharedPreferences();
+        ShopDAO shopDAO = new ShopDAO(getContext());
+        idShop = shopDAO.getIdShop(idUser);
         status = 0;
 
         recyclerView = view.findViewById(R.id.rcv_lits_order_history);
@@ -68,6 +77,7 @@ public class OrderHistoryFragment extends Fragment {
                 txt_order_in_delivery.setBackgroundResource(R.drawable.custom_button_background);
                 txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
+
                 loaddata();
             }
         });
@@ -90,10 +100,10 @@ public class OrderHistoryFragment extends Fragment {
                 txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
                 txt_order_cancelled.setBackgroundResource(R.drawable.custom_button_background);
+                
                 loaddata();
             }
         });
-
 
         return view;
     }
@@ -105,9 +115,8 @@ public class OrderHistoryFragment extends Fragment {
 
     public void loaddata() {
         orderDAO = new OrderDAO(getContext());
-        orderList = orderDAO.getOrderByIdUserStatus(idUser, status);
-        orderAdapter = new OrderAdapter(getContext(), orderList, orderDAO);
-        recyclerView.setAdapter(orderAdapter);
+        orderList = orderDAO.getOrderByIdShopStatus(idShop, status);
+        sellAdapter = new OrderSellAdapter(getContext(), orderList, orderDAO);
+        recyclerView.setAdapter(sellAdapter);
     }
-
 }

@@ -241,9 +241,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " +
-                "FROM Product " +
-                "WHERE status = 1 AND idCategories IN (1, 2, 3, 4, 5) AND idShop = ?";
+        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " + "FROM Product " + "WHERE status = 1 AND idCategories IN (1, 2, 3, 4, 5) AND idShop = ?";
         Cursor cursor = null;
         try {
             cursor = db.rawQuery(query, new String[]{String.valueOf(idShop)});
@@ -280,9 +278,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " +
-                "FROM Product " +
-                "WHERE status = 1 AND idCategories IN (6, 7, 8, 9, 10) AND idShop = ?";
+        String query = "SELECT idProduct, idCategories, idShop, name, image, price, note, status, sold " + "FROM Product " + "WHERE status = 1 AND idCategories IN (6, 7, 8, 9, 10) AND idShop = ?";
         Cursor cursor = null;
         try {
             cursor = db.rawQuery(query, new String[]{String.valueOf(idShop)});
