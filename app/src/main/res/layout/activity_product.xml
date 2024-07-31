@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/img_product"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:src="@mipmap/image_goivit" />
@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/img_back_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_back_figma"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true" />
@@ -35,8 +35,8 @@
             android:id="@+id/img_arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginStart="5dp"
+            android:padding="0dp"
+            android:layout_marginStart="6dp"
             android:src="@drawable/baseline_arrow_back_ios_new_24"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -46,30 +46,37 @@
     <!-- Product Details -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="500dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/top_rounded_card"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="30dp">
 
         <!-- Product Name -->
         <TextView
             android:id="@+id/txt_name_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="20dp"
             android:text="Bánh Tráng Trộn"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
+            android:textSize="22sp" />
+        <!-- Product Shop -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nino Shop"
+                android:textSize="18dp"/>
+        </LinearLayout>
         <!-- Product Price and Rating -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -85,7 +92,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -93,14 +100,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.5"
-                    android:textColor="@color/orange"
-                    android:textSize="18sp" />
+                    android:textColor="#ECD400"
+                    android:textSize="25sp"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@string/star_rating"
-                    android:src="@drawable/ic_star_rate_24" />
+                    android:src="@drawable/ic_star_rate_24"
+                    android:layout_marginBottom="5dp"/>
             </LinearLayout>
 
 
@@ -116,9 +124,10 @@
 
             <ImageView
                 android:id="@+id/img_minus_quantity_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_price"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:background="@drawable/background_circle_blue"
                 android:contentDescription="@string/decrease_quantity"
                 android:src="@drawable/baseline_remove_24" />
 
@@ -128,44 +137,43 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="1"
-                android:textSize="24sp"
+                android:textSize="30dp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/img_plus_quantity_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_price"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:background="@drawable/background_circle_blue"
                 android:contentDescription="@string/increase_quantity"
                 android:src="@drawable/ic_add_24" />
             <LinearLayout
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/txt_sold_product"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="100 lượt mua"
                     android:gravity="right"
-                    android:textColor="@color/orange"
-                    android:textSize="18sp" />
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
 
         <!-- Product Description -->
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical"
-            android:background="@drawable/custom_describe">
+            android:layout_height="120dp"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Mô Tả"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -193,37 +201,38 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:text="Mời Bạn Đánh Giá"
-                android:textSize="16sp" />
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/star_rating"
-                android:src="@drawable/ic_star_rate_24" />
+                android:src="@mipmap/star_null" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/star_rating"
-                android:src="@drawable/ic_star_rate_24" />
+                android:src="@mipmap/star_null" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/star_rating"
-                android:src="@drawable/ic_star_rate_24" />
+                android:src="@mipmap/star_null" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/star_rating"
-                android:src="@drawable/ic_star_rate_24" />
+                android:src="@mipmap/star_null" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/star_rating"
-                android:src="@drawable/ic_star_rate_24" />
+                android:src="@mipmap/star_null" />
         </LinearLayout>
 
         <!-- Add to Cart Button -->
@@ -231,10 +240,9 @@
             android:id="@+id/btn_add_product_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/button_background"
-            android:padding="16dp"
+            android:layout_marginHorizontal="0dp"
+            android:background="@drawable/custom_button_background"
+            android:padding="10dp"
             android:text="Thêm Vào Giỏ Hàng"
             android:textColor="@color/white"
             android:textSize="16sp"

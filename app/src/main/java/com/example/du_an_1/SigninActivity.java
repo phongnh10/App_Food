@@ -7,17 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class ChangepassActivity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_changepass);
+        setContentView(R.layout.activity_signin);
+
         ImageView btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangepassActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SigninActivity.this, StarActivity.class);
                 startActivity(intent);
             }
         });

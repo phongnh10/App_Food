@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="fragment.CartBuyFragment"
     android:orientation="vertical"
-    android:background="@color/background_dark">
+    android:background="#FEE9D5">
     <LinearLayout
         android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="20dp"
@@ -21,19 +21,19 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="0dp"
                 android:layout_weight="1"
-                android:gravity="bottom"
+                android:gravity="center"
                 android:text="Đơn hàng hiện tại"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textColor="#232323"
+                android:textSize="18dp"
                 android:textStyle="bold"></TextView>
             <TextView
                 android:id="@+id/txt_history_orders"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:gravity="bottom"
-                android:textSize="20dp"
-                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="#2E2E2E"
                 android:text="Lịch sử"
                 android:layout_weight="1"></TextView>
         </RelativeLayout>
