@@ -1,15 +1,11 @@
 package com.example.du_an_1;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,8 +21,10 @@ import java.util.List;
 import adapter.OrderDetailsAdapter;
 import dao.OrderDetailsDAO;
 import dao.ProductDAO;
+import dao.ShopDAO;
 import model.OrderDetails;
 import model.Product;
+import model.Shop;
 
 
 public class ProductActivity extends AppCompatActivity {
@@ -37,10 +35,11 @@ public class ProductActivity extends AppCompatActivity {
     private List<OrderDetails> orderDetailsList;
     private OrderDetailsAdapter adapter;
     private int quantity = 1;
-    private int price;
-    private int totalPrice;
+    private double price;
+    private double totalPrice;
     private int idUser;
     private int idShopList;
+    private int idRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,12 @@ public class ProductActivity extends AppCompatActivity {
         binding = ActivityProductBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        idRole = getRoleUserFromSharedPreferences();
+        if (idRole == 0 || idRole == 1) {
+            binding.btnAddProductCart.setVisibility(View.GONE);
+        }
+
 
         Intent intent = getIntent();
         int productId = intent.getIntExtra("productId", -1);
@@ -64,6 +69,11 @@ public class ProductActivity extends AppCompatActivity {
             binding.imgProduct.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
             binding.txtNoteProduct.setText(product.getNote());
             binding.txtSoldProduct.setText(String.valueOf(product.getSold() + " lượt mua"));
+
+            Shop shop = new Shop();
+            ShopDAO shopDAO = new ShopDAO(ProductActivity.this);
+            shop = shopDAO.getShopByIdShop(product.getIdShop());
+            binding.txtNameShop.setText(shop.getName());
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {
@@ -108,19 +118,28 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (orderDetailsList == null) {
                     orderDetailsList = new ArrayList<>();
-
                 }
                 if (adapter == null) {
                     adapter = new OrderDetailsAdapter(ProductActivity.this, orderDetailsList, orderDetailsDAO);
                 }
 
-                OrderDetails orderDetails = new OrderDetails();
                 orderDetailsDAO = new OrderDetailsDAO(ProductActivity.this);
-
                 idUser = getIdUserFromSharedPreferences();
                 int idOrder = idUser;
                 int statusOderDetail = 0;
                 idShopList = -1;
+
+                orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(idUser, 0);
+                if (orderDetailsList != null && !orderDetailsList.isEmpty()) {
+                    OrderDetails firstOrderDetail = orderDetailsList.get(0);
+                    idShopList = firstOrderDetail.getIdShop();
+                    if (firstOrderDetail.getIdShop() != product.getIdShop()) {
+                        Toast.makeText(ProductActivity.this, "Bạn phải thêm sản phẩm cùng 1 shop", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                OrderDetails orderDetails = new OrderDetails();
 
                 orderDetails.setIdShop(product.getIdShop());
                 orderDetails.setIdOrder(idOrder);
@@ -130,36 +149,38 @@ public class ProductActivity extends AppCompatActivity {
                 orderDetails.setTotalPrice(totalPrice);
                 orderDetails.setImage(product.getImage());
                 orderDetails.setName(product.getName());
-                orderDetails.setStatus(statusOderDetail);
+                orderDetails.setStatus(1);
 
-                orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(idUser,0);
-                if (orderDetailsList.size() > 0 && orderDetailsList != null && !orderDetailsList.isEmpty()) {
-                    OrderDetails firstOrderDetail = orderDetailsList.get(0);
-                    if (firstOrderDetail.getIdShop() != product.getIdShop()) {
-                        Toast.makeText(ProductActivity.this, "Bạn phải thêm sản phẩm cùng 1 shop ", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
+                long check = orderDetailsDAO.addOrderDetails(product.getIdShop(), idOrder, product.getIdProduct(), quantity, product.getPrice(), totalPrice, product.getImage(), product.getName(), statusOderDetail);
 
-
-                long check = orderDetailsDAO.addOrderDetails(product.getIdShop(), idOrder, product.getIdProduct(), quantity, price, totalPrice, product.getImage(), product.getName(), statusOderDetail);
-                if (check == 1) {
+                if (check > 0) {
                     orderDetailsList.add(orderDetails);
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng ", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(ProductActivity.this, ShopActivity.class);
-                    intent1.putExtra("idShop", product.getIdShop());
-                    startActivity(intent1);
+                    Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+
+                    if (product.getIdShop() != idShopList) {
+                        Intent intent1 = new Intent(ProductActivity.this, ShopActivity.class);
+                        intent1.putExtra("idShop", product.getIdShop());
+                        startActivity(intent1);
+
+                    }
+                    else{
+                        finish();
+                    }
                 } else if (check == 0) {
-                    Toast.makeText(ProductActivity.this, "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
-                } else if (check == -1) {
+                    for(OrderDetails orderDetail : orderDetailsList){
+                        if(orderDetail.getIdProduct() == product.getIdProduct()){
+                            orderDetail.setQuantity(orderDetail.getQuantity() + 1);
+                            orderDetail.setTotalPrice(orderDetail.getTotalPrice() + totalPrice);
+                            orderDetailsDAO.updateOrderDetails(orderDetail);
+                            Toast.makeText(ProductActivity.this, "Sản phẩm + 1", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
                     Toast.makeText(ProductActivity.this, "Lỗi khi thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                 }
-
-                finish();
             }
         });
-
     }
 
 
@@ -167,6 +188,12 @@ public class ProductActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = ProductActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }
+
+    public int getRoleUserFromSharedPreferences() {
+        SharedPreferences sharedPreferences = ProductActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("role", -1);
+    }
+
 
     private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
         if (imageBytes != null && imageBytes.length > 0) {

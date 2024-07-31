@@ -21,7 +21,7 @@ public class ProductDAO {
     }
 
 
-    public int addProduct(int idCategories, int idShop, String name, byte[] image, int price, String note, int status, int sold) {
+    public int addProduct(int idCategories, int idShop, String name, byte[] image, double price, String note, int status, int sold) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE name = ?", new String[]{name});
 //        if (cursor.getCount() > 0) {

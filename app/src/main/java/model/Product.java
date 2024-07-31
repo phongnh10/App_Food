@@ -4,7 +4,7 @@ public class Product {
     private int idProduct, idCategories, idShop;
     private String name;
     private byte[] image;
-    private int price;
+    private double price;
     private String note;
     private int status;
     private int sold;
@@ -13,7 +13,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int idProduct, int idCategories, int idShop, String name, byte[] image, int price, String note, int status, int sold) {
+    public Product(int idProduct, int idCategories, int idShop, String name, byte[] image, double price, String note, int status, int sold) {
         this.idProduct = idProduct;
         this.idCategories = idCategories;
         this.idShop = idShop;
@@ -65,11 +65,11 @@ public class Product {
         this.image = image;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

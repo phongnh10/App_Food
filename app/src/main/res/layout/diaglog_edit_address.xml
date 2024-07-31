@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/txt_cancel_edit_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_cancel_background"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/txt_update_edit_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_background"

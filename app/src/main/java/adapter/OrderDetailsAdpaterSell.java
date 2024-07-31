@@ -62,7 +62,8 @@ public class OrderDetailsAdpaterSell extends RecyclerView.Adapter<OrderDetailsAd
         holder.txt_name_product.setText(orderDetails.getName());
         DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
         holder.txt_price_product.setText(decimalFormat.format(orderDetails.getTotalPrice()));
-        holder.txt_quantity_product.setText("Sl: "+String.valueOf(orderDetails.getQuantity()));
+        holder.txt_quantity_product.setTypeface(holder.txt_quantity_product.getTypeface(), holder.txt_quantity_product.getTypeface().ITALIC);
+        holder.txt_quantity_product.setText("sl: "+String.valueOf(orderDetails.getQuantity()));
         holder.txt_shop_product_details.setText(shop.getName());
 
         // Hide quantity controls for seller

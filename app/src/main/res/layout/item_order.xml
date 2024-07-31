@@ -150,7 +150,7 @@
 
                 <Button
                     android:id="@+id/btn_canel_order"
-                    android:layout_width="100dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/custom_edit_booth_canel"

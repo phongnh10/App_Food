@@ -53,14 +53,17 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
         DecimalFormat decimalFormat1 = new DecimalFormat("#");
-        binding.txtQuantityOrder.setText("Sl: " + String.valueOf(decimalFormat1.format(quantity)));
+        binding.txtQuantityOrder.setText("Số lượng: " + String.valueOf(decimalFormat1.format(quantity)));
 
-        binding.txtTotalPriceOrder.setText("Tổng Tiền: " + String.valueOf(decimalFormat.format(totalPrice)));
+        binding.txtTotalPriceOrder.setText("Tổng tiền: " + String.valueOf(decimalFormat.format(totalPrice)));
 
         Order order = new Order();
         OrderDAO orderDAO = new OrderDAO(OrderDetailActivity.this);
         order = orderDAO.getOrderByIdOrder(idOrder);
 
+        binding.txtDateOrder.setText("Ngày đặt: " + order.getDate());
+        binding.txtNoteOrder.setText("Lời nhắn: "+order.getNote());
+        binding.mid.setText("Đơn hàng số: "+ order.getIdOrder());
         if (order.getStatus() == 0) {
             binding.txtStatusOrder.setText("Trạng Thái: Chờ xác nhận");
         }

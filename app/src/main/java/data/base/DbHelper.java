@@ -128,7 +128,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_ID_SHOP + " INTEGER, " +
                 COLUMN_NAME_PRODUCT + " TEXT, " +
                 COLUMN_IMAGE_PRODUCT + " BLOB, " +
-                COLUMN_PRICE_PRODUCT + " INTEGER, " +
+                COLUMN_PRICE_PRODUCT + " DOUBLE, " +
                 COLUMN_NOTE_PRODUCT + " TEXT, " +
                 COLUMN_PRODUCT_SOLD + " INTEGER, " +
                 COLUMN_STATUS_PRODUCT + " INTEGER, " +

@@ -152,5 +152,33 @@ public class OrderDetailsDAO {
         return rows > 0;
     }
 
+    public OrderDetails getOrderDetailsByIdProduct(int idProduct) {
+        OrderDetails orderDetails = null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Correct SQL query with parameterized arguments
+        String query = "SELECT * FROM OrderDetails WHERE idProduct = ? AND status = 1";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idProduct)});
+
+        if (cursor.moveToFirst()) {
+            orderDetails = new OrderDetails();
+
+            // Use getColumnIndexOrThrow to ensure the column exists
+            orderDetails.setIdOrderDetails(cursor.getInt(cursor.getColumnIndexOrThrow("idOrderDetails")));
+            orderDetails.setIdShop(cursor.getInt(cursor.getColumnIndexOrThrow("idShop")));
+            orderDetails.setIdOrder(cursor.getInt(cursor.getColumnIndexOrThrow("idOrder")));
+            orderDetails.setIdProduct(cursor.getInt(cursor.getColumnIndexOrThrow("idProduct")));
+            orderDetails.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow("quantity")));
+            orderDetails.setPrice(cursor.getDouble(cursor.getColumnIndexOrThrow("price")));
+            orderDetails.setTotalPrice(cursor.getDouble(cursor.getColumnIndexOrThrow("totalPrice")));
+            orderDetails.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow("image")));
+            orderDetails.setName(cursor.getString(cursor.getColumnIndexOrThrow("name")));
+            orderDetails.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+        }
+
+        cursor.close();
+        db.close();
+        return orderDetails;
+    }
 
 }

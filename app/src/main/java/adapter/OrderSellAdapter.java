@@ -2,6 +2,7 @@ package adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -11,12 +12,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.du_an_1.OrderDetailActivity;
 import com.example.du_an_1.R;
 
 import java.text.DecimalFormat;
@@ -58,6 +61,15 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         shop.setIdShop(order.getIdShop());
 
         holder.txt_shop_order.setText(shop.getName());
+
+        holder.linear_layout_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OrderDetailActivity.class);
+                intent.putExtra("idOrder", order.getIdOrder());
+                context.startActivity(intent);
+            }
+        });
 
         int status = order.getStatus();
         if (status == 0) {
@@ -366,6 +378,7 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         TextView txt_shop_order, txt_status_order, txt_id_order, txt_name_user_order, txt_name_order, txt_quantity_order, txt_total_price_order, txt_date_order, txt_note_order;
         ImageView img_image_order;
         Button btn_canel_order, btn_confirm_order;
+        LinearLayout linear_layout_order;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -381,6 +394,7 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
             btn_canel_order = itemView.findViewById(R.id.btn_canel_order);
             btn_confirm_order = itemView.findViewById(R.id.btn_confirm_order);
             txt_note_order = itemView.findViewById(R.id.txt_note_order);
+            linear_layout_order = itemView.findViewById(R.id.linear_layout_order);
         }
     }
 

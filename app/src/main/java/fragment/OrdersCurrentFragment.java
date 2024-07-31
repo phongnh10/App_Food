@@ -1,16 +1,9 @@
 package fragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +12,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.du_an_1.R;
 import com.example.du_an_1.databinding.FragmentOrdersCurrentBinding;
@@ -36,7 +34,6 @@ import dao.UserDAO;
 import model.Order;
 import model.OrderDetails;
 import model.User;
-import bottomRecycleview.BottomSpaceItemDecoration;
 
 public class OrdersCurrentFragment extends Fragment {
     private FragmentOrdersCurrentBinding binding;
@@ -157,49 +154,90 @@ public class OrdersCurrentFragment extends Fragment {
                     return;
                 }
 
-                // Tạo đối tượng Order và set các thuộc tính
-                Order order = new Order();
-                OrderDetails orderDetails1 = orderDetailsList.get(0);
-                idShopShare = orderDetails1.getIdShop();
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_confirm_order);
 
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String formattedDate = sdf.format(date);
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialog.getWindow().setAttributes(layoutParams);
 
-                UserDAO userDAO = new UserDAO(getContext());
-                User user = userDAO.getUserByID(idUser);
+                dialog.show();
 
-                order.setIdShop(idShopShare);
-                order.setIdUser(idUser);
-                order.setQuantity(quantityProduct);
-                order.setTotalPrice(priceTotal);
-                order.setDate(formattedDate);
-                order.setNote("Đặt Hàng");
-                order.setName(user.getName());
-                order.setPhone(user.getPhone());
-                order.setAddress(user.getAddress());
-                order.setStatus(0);
+                TextView txt_canel = dialog.findViewById(R.id.txt_canel);
+                TextView txt_confirm = dialog.findViewById(R.id.txt_confirm);
+                TextView txt_note = dialog.findViewById(R.id.txt_note);
 
-                long orderId = orderDAO.addOrder(order.getIdShop(), order.getIdUser(), order.getQuantity(), order.getTotalPrice(), order.getDate(), order.getNote(), order.getName(), order.getPhone(), order.getAddress(), order.getStatus());
+                txt_note.setText("");
+                txt_note.setHint("Hãy nhắn gì đó cho cửa hàng");
 
-                if (orderId != -1) {
-                    order.setIdOrder((int) orderId);
-                    orderList.add(order);
-                    for (OrderDetails orderDetails : orderDetailsList) {
-                        orderDetails.setIdOrder(order.getIdOrder());
-                        orderDetails.setStatus(1);
 
-                        boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
-                        if (!isUpdated) {
-                            Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
+                txt_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        // Tạo đối tượng Order và set các thuộc tính
+                        Order order = new Order();
+                        OrderDetails orderDetails1 = orderDetailsList.get(0);
+                        idShopShare = orderDetails1.getIdShop();
+
+                        Date date = new Date();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String formattedDate = sdf.format(date);
+
+                        UserDAO userDAO = new UserDAO(getContext());
+                        User user = userDAO.getUserByID(idUser);
+
+                        String note = txt_note.getText().toString();
+                        if(note.length() < 5){
+                            Toast.makeText(getContext(), "Nội dung phải lớn hơn 5 ký tự", Toast.LENGTH_SHORT).show();
+                            return;
                         }
+                        
+                        order.setIdShop(idShopShare);
+                        order.setIdUser(idUser);
+                        order.setQuantity(quantityProduct);
+                        order.setTotalPrice(priceTotal);
+                        order.setDate(formattedDate);
+                        order.setNote(note);
+                        order.setName(user.getName());
+                        order.setPhone(user.getPhone());
+                        order.setAddress(user.getAddress());
+                        order.setStatus(0);
+
+                        long orderId = orderDAO.addOrder(order.getIdShop(), order.getIdUser(), order.getQuantity(), order.getTotalPrice(), order.getDate(), order.getNote(), order.getName(), order.getPhone(), order.getAddress(), order.getStatus());
+
+                        if (orderId != -1) {
+                            order.setIdOrder((int) orderId);
+                            orderList.add(order);
+                            for (OrderDetails orderDetails : orderDetailsList) {
+                                orderDetails.setIdOrder(order.getIdOrder());
+                                orderDetails.setStatus(1);
+
+                                boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
+                                if (!isUpdated) {
+                                    Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            orderDetailsList.clear();
+                            Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    dialog.dismiss();
                     }
-                    adapter.notifyDataSetChanged();
-                    orderDetailsList.clear();
-                    Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
-                }
+
+                });
+
+                txt_canel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
