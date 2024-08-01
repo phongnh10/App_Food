@@ -55,7 +55,6 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         Shop shop = new Shop();
         ShopDAO shopDAO = new ShopDAO(context);
         shop = shopDAO.getShopByIdShop(order.getIdShop());
-        shop.setIdShop(order.getIdShop());
 
         holder.txt_shop_order.setText(shop.getName());
         holder.linear_layout_order.setOnClickListener(new View.OnClickListener() {
