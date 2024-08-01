@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,13 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.du_an_1.ProductActivity;
 import com.example.du_an_1.R;
+import com.example.du_an_1.ShopActivity;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -58,6 +62,23 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
         shop = shopDAO.getShopByIdShop(orderDetails.getIdShop());
         holder.txt_shop_product_details.setText(shop.getName());
 
+        holder.txt_name_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductActivity.class);
+                intent.putExtra("productId", orderDetails.getIdProduct());
+                context.startActivity(intent);
+            }
+        });
+
+        holder.txt_shop_product_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ShopActivity.class);
+                intent.putExtra("idShop", orderDetails.getIdShop());
+                context.startActivity(intent);
+            }
+        });
 
         idUser = getIdUserFromSharedPreferences();
 
@@ -141,6 +162,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_product, img_back, img_minus_quantity_product, img_plus_quantity_product;
         TextView txt_name_product, txt_price_product, txt_quantity_product,txt_shop_product_details;
+        LinearLayout ll_order_details;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,6 +174,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
             img_minus_quantity_product = itemView.findViewById(R.id.img_minus_quantity_product_details);
             img_plus_quantity_product = itemView.findViewById(R.id.img_plus_quantity_product_details);
             txt_shop_product_details = itemView.findViewById(R.id.txt_shop_product_details);
+            ll_order_details = itemView.findViewById(R.id.ll_order_details);
         }
     }
 

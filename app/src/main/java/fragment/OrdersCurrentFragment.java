@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import CustomToast.CustomToast;
 import adapter.OrderDetailsAdapter;
 import dao.OrderDAO;
 import dao.OrderDetailsDAO;
@@ -109,11 +109,12 @@ public class OrdersCurrentFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() || editAddress.getText().toString().isEmpty()) {
-                            Toast.makeText(getContext(), "Nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                            CustomToast.show(getContext(), "Nhập đầy đủ thông tin", R.mipmap.image_logo_admin);
+
                             return;
                         }
                         if ((!editPhone.getText().toString().matches("\\d+")) || (editPhone.getText().toString().length() != 10)) {
-                            Toast.makeText(getContext(), "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
+                            CustomToast.show(getContext(), "Số điện thoại không hợp lệ", R.mipmap.image_logo_admin);
                             return;
                         }
 
@@ -124,9 +125,10 @@ public class OrdersCurrentFragment extends Fragment {
                         boolean check = userDAO.upDateAddress(user);
                         if (check) {
                             loadAddrest();
-                            Toast.makeText(getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                            CustomToast.show(getContext(), "Cập nhật thông tin thành công", R.mipmap.image_logo_admin);
                         } else {
-                            Toast.makeText(getContext(), "Cập nhật thông tin thất bại", Toast.LENGTH_SHORT).show();
+
+                            CustomToast.show(getContext(), "Cập nhật thông tin thất bại", R.mipmap.image_logo_admin);
                         }
 
                         dialog.dismiss();
@@ -150,7 +152,7 @@ public class OrdersCurrentFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (orderDetailsList == null || orderDetailsList.isEmpty()) {
-                    Toast.makeText(getContext(), "Bạn chưa thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    CustomToast.show(getContext(), "Bạn chưa thêm sản phẩm vào giỏ hàng", R.mipmap.image_logo_admin);
                     return;
                 }
 
@@ -190,11 +192,11 @@ public class OrdersCurrentFragment extends Fragment {
                         User user = userDAO.getUserByID(idUser);
 
                         String note = txt_note.getText().toString();
-                        if(note.length() < 5){
-                            Toast.makeText(getContext(), "Nội dung phải lớn hơn 5 ký tự", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        
+//                        if(note.length() < 5){
+//                            Toast.makeText(getContext(), "Nội dung phải lớn hơn 5 ký tự", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+
                         order.setIdShop(idShopShare);
                         order.setIdUser(idUser);
                         order.setQuantity(quantityProduct);
@@ -217,14 +219,15 @@ public class OrdersCurrentFragment extends Fragment {
 
                                 boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
                                 if (!isUpdated) {
-                                    Toast.makeText(getContext(), "Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
+                                    CustomToast.show(getContext(), "Cập nhật idOder trong OrderDetails thất bại", R.mipmap.image_logo_admin);
                                 }
                             }
                             adapter.notifyDataSetChanged();
                             orderDetailsList.clear();
-                            Toast.makeText(getContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                            CustomToast.show(getContext(), "Đặt hàng thành công", R.mipmap.image_logo_admin);
                         } else {
-                            Toast.makeText(getContext(), "Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
+                            CustomToast.show(getContext(), "Đặt hàng thất bại", R.mipmap.image_logo_admin);
+
                         }
                     dialog.dismiss();
                     }
@@ -290,7 +293,7 @@ public class OrdersCurrentFragment extends Fragment {
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText(String.valueOf(quantityProduct) + " món ăn");
+            binding.txtQuantityProduct.setText("Tổng: "+String.valueOf(quantityProduct));
         }
     }
 
@@ -304,7 +307,7 @@ public class OrdersCurrentFragment extends Fragment {
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
         if (orderDetailsList.isEmpty() || (orderDetailsList == null)) {
-            binding.txtQuantityProduct.setText("0 món ăn");
+            binding.txtQuantityProduct.setText("Tổng: 0");
         }
     }
 

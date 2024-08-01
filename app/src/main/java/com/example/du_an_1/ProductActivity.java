@@ -139,22 +139,22 @@ public class ProductActivity extends AppCompatActivity {
                     }
                 }
 
-                OrderDetails orderDetails = new OrderDetails();
+                OrderDetails orderDetailsUp = new OrderDetails();
 
-                orderDetails.setIdShop(product.getIdShop());
-                orderDetails.setIdOrder(idOrder);
-                orderDetails.setIdProduct(product.getIdProduct());
-                orderDetails.setQuantity(quantity);
-                orderDetails.setPrice(product.getPrice());
-                orderDetails.setTotalPrice(totalPrice);
-                orderDetails.setImage(product.getImage());
-                orderDetails.setName(product.getName());
-                orderDetails.setStatus(1);
+                orderDetailsUp.setIdShop(product.getIdShop());
+                orderDetailsUp.setIdOrder(idOrder);
+                orderDetailsUp.setIdProduct(product.getIdProduct());
+                orderDetailsUp.setQuantity(quantity);
+                orderDetailsUp.setPrice(product.getPrice());
+                orderDetailsUp.setTotalPrice(totalPrice);
+                orderDetailsUp.setImage(product.getImage());
+                orderDetailsUp.setName(product.getName());
+                orderDetailsUp.setStatus(0);
 
                 long check = orderDetailsDAO.addOrderDetails(product.getIdShop(), idOrder, product.getIdProduct(), quantity, product.getPrice(), totalPrice, product.getImage(), product.getName(), statusOderDetail);
 
                 if (check > 0) {
-                    orderDetailsList.add(orderDetails);
+                    orderDetailsList.add(orderDetailsUp);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
 
@@ -170,10 +170,10 @@ public class ProductActivity extends AppCompatActivity {
                 } else if (check == 0) {
                     for(OrderDetails orderDetail : orderDetailsList){
                         if(orderDetail.getIdProduct() == product.getIdProduct()){
-                            orderDetail.setQuantity(orderDetail.getQuantity() + 1);
-                            orderDetail.setTotalPrice(orderDetail.getTotalPrice() + totalPrice);
+                            orderDetail.setQuantity(orderDetail.getQuantity() +orderDetailsUp.getQuantity() );
+                            orderDetail.setTotalPrice(orderDetail.getTotalPrice() + orderDetailsUp.getTotalPrice());
                             orderDetailsDAO.updateOrderDetails(orderDetail);
-                            Toast.makeText(ProductActivity.this, "Sản phẩm + 1", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProductActivity.this, "Sản phẩm + "+orderDetailsUp.getQuantity(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {

@@ -187,7 +187,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             txt_status_order = itemView.findViewById(R.id.txt_status_order);
             txt_id_order = itemView.findViewById(R.id.txt_id_order);
             txt_name_user_order = itemView.findViewById(R.id.txt_name_user_order);
-            txt_name_order = itemView.findViewById(R.id.txt_name_order);
             txt_quantity_order = itemView.findViewById(R.id.txt_quantity_order);
             txt_total_price_order = itemView.findViewById(R.id.txt_total_price_order);
             txt_date_order = itemView.findViewById(R.id.txt_date_order);

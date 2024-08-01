@@ -53,15 +53,11 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         Order order = orderList.get(position);
 
         Shop shop = new Shop();
-
         ShopDAO shopDAO = new ShopDAO(context);
-
         shop = shopDAO.getShopByIdShop(order.getIdShop());
-
         shop.setIdShop(order.getIdShop());
 
         holder.txt_shop_order.setText(shop.getName());
-
         holder.linear_layout_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +88,8 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
 
         }
 
+
+        holder.txt_name_order.setText(orderList.get(0).getName());
         holder.txt_id_order.setText("Đơn hàng: " + String.valueOf(order.getIdOrder()));
         holder.txt_name_user_order.setText("Người Mua: " + order.getName());
         holder.txt_quantity_order.setText("SL: " + String.valueOf(order.getQuantity()));
@@ -386,7 +384,6 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
             txt_status_order = itemView.findViewById(R.id.txt_status_order);
             txt_id_order = itemView.findViewById(R.id.txt_id_order);
             txt_name_user_order = itemView.findViewById(R.id.txt_name_user_order);
-            txt_name_order = itemView.findViewById(R.id.txt_name_order);
             txt_quantity_order = itemView.findViewById(R.id.txt_quantity_order);
             txt_total_price_order = itemView.findViewById(R.id.txt_total_price_order);
             txt_date_order = itemView.findViewById(R.id.txt_date_order);
