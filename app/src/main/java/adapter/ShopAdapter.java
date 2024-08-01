@@ -27,8 +27,8 @@ import model.User;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder> {
 
-    private Context context;
     private List<Shop> shopList;
+    private Context context;
     private ShopDAO shopDAO;
     private UserDAO userDAO;
 

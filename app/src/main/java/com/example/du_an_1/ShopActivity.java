@@ -1,9 +1,10 @@
 package com.example.du_an_1;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -29,7 +30,7 @@ public class ShopActivity extends AppCompatActivity {
     private RecyclerView rcvEat, rcvDrink;
     private ProductDAO productDAO;
     private SearchAdapter searchAdapter1, searchAdapter2;
-    private int idUser, idShop;
+    private int idUser, idShop,quantity;
     private ShopDAO shopDAO;
 
     @Override
@@ -46,10 +47,11 @@ public class ShopActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idShop = intent.getIntExtra("idShop", -1);
+        quantity = intent.getIntExtra("quantity", -1);
 
 
         rcvEat = binding.rcvShopEatBuy;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rcvEat.setLayoutManager(layoutManager);
 
         rcvDrink = binding.rcvShopDrinkBuy;
@@ -60,7 +62,17 @@ public class ShopActivity extends AppCompatActivity {
         loadProductList();
         loadProductList1();
 
-        binding.imgBackProduct.setOnClickListener(view -> finish());
+        binding.imgArrowBack.setOnClickListener(view -> finish());
+
+        binding.llItemCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(ShopActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "CartBuyFragment");
+                startActivity(intent);
+            }
+        });
 
         Shop shop = new Shop();
         shopDAO = new ShopDAO(this);
@@ -72,12 +84,11 @@ public class ShopActivity extends AppCompatActivity {
         User user = new User();
         user = userDAO.getUserByID(idUser);
 
-        binding.txtAddressShopBuy.setText("Địa Chỉ: "+shop.getAddress());
-        binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: "+user.getPhone()));
+        binding.txtAddressShopBuy.setText("Địa Chỉ: " + shop.getAddress());
+        binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: " + user.getPhone()));
         binding.txtNameShopBuy.setText(shop.getName());
         binding.imgImageShopBuy.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
-
-
+        binding.txtNumberCart.setText(String.valueOf(String.valueOf(quantity)));
 
     }
 
@@ -93,14 +104,6 @@ public class ShopActivity extends AppCompatActivity {
         List<Product> productList = productDAO.getProductsListDrinksShop(idShop);
         searchAdapter2 = new SearchAdapter(this, productList, productDAO);
         rcvDrink.setAdapter(searchAdapter2);
-    }
-
-    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
-        if (imageBytes != null && imageBytes.length > 0) {
-            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        } else {
-            return BitmapFactory.decodeResource(ShopActivity.this.getResources(), R.drawable.side_nav_bar);
-        }
     }
 
 }

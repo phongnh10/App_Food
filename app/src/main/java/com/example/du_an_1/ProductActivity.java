@@ -73,7 +73,7 @@ public class ProductActivity extends AppCompatActivity {
             Shop shop = new Shop();
             ShopDAO shopDAO = new ShopDAO(ProductActivity.this);
             shop = shopDAO.getShopByIdShop(product.getIdShop());
-            binding.txtNameShop.setText("Shop "+shop.getName());
+            binding.txtNameShop.setText(shop.getName());
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {

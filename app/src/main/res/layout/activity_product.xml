@@ -60,17 +60,29 @@
             android:layout_marginBottom="0dp"
             android:layout_marginTop="20dp"
             android:text="Bánh Tráng Trộn"
-            android:textColor="@color/background_dark"
+            android:textColor="@color/black"
             android:textSize="22sp" />
         <!-- Product Shop -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            >
 
+            <TextView
+                android:id="@+id/txt_name_shop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:text="Nino Shop"
+                android:textSize="18dp" />
+        </LinearLayout>
         <!-- Product Price and Rating -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_price_product"
@@ -80,7 +92,7 @@
                 android:text="15.000 đ"
                 android:textColor="@color/orange"
                 android:textSize="40sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -94,11 +106,11 @@
                     android:layout_height="wrap_content"
                     android:text="4.5"
                     android:textColor="#ECD400"
-                    android:textSize="30sp"/>
+                    android:textSize="25sp"/>
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@string/star_rating"
                     android:src="@drawable/ic_star_rate_24"
                     android:layout_marginBottom="5dp"/>
@@ -141,48 +153,32 @@
                 android:background="@drawable/background_circle_blue"
                 android:contentDescription="@string/increase_quantity"
                 android:src="@drawable/ic_add_24" />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/txt_sold_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100 lượt mua"
-                android:textSize="18dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  |  "/>
-            <TextView
-                android:id="@+id/txt_name_shop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nino Shop"
-                android:textSize="18dp" />
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_sold_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100 lượt mua"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
         </LinearLayout>
+
         <!-- Product Description -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:layout_marginBottom="10dp">
+            android:layout_height="120dp"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Mô Tả"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -191,19 +187,66 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="Bánh Tráng phơi sương"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
         <!-- Rating Section -->
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:text="Mời Bạn Đánh Giá"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star_rating"
+                android:src="@mipmap/star_null" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star_rating"
+                android:src="@mipmap/star_null" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star_rating"
+                android:src="@mipmap/star_null" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star_rating"
+                android:src="@mipmap/star_null" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/star_rating"
+                android:src="@mipmap/star_null" />
+        </LinearLayout>
 
         <!-- Add to Cart Button -->
         <Button
             android:id="@+id/btn_add_product_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:background="@drawable/custom_boder_update_user"
+            android:layout_marginHorizontal="0dp"
+            android:background="@drawable/custom_button_background"
             android:padding="10dp"
             android:text="Thêm Vào Giỏ Hàng"
             android:textColor="@color/white"

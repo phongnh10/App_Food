@@ -82,41 +82,6 @@ public class ShopDAO {
         return shopList;
     }
 
-    public List<Shop> getlitsShopIsActive() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        List<Shop> shopList = new ArrayList<>();
-
-        String query = "SELECT " + "shop.idShop, " + "shop.idUser, " + "shop.name, " + "shop.address, " + "shop.image, " + "shop.status " +
-                "FROM shop " +
-                "JOIN user ON shop.idUser = user.idUser " +
-                "WHERE shop.status = 1 " +
-                "AND user.role = 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                int idShop = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
-                int idUser = cursor.getInt(cursor.getColumnIndexOrThrow("idUser"));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
-                byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
-                int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
-
-                Shop shop = new Shop(idShop, idUser, name, address, image, status);
-                shopList.add(shop);
-            } while (cursor.moveToNext());
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-        db.close();
-
-        return shopList;
-    }
-
-
     public int addShop(int idUser, String name, String address, byte[] image, int status) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from Shop where idUser =?", new String[]{String.valueOf(idUser)});
@@ -179,7 +144,7 @@ public class ShopDAO {
 
         db = dbHelper.getWritableDatabase();
 
-        String[] columns = {"idShop", "idUser", "address", "image", "name", "status"};
+        String[] columns = {"idShop", "idUser", "address", "image", "name","status"};
         String selection = "idShop = ?";
         String[] selectionArgs = {String.valueOf(idShop)};
 
@@ -239,7 +204,7 @@ public class ShopDAO {
 
         String[] columns = {"idShop"};
         String selection = "idUser = ?";
-        String[] selectionArgs = {String.valueOf(idUser)};
+        String[] selectionArgs = { String.valueOf(idUser) };
 
         try (Cursor cursor = db.query("Shop", columns, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
