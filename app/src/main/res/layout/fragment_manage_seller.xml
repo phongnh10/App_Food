@@ -20,7 +20,7 @@
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="@mipmap/img_backround_shop"
+                android:background="@mipmap/bannershop"
                 android:scaleType="centerCrop"
                 android:orientation="horizontal">
 
@@ -50,7 +50,7 @@
                         android:text="Shop A"
                         android:textStyle="bold"
                         android:textSize="18dp"
-                        android:textColor="#A90707"></TextView>
+                        android:textColor="@color/orange"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -106,37 +106,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txt_shop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="center"
-                        android:text="Shop"
-                        android:textColor="#A90707"
-                        android:textSize="20dp"
-                        android:textStyle="bold"></TextView>
-
-                    <ImageView
-                        android:id="@+id/img_shop"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#A90707"></ImageView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
                         android:id="@+id/txt_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:gravity="center"
-                        android:text="Product"
-                        android:textColor="#A90707"
+                        android:text="Sản phẩm"
+                        android:textColor="@color/orange"
                         android:textSize="20dp"
                         android:textStyle="bold"></TextView>
 
@@ -159,8 +135,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:gravity="center"
-                        android:text="Category"
-                        android:textColor="#A90707"
+                        android:text="Danh mục"
+                        android:textColor="@color/orange"
                         android:textSize="20dp"
                         android:textStyle="bold"></TextView>
 

@@ -32,13 +32,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:src="@drawable/ic_back_figma">
 
                 <ImageView
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="5dp"
@@ -188,7 +188,7 @@
                 android:gravity="center"
                 android:text="Nino Shop"
                 android:textColor="#F5643A"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"></TextView>
 
             <TextView
@@ -217,29 +217,17 @@
     <RelativeLayout
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_weight="1"
         android:gravity="left"
         android:layout_alignParentTop="true">
-
         <ImageView
-            android:id="@+id/img_back_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_back_figma" />
-
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="0dp"
-            android:layout_toEndOf="@id/img_back_product"
+            android:id="@id/img_back_product"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:padding="5dp"
-            android:src="@drawable/baseline_arrow_back_ios_new_24" />
+            android:src="@drawable/baseline_arrow_back_ios_new_24"
+            android:background="@drawable/bg_ic_back"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rl_cart_order"
