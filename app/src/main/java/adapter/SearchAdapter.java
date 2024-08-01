@@ -14,10 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.du_an_1.LoginActivity;
-import com.example.du_an_1.MainActivity;
 import com.example.du_an_1.ProductActivity;
 import com.example.du_an_1.R;
+import com.example.du_an_1.ShopActivity;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -37,6 +36,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         this.productList = productList;
         this.productDAO = productDAO;
     }
+
     public void updateProductList(List<Product> newProductList) {
         this.productList = newProductList;
         notifyDataSetChanged();
@@ -45,7 +45,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @NonNull
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product_search,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product_search, parent, false);
         return new ViewHolder(view);
     }
 
@@ -58,24 +58,33 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         DecimalFormat decimalFormat = new DecimalFormat("#,###,### đ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
 
-        int idShop= product.getIdShop();
+        int idShop = product.getIdShop();
         ShopDAO shopDAO = new ShopDAO(context);
         Shop shop = shopDAO.getShopByIdShop(idShop);
 
         holder.txt_name_shop.setText(shop.getName());
+        holder.txt_sold_shop_home.setText(String.valueOf(product.getSold()) + " lượt bán");
 
-        holder.txt_sold_shop_home.setText(String.valueOf(product.getSold())+" lượt bán");
-
-        holder.item.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener productClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductActivity.class);
                 intent.putExtra("productId", product.getIdProduct());
                 context.startActivity(intent);
             }
+        };
+
+        holder.txt_name.setOnClickListener(productClickListener);
+        holder.img.setOnClickListener(productClickListener);
+
+        holder.txt_name_shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ShopActivity.class);
+                intent.putExtra("idShop", shop.getIdShop());
+                context.startActivity(intent);
+            }
         });
-
-
     }
 
     @Override
@@ -84,7 +93,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_name,txt_price,txt_name_shop,txt_sold_shop_home;
+        TextView txt_name, txt_price, txt_name_shop, txt_sold_shop_home;
         ImageView img;
         LinearLayout item;
 
@@ -98,7 +107,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             txt_sold_shop_home = itemView.findViewById(R.id.txt_sold_shop_home);
         }
     }
-    //img
+
     private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
         if (imageBytes != null && imageBytes.length > 0) {
             return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);

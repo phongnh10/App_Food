@@ -1,9 +1,12 @@
 package com.example.du_an_1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -17,9 +20,11 @@ import com.example.du_an_1.databinding.ActivityShopBinding;
 import java.util.List;
 
 import adapter.SearchAdapter;
+import dao.OrderDetailsDAO;
 import dao.ProductDAO;
 import dao.ShopDAO;
 import dao.UserDAO;
+import model.OrderDetails;
 import model.Product;
 import model.Shop;
 import model.User;
@@ -44,12 +49,17 @@ public class ShopActivity extends AppCompatActivity {
             return insets;
         });
 
+        int role = getRoleUserFromSharedPreferences();
+        if(role != 2){
+            binding.rlCartOrder.setVisibility(View.GONE);
+        }
+
         Intent intent = getIntent();
         idShop = intent.getIntExtra("idShop", -1);
 
 
         rcvEat = binding.rcvShopEatBuy;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rcvEat.setLayoutManager(layoutManager);
 
         rcvDrink = binding.rcvShopDrinkBuy;
@@ -72,13 +82,25 @@ public class ShopActivity extends AppCompatActivity {
         User user = new User();
         user = userDAO.getUserByID(idUser);
 
-        binding.txtAddressShopBuy.setText("Địa Chỉ: "+shop.getAddress());
-        binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: "+user.getPhone()));
+        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO(ShopActivity.this);
+
+        int quantity = 0;
+        List<OrderDetails> orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus (getidUserFromSharedPreferences(), 0);
+        for (OrderDetails orderDetail : orderDetailsList) {
+            quantity += orderDetail.getQuantity();
+        }
+        binding.txtQuantityOrder.setText(String.valueOf(quantity));
+        binding.txtAddressShopBuy.setText("Địa Chỉ: " + shop.getAddress());
+        binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: " + user.getPhone()));
         binding.txtNameShopBuy.setText(shop.getName());
         binding.imgImageShopBuy.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
 
 
-
+        binding.rlCartOrder.setOnClickListener(view -> {
+           Intent intent1 = new Intent(ShopActivity.this, MainActivity.class);
+           intent1.putExtra("fragment","CartBuyFragment");
+           startActivity(intent1);
+        });
     }
 
     public void loadProductList() {
@@ -101,6 +123,15 @@ public class ShopActivity extends AppCompatActivity {
         } else {
             return BitmapFactory.decodeResource(ShopActivity.this.getResources(), R.drawable.side_nav_bar);
         }
+    }
+
+    public int getidUserFromSharedPreferences() {
+        SharedPreferences sharedPreferences = ShopActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("idUser", -1);
+    }
+    public int getRoleUserFromSharedPreferences() {
+        SharedPreferences sharedPreferences = ShopActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("role", -1);
     }
 
 }

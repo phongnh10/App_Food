@@ -1,6 +1,7 @@
 package com.example.du_an_1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,7 +22,6 @@ import fragment.ManageSellerFragment;
 import fragment.SearchFragment;
 import fragment.SettingFragment;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -34,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         checkRole();
 
-        // Load the default fragment
-        replaceFragment(new HomeFragment());
+        Intent intent = getIntent();
+        String fragmentName = intent.getStringExtra("fragment");
+        if (fragmentName != null && !fragmentName.isEmpty()) {
+            replaceFragment(getFragmentByName(fragmentName));
+        } else {
+            replaceFragment(new HomeFragment());
+        }
 
         int role = getRoleFromSharedPreferences();
 
@@ -61,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (item.getItemId() == R.id.nav_setting) {
                 replaceFragment(new SettingFragment());
-
             } else {
                 replaceFragment(new HomeFragment());
             }
@@ -69,27 +73,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // f
+    // Method to get Fragment by name
+    private Fragment getFragmentByName(String fragmentName) {
+        switch (fragmentName) {
+            case "CartSellFragment":
+                return new CartSellFragment();
+            case "CartBuyFragment":
+                return new CartBuyFragment();
+            case "ManageAdminFragment":
+                return new ManageAdminFragment();
+            case "ManageBuyerFragment":
+                return new ManageBuyerFragment();
+            case "ManageSellerFragment":
+                return new ManageSellerFragment();
+            case "SearchFragment":
+                return new SearchFragment();
+            case "SettingFragment":
+                return new SettingFragment();
+            case "HomeFragment":
+            default:
+                return new HomeFragment();
+        }
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment); // Corrected method call
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
 
-    // get role
     public int getRoleFromSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("role", -1);
     }
 
-    // check role
     public void checkRole() {
         int role = getRoleFromSharedPreferences();
 
         switch (role) {
-            //admin
-            case 0:
+            case 0: // admin
                 MenuItem nav_shop = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
                 if (nav_shop != null) {
                     nav_shop.setTitle("Manage");
@@ -98,15 +121,11 @@ public class MainActivity extends AppCompatActivity {
                 MenuItem nav_cart = binding.bottomNavigation.getMenu().findItem(R.id.nav_cart);
                 nav_cart.setVisible(false);
                 break;
-            //sell
-            case 1:
+            case 1: // seller
                 break;
-            //buy
-            case 2:
+            case 2: // buyer
                 break;
-            //other case
             default:
-
                 break;
         }
     }

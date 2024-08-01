@@ -82,6 +82,53 @@ public class ShopDAO {
         return shopList;
     }
 
+    public List<Shop> getShopByName(String query) {
+        List<Shop> shopList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Câu lệnh SQL để tìm các cửa hàng có tên giống như truy vấn
+        String sql = "SELECT idShop, idUser, name, address, image, status FROM shop WHERE name LIKE ?";
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(sql, new String[]{"%" + query + "%"});
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    // Lấy chỉ số của các cột từ con trỏ
+                    int idShopIndex = cursor.getColumnIndex("idShop");
+                    int idUserIndex = cursor.getColumnIndex("idUser");
+                    int nameIndex = cursor.getColumnIndex("name");
+                    int addressIndex = cursor.getColumnIndex("address");
+                    int imageIndex = cursor.getColumnIndex("image");
+                    int statusIndex = cursor.getColumnIndex("status");
+
+                    if (idShopIndex >= 0 && idUserIndex >= 0 && nameIndex >= 0 && addressIndex >= 0 && imageIndex >= 0 && statusIndex >= 0) {
+                        // Lấy dữ liệu từ con trỏ và tạo đối tượng Shop
+                        int idShop = cursor.getInt(idShopIndex);
+                        int idUser = cursor.getInt(idUserIndex);
+                        String name = cursor.getString(nameIndex);
+                        String address = cursor.getString(addressIndex);
+                        byte[] imageBytes = cursor.getBlob(imageIndex);
+                        int status = cursor.getInt(statusIndex);
+
+                        Shop shop = new Shop(idShop, idUser, name, address, imageBytes, status);
+                        shopList.add(shop);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("ShopDAO", "Error while fetching shops: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return shopList;
+    }
+
+
     public List<Shop> getlitsShopIsActive() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<Shop> shopList = new ArrayList<>();

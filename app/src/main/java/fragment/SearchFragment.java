@@ -1,14 +1,13 @@
 package fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ import com.example.du_an_1.databinding.FragmentSearchBinding;
 import java.util.List;
 
 import adapter.SearchAdapter;
-import adapter.ShopAdapter;
 import adapter.ShopItemAdapter;
 import dao.ProductDAO;
 import dao.ShopDAO;
@@ -31,9 +29,11 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private ProductDAO productDAO;
     private SearchAdapter searchAdapter;
-    private ShopAdapter shopAdapter;
+    ShopItemAdapter shopItemAdapter;
     private ShopDAO shopDAO;
     private RecyclerView recyclerView;
+    private boolean isProductSearch;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class SearchFragment extends Fragment {
         View view = binding.getRoot();
 
         loadProductList();
-
 
         binding.showMenu1Textview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +52,12 @@ public class SearchFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.item1) {
                             binding.showMenu1Textview.setText("Sản Phẩm");
+
                             loadProductList();
                         } else if (item.getItemId() == R.id.item2) {
                             binding.showMenu1Textview.setText("Shop");
-                            loadProductList1();
+                            loadShopList();
+
                         }
                         return false;
                     }
@@ -74,20 +75,34 @@ public class SearchFragment extends Fragment {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.item1) {
-                            binding.showMenu2Textview.setText("Ăn Vặt");
+                            loadProduct1();
+                            binding.showMenu2Textview.setText("Cơm");
                         } else if (item.getItemId() == R.id.item2) {
-                            binding.showMenu2Textview.setText("Ăn Chính");
+                            loadProduct2();
+                            binding.showMenu2Textview.setText("Mỳ");
                         } else if (item.getItemId() == R.id.item3) {
-                            binding.showMenu2Textview.setText("Combo Đồ Ăn");
+                            loadProduct3();
+                            binding.showMenu2Textview.setText("Bánh Mỳ");
                         } else if (item.getItemId() == R.id.item4) {
-                            binding.showMenu2Textview.setText("Đồ Ăn Khác");
+                            loadProduct4();
+                            binding.showMenu2Textview.setText("Đồ Ăn Vặt");
                         } else if (item.getItemId() == R.id.item5) {
-                            binding.showMenu2Textview.setText("Nước Ngọt");
+                            loadProduct5();
+                            binding.showMenu2Textview.setText("Đồ Ăn Khác");
                         } else if (item.getItemId() == R.id.item6) {
-                            binding.showMenu2Textview.setText("Cà Phê");
-                        } else if (item.getItemId() == R.id.item7) {
+                            loadProduct6();
                             binding.showMenu2Textview.setText("Trà Sữa");
+                        } else if (item.getItemId() == R.id.item7) {
+                            loadProduct7();
+                            binding.showMenu2Textview.setText("Cà Phê");
                         } else if (item.getItemId() == R.id.item8) {
+                            loadProduct8();
+                            binding.showMenu2Textview.setText("Nước Ngọt");
+                        } else if (item.getItemId() == R.id.item9) {
+                            loadProduct9();
+                            binding.showMenu2Textview.setText("Sữa");
+                        } else if (item.getItemId() == R.id.item10) {
+                            loadProduct10();
                             binding.showMenu2Textview.setText("Nước Khác");
                         }
                         return false;
@@ -107,12 +122,19 @@ public class SearchFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.item1) {
                             binding.showMenu3Textview.setText("Mới Nhất");
+                            loadProductListNew();
                         } else if (item.getItemId() == R.id.item2) {
                             binding.showMenu3Textview.setText("Giá Thấp Nhất");
+                            loadProductListMin();
                         } else if (item.getItemId() == R.id.item3) {
                             binding.showMenu3Textview.setText("Giá Cao Nhất");
+                            loadProductListMax();
                         } else if (item.getItemId() == R.id.item4) {
+                            binding.showMenu3Textview.setText("Lượt Bán");
+                            loadProductListSold();                        }
+                        else if (item.getItemId() == R.id.item5) {
                             binding.showMenu3Textview.setText("A-Z");
+                            loadProductList();
                         }
                         return false;
                     }
@@ -121,33 +143,61 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
-
-        binding.edtSearchProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Do nothing
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterProductList(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Do nothing
-            }
-        });
+        setupSearchView();
 
         return view;
     }
 
 
+
+
+
+    private void filterProductList(String query) {
+        List<Product> filteredList = productDAO.getProductsByName(query);
+        searchAdapter.updateProductList(filteredList);
+    }
+    private void filterShopList(String query) {
+        List<Shop> filteredList = shopDAO.getShopByName(query);
+        shopItemAdapter.updateShopList(filteredList);
+    }
+    private void setupSearchView() {
+        binding.svSearchProduct.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (isProductSearch) {
+                    filterProductList(query);
+                } else {
+                    filterShopList(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (isProductSearch) {
+                    filterProductList(newText);
+                } else {
+                    filterShopList(newText);
+                }
+                return false;
+            }
+        });
+    }
+
+    public void loadShopList() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        shopDAO = new ShopDAO(getContext());
+        List<Shop> shopList = shopDAO.getlitsShopIsActive();
+        shopItemAdapter = new ShopItemAdapter(getContext(), shopList, shopDAO);
+        recyclerView.setAdapter(shopItemAdapter);
+        isProductSearch = false;
+
+    }
+
     public void loadProductList() {
-
-
-
         recyclerView = binding.rcvProductSearch;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -156,22 +206,191 @@ public class SearchFragment extends Fragment {
         List<Product> productList = productDAO.getProductsListAll();
         searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
         recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
 
     }
 
-    public void loadProductList1() {
+    public void loadProductListNew() {
         recyclerView = binding.rcvProductSearch;
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        shopDAO = new ShopDAO(getContext());
-        List<Shop> shopList = shopDAO.getlitsShopIsActive();
-        ShopItemAdapter shopItemAdapter = new ShopItemAdapter(getContext(), shopList, shopDAO);
-        recyclerView.setAdapter(shopItemAdapter);
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListNew();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+
+    }
+    public void loadProductListMax() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListPriceMax();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+    public void loadProductListMin() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListPriceMin();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
     }
 
-    private void filterProductList(String query) {
-        List<Product> filteredList = productDAO.getProductsByName(query);
-        searchAdapter.updateProductList(filteredList);
+    public void loadProductListSold() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListSold();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
     }
+
+    public void loadProduct1() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(1);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct2() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(3);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct3() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(3);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct4() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(4);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct5() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(5);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct6() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(6);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct7() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(7);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct8() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(8);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+        isProductSearch = true;
+
+    }
+
+    public void loadProduct9() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(9);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+
+        isProductSearch = true;
+    }
+
+    public void loadProduct10() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListByIdCategories(10);
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+
+        isProductSearch = true;
+    }
+
+
+
+
 }

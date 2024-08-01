@@ -70,6 +70,14 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
                 context.startActivity(intent);
             }
         });
+        holder.img_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductActivity.class);
+                intent.putExtra("productId", orderDetails.getIdProduct());
+                context.startActivity(intent);
+            }
+        });
 
         holder.txt_shop_product_details.setOnClickListener(new View.OnClickListener() {
             @Override

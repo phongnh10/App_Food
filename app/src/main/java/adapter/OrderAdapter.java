@@ -137,7 +137,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                             }
 
                             int statusUpdate = 3;
-
                             Order updatedOrder = new Order(order.getIdOrder(), order.getIdShop(), order.getIdUser(), order.getQuantity(), order.getTotalPrice(), order.getDate(), noteUp, order.getName(), order.getPhone(), order.getAddress(), statusUpdate);
 
                             boolean check = orderDAO.updateOrder(updatedOrder);

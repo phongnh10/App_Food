@@ -285,43 +285,43 @@ public class DbHelper extends SQLiteOpenHelper {
 
 // Cơm
         insertProduct(db, 1, 1, "Cơm Tấm Sườn Nướng", image1, 30000.0, "Cơm tấm với sườn nướng thơm ngon, kèm trứng ốp la và dưa leo, cà chua. Món ăn truyền thống đầy hương vị.", 1, 999);
-        insertProduct(db, 1, 1, "Cơm Chiên Dương Châu", image1, 32000.0, "Cơm chiên với tôm, thịt heo, rau củ và trứng. Hương vị đậm đà và đầy đủ dinh dưỡng.", 1, 100);
+        insertProduct(db, 1, 2, "Cơm Chiên Dương Châu", image1, 32000.0, "Cơm chiên với tôm, thịt heo, rau củ và trứng. Hương vị đậm đà và đầy đủ dinh dưỡng.", 1, 100);
 
 // Mỳ
         insertProduct(db, 2, 1, "Mỳ Xào Thập Cẩm", image2, 35000.0, "Mỳ xào với nhiều loại hải sản tươi ngon và rau củ, nước sốt đặc biệt.", 1, 200);
-        insertProduct(db, 2, 1, "Mỳ Ý Bolognese", image2, 37000.0, "Mỳ Ý với sốt Bolognese truyền thống, thịt bằm và phô mai parmesan.", 1, 300);
+        insertProduct(db, 2, 2, "Mỳ Ý Bolognese", image2, 37000.0, "Mỳ Ý với sốt Bolognese truyền thống, thịt bằm và phô mai parmesan.", 1, 300);
 
 // Bánh Mỳ
         insertProduct(db, 3, 1, "Bánh Mỳ Kẹp Thịt Nướng", image3, 20000.0, "Bánh mì kẹp thịt nướng với rau sống tươi ngon và sốt đặc biệt.", 1, 500);
-        insertProduct(db, 3, 1, "Bánh Mỳ Pate Đặc Biệt", image3, 22000.0, "Bánh mì với pate và thịt nguội, kèm rau sống và sốt mayonnaise.", 1, 700);
+        insertProduct(db, 3, 2, "Bánh Mỳ Pate Đặc Biệt", image3, 22000.0, "Bánh mì với pate và thịt nguội, kèm rau sống và sốt mayonnaise.", 1, 700);
 
 // Đồ Ăn Vặt
         insertProduct(db, 4, 1, "Khoai Tây Chiên Giòn", image4, 15000.0, "Khoai tây chiên giòn rụm, kèm sốt mayonnaise và ketchup.", 1, 800);
-        insertProduct(db, 4, 1, "Chả Giò Hải Sản", image4, 18000.0, "Chả giò với hải sản tươi ngon, rau củ và nước chấm chua ngọt.", 1, 10);
+        insertProduct(db, 4, 2, "Chả Giò Hải Sản", image4, 18000.0, "Chả giò với hải sản tươi ngon, rau củ và nước chấm chua ngọt.", 1, 10);
 
 // Đồ Ăn Khác
         insertProduct(db, 5, 1, "Gỏi Cuốn Tôm Thịt", image5, 20000.0, "Gỏi cuốn với tôm, thịt heo, rau sống và nước chấm đậu phộng.", 1, 55);
-        insertProduct(db, 5, 1, "Bánh Xèo", image5, 22000.0, "Bánh xèo với nhân thịt heo, tôm và giá đỗ, ăn kèm rau sống và nước chấm.", 1, 1000);
+        insertProduct(db, 5, 2, "Bánh Xèo", image5, 22000.0, "Bánh xèo với nhân thịt heo, tôm và giá đỗ, ăn kèm rau sống và nước chấm.", 1, 1000);
 
 // Trà Sữa
         insertProduct(db, 6, 1, "Trà Sữa Đen", image6, 35000.0, "Trà sữa đen với trân châu mềm mịn và vị ngọt thanh.", 1, 2100);
-        insertProduct(db, 6, 1, "Trà Sữa Matcha", image6, 38000.0, "Trà sữa matcha thơm ngon với lớp bọt sữa mịn và trân châu.", 1, 1543);
+        insertProduct(db, 6, 2, "Trà Sữa Matcha", image6, 38000.0, "Trà sữa matcha thơm ngon với lớp bọt sữa mịn và trân châu.", 1, 1543);
 
 // Cà Phê
         insertProduct(db, 7, 1, "Cà Phê Espresso", image7, 25000.0, "Cà phê espresso đậm đà, phục vụ với một lớp crema dày và mịn.", 1, 1234);
-        insertProduct(db, 7, 1, "Cà Phê Americano", image7, 27000.0, "Cà phê Americano với hương vị mạnh mẽ, pha với nước nóng.", 1, 12412);
+        insertProduct(db, 7, 2, "Cà Phê Americano", image7, 27000.0, "Cà phê Americano với hương vị mạnh mẽ, pha với nước nóng.", 1, 12412);
 
 // Nước Ngọt
         insertProduct(db, 8, 1, "Nước Ngọt Cola", image8, 12000.0, "Nước ngọt cola với hương vị đặc trưng và sủi bọt.", 1, 124);
-        insertProduct(db, 8, 1, "Nước Ngọt Cam", image8, 13000.0, "Nước ngọt cam với vị chua ngọt thanh mát.", 1, 124);
+        insertProduct(db, 8, 2, "Nước Ngọt Cam", image8, 13000.0, "Nước ngọt cam với vị chua ngọt thanh mát.", 1, 124);
 
 // Sữa
         insertProduct(db, 9, 1, "Sữa Tươi", image9, 15000.0, "Sữa tươi nguyên chất, giàu canxi và vitamin.", 1, 14);
-        insertProduct(db, 9, 1, "Sữa Socola", image9, 17000.0, "Sữa socola ngọt ngào với hương vị socola đậm đà.", 1, 124);
+        insertProduct(db, 9, 2, "Sữa Socola", image9, 17000.0, "Sữa socola ngọt ngào với hương vị socola đậm đà.", 1, 124);
 
 // Nước Khác
         insertProduct(db, 10, 1, "Nước Dừa", image10, 20000.0, "Nước dừa tươi mát, giàu vitamin và khoáng chất.", 1, 124);
-        insertProduct(db, 10, 1, "Nước Chanh", image10, 18000.0, "Nước chanh tươi với hương vị chua ngọt và tinh khiết.", 1, 14);
+        insertProduct(db, 10, 2, "Nước Chanh", image10, 18000.0, "Nước chanh tươi với hương vị chua ngọt và tinh khiết.", 1, 14);
 
     }
 

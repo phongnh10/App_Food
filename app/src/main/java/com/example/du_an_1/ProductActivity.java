@@ -57,6 +57,8 @@ public class ProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int productId = intent.getIntExtra("productId", -1);
 
+
+
         if (productId != -1) {
             productDAO = new ProductDAO(this);
             product = productDAO.getProductById(productId);
@@ -74,6 +76,15 @@ public class ProductActivity extends AppCompatActivity {
             ShopDAO shopDAO = new ShopDAO(ProductActivity.this);
             shop = shopDAO.getShopByIdShop(product.getIdShop());
             binding.txtNameShop.setText("Shop "+shop.getName());
+            binding.txtNameShop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent1 = new Intent(ProductActivity.this, ShopActivity.class);
+                    intent1.putExtra("idShop", product.getIdShop());
+                    startActivity(intent1);
+                    finish();
+                }
+            });
         }
 
         binding.imgMinusQuantityProduct.setOnClickListener(new View.OnClickListener() {

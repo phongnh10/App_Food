@@ -33,6 +33,10 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ViewHo
         this.shopDAO = shopDAO;
     }
 
+    public void updateShopList(List<Shop> newShoptList) {
+        this.shopList = newShoptList;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ShopItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.du_an_1.ProductActivity;
 import com.example.du_an_1.R;
+import com.example.du_an_1.ShopActivity;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -57,11 +58,9 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         int idShop= product.getIdShop();
         ShopDAO shopDAO = new ShopDAO(context);
         Shop shop = shopDAO.getShopByIdShop(idShop);
-
         holder.txt_name_shop.setText(shop.getName());
-
         holder.txt_luotban_shop_home.setText(String.valueOf(product.getSold())+" lượt bán");
-        holder.ll_item_product_search.setOnClickListener(new View.OnClickListener() {
+        holder.txt_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductActivity.class);
@@ -69,6 +68,23 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                 context.startActivity(intent);
             }
         });
+        holder.img_product_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProductActivity.class);
+                intent.putExtra("productId", product.getIdProduct());
+                context.startActivity(intent);
+            }
+        });
+        holder.txt_name_shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ShopActivity.class);
+                intent.putExtra("idShop", shop.getIdShop());
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 

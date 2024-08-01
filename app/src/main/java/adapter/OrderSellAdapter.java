@@ -26,8 +26,12 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import dao.OrderDAO;
+import dao.OrderDetailsDAO;
+import dao.ProductDAO;
 import dao.ShopDAO;
 import model.Order;
+import model.OrderDetails;
+import model.Product;
 import model.Shop;
 
 public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.ViewHolder> {
@@ -88,7 +92,6 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         }
 
 
-        holder.txt_name_order.setText(orderList.get(0).getName());
         holder.txt_id_order.setText("Đơn hàng: " + String.valueOf(order.getIdOrder()));
         holder.txt_name_user_order.setText("Người Mua: " + order.getName());
         holder.txt_quantity_order.setText("SL: " + String.valueOf(order.getQuantity()));
@@ -342,6 +345,29 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, getItemCount());
 
+                                // Cập nhật số lượng sản phẩm đã bán
+                                OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO(context);
+                                List<OrderDetails> orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(order.getIdOrder(), 1);
+
+                                ProductDAO productDAO = new ProductDAO(context);
+                                List<Product> productList = productDAO.getProductsListAll();
+
+                                for (OrderDetails orderDetails : orderDetailsList) {
+                                    for (Product product : productList) {
+                                        if (product.getIdProduct() == orderDetails.getIdProduct()) {
+                                            product.setSold((product.getSold() + orderDetails.getQuantity()));
+                                            boolean check1 = productDAO.upSold(product);
+                                            if (check1) {
+                                                int productPosition = productList.indexOf(product);
+                                                if (productPosition >= 0) {
+                                                    productList.set(productPosition, product);
+                                                }
+                                            }
+                                        }
+
+                                    }
+
+                                }
                                 Toast.makeText(context, "Chúc mừng đã giao thành công đơn hàng", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             } else {

@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ffood"
+                android:text="Ffood"
                 android:textColor="#F5643A"
                 android:textStyle="bold"
                 android:textSize="25dp"
@@ -34,25 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bogoccovien">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:src="@drawable/ic_search" />
-                <EditText
-                    android:id="@+id/edt_search_product"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:textColor="@color/black"
-                    android:hint="Tìm kiếm sản phẩm"
-                    android:textSize="16dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
+
+                <SearchView
+                    android:id="@+id/svSearchProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Tìm kiếm sản phẩm..." >
+                </SearchView>
             </LinearLayout>
 
         </LinearLayout>
@@ -95,7 +84,7 @@
                         android:text="Sản Phẩm "
                         android:textSize="16sp"
                         android:gravity="center"
-                        android:background="@drawable/custom_boder_right_lefrt"/>
+                        android:background="@drawable/bogoccovien"/>
 
                 </LinearLayout>
 
