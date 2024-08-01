@@ -2,7 +2,6 @@ package fragment;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.du_an_1.R;
-import com.example.du_an_1.ShopActivity;
 import com.example.du_an_1.databinding.FragmentOrdersCurrentBinding;
 
 import java.text.DecimalFormat;
@@ -297,9 +295,6 @@ public class OrdersCurrentFragment extends Fragment {
             quantityProduct += orderDetails.getQuantity();
             binding.txtQuantityProduct.setText("Tổng: "+String.valueOf(quantityProduct));
         }
-
-        Intent intent = new Intent(getContext(), ShopActivity.class);
-        intent.getIntExtra("quantity",quantityProduct);
     }
 
 
