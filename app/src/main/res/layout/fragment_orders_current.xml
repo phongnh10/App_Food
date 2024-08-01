@@ -203,7 +203,7 @@
                 android:id="@+id/txtTotalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0 vnđ"
+                android:text="90.000 vnđ"
                 android:textColor="@color/price_color"
                 android:textSize="20sp"
                 android:gravity="center"/>

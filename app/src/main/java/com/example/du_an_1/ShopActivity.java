@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +36,6 @@ public class ShopActivity extends AppCompatActivity {
     private SearchAdapter searchAdapter1, searchAdapter2;
     private int idUser, idShop;
     private ShopDAO shopDAO;
-    private Runnable runnable;
-    private Handler handler = new Handler(); // Initialize handler
-    private int quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +50,13 @@ public class ShopActivity extends AppCompatActivity {
         });
 
         int role = getRoleUserFromSharedPreferences();
-        if (role != 2) {
+        if(role != 2){
             binding.rlCartOrder.setVisibility(View.GONE);
         }
 
         Intent intent = getIntent();
         idShop = intent.getIntExtra("idShop", -1);
+
 
         rcvEat = binding.rcvShopEatBuy;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -69,38 +66,41 @@ public class ShopActivity extends AppCompatActivity {
         StaggeredGridLayoutManager layoutManager1 = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rcvDrink.setLayoutManager(layoutManager1);
 
+
         loadProductList();
         loadProductList1();
 
         binding.imgBackProduct.setOnClickListener(view -> finish());
 
+        Shop shop = new Shop();
         shopDAO = new ShopDAO(this);
-        Shop shop = shopDAO.getShopByIdShop(idShop);
+        shop = shopDAO.getShopByIdShop(idShop);
 
         idUser = shop.getIdUser();
         UserDAO userDAO = new UserDAO(this);
-        User user = userDAO.getUserByID(idUser);
+        userDAO = new UserDAO(this);
+        User user = new User();
+        user = userDAO.getUserByID(idUser);
 
+        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO(ShopActivity.this);
+
+        int quantity = 0;
+        List<OrderDetails> orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus (getidUserFromSharedPreferences(), 0);
+        for (OrderDetails orderDetail : orderDetailsList) {
+            quantity += orderDetail.getQuantity();
+        }
         binding.txtQuantityOrder.setText(String.valueOf(quantity));
         binding.txtAddressShopBuy.setText("Địa Chỉ: " + shop.getAddress());
         binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: " + user.getPhone()));
         binding.txtNameShopBuy.setText(shop.getName());
         binding.imgImageShopBuy.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
 
-        binding.rlCartOrder.setOnClickListener(view -> {
-            Intent intent1 = new Intent(ShopActivity.this, MainActivity.class);
-            intent1.putExtra("CartBuyFragment", "CartBuyFragment");
-            startActivity(intent1);
-        });
 
-        // Setup the runnable to update the price periodically
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                loadQuantity();
-                handler.postDelayed(this, 500);
-            }
-        };
+        binding.rlCartOrder.setOnClickListener(view -> {
+           Intent intent1 = new Intent(ShopActivity.this, MainActivity.class);
+           intent1.putExtra("fragment","CartBuyFragment");
+           startActivity(intent1);
+        });
     }
 
     public void loadProductList() {
@@ -129,31 +129,9 @@ public class ShopActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = ShopActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }
-
     public int getRoleUserFromSharedPreferences() {
         SharedPreferences sharedPreferences = ShopActivity.this.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("role", -1);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        handler.post(runnable);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    public void loadQuantity() {
-        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO(ShopActivity.this); // Correctly initialized
-        List<OrderDetails> orderDetailsList = orderDetailsDAO.getOrderDetailsIdUserStatus(getidUserFromSharedPreferences(), 0);
-        quantity = 0; // Reset quantity before calculating
-        for (OrderDetails orderDetail : orderDetailsList) {
-            quantity += orderDetail.getQuantity();
-        }
-        binding.txtQuantityOrder.setText(String.valueOf(quantity)); // Update the quantity on the UI
-    }
 }

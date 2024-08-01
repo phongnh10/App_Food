@@ -295,7 +295,6 @@ public class OrdersCurrentFragment extends Fragment {
             quantityProduct += orderDetails.getQuantity();
             binding.txtQuantityProduct.setText("Tổng: "+String.valueOf(quantityProduct));
         }
-        loadlist();
     }
 
 
