@@ -1,10 +1,9 @@
 package com.example.du_an_1;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -76,6 +75,7 @@ public class ShopActivity extends AppCompatActivity {
         binding.txtAddressShopBuy.setText("Địa Chỉ: "+shop.getAddress());
         binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: "+user.getPhone()));
         binding.txtNameShopBuy.setText(shop.getName());
+        binding.imgImageShopBuy.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
 
 
 
@@ -93,6 +93,14 @@ public class ShopActivity extends AppCompatActivity {
         List<Product> productList = productDAO.getProductsListDrinksShop(idShop);
         searchAdapter2 = new SearchAdapter(this, productList, productDAO);
         rcvDrink.setAdapter(searchAdapter2);
+    }
+
+    private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        } else {
+            return BitmapFactory.decodeResource(ShopActivity.this.getResources(), R.drawable.side_nav_bar);
+        }
     }
 
 }
