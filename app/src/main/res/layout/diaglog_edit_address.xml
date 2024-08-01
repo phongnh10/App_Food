@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#DBE2EA"
+    android:background="@color/white"
     android:elevation="10dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,10 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/custom_edittext_background"
-            android:hint="Nhập vào tên của bạn"
-            android:padding="16dp"
-            android:textSize="18dp"
+            android:background="@drawable/bogoc_edittext"
+            android:hint="Nhập họ và tên của bạn"
+            android:padding="15dp"
+            android:textSize="18sp"
             android:textColor="@color/primary_text"
             android:textColorHint="@color/secondary_text"/>
 
@@ -31,10 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/custom_edittext_background"
+            android:background="@drawable/bogoc_edittext"
             android:hint="Nhập vào số điện thoại"
-            android:padding="16dp"
-            android:textSize="18dp"
+            android:padding="15dp"
+            android:textSize="18sp"
             android:textColor="@color/primary_text"
             android:textColorHint="@color/secondary_text"/>
 
@@ -43,10 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/custom_edittext_background"
-            android:hint="Nhập vào địa chỉ"
-            android:padding="16dp"
-            android:textSize="18dp"
+            android:background="@drawable/bogoc_edittext"
+            android:hint="Nhập vào địa chỉ giao hàng"
+            android:padding="15dp"
+            android:textSize="18sp"
             android:textColor="@color/primary_text"
             android:textColorHint="@color/secondary_text"/>
 
@@ -58,28 +59,29 @@
 
             <TextView
                 android:id="@+id/txt_cancel_edit_address"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_cancel_background"
                 android:gravity="center"
-                android:text="Không thay đổi"
-                android:textSize="15dp"
+                android:text="Trở về"
+                android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginEnd="10dp"/>
 
             <TextView
                 android:id="@+id/txt_update_edit_address"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_background"
-                android:text="Thay đổi"
                 android:gravity="center"
-                android:textSize="15dp"
+                android:text="Thay đổi"
+                android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

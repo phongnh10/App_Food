@@ -22,25 +22,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_margin="20dp">
-
         <ImageView
             android:id="@+id/img_back_product"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_back_figma"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true" />
-
-        <ImageView
-            android:id="@+id/img_arrow_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:layout_marginStart="6dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
             android:src="@drawable/baseline_arrow_back_ios_new_24"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/img_back_product"/>
+            android:background="@drawable/bg_ic_back"/>
     </RelativeLayout>
 
     <!-- Product Details -->
@@ -61,7 +49,7 @@
             android:layout_marginTop="20dp"
             android:text="Bánh Tráng Trộn"
             android:textColor="@color/background_dark"
-            android:textSize="22sp" />
+            android:textSize="25sp" />
         <!-- Product Shop -->
 
         <!-- Product Price and Rating -->
@@ -130,8 +118,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="1"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textSize="30dp"/>
 
             <ImageView
                 android:id="@+id/img_plus_quantity_product"
@@ -148,8 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -157,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100 lượt mua"
-                android:textSize="18dp"/>
+                android:textSize="20sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nino Shop"
-                android:textSize="18dp" />
+                android:textSize="20sp" />
 
 
         </LinearLayout>
@@ -176,38 +163,45 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="vertical"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:padding="12dp"
+            android:background="@drawable/custom_background">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="Mô Tả"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:id="@+id/txt_note_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:text="Bánh Tráng phơi sương"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
+        </ScrollView>
+    </LinearLayout>
 
-        </LinearLayout>
 
-        <!-- Rating Section -->
+    <!-- Rating Section -->
 
         <!-- Add to Cart Button -->
         <Button
             android:id="@+id/btn_add_product_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
             android:background="@drawable/custom_boder_update_user"
-            android:padding="10dp"
+            android:padding="12dp"
             android:text="Thêm Vào Giỏ Hàng"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:backgroundTint="@null" />
     </LinearLayout>
 

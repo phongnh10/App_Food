@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_gravity="center"
+            android:textColor="@color/white"
             android:gravity="center"
             android:background="@drawable/custom_button_cancel_background"
             android:textStyle="bold"
@@ -50,6 +51,7 @@
             android:padding="10dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textColor="@color/white"
             android:background="@drawable/custom_button_background"
             android:textStyle="bold"
             android:text="Đồng ý">

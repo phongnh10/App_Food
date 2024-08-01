@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="fragment.CartSellFragment"
     android:orientation="vertical"
-    android:background="@color/background_dark">
+    android:background="#FEE9D5">
     <LinearLayout
         android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="20dp"
@@ -21,10 +21,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="0dp"
                 android:layout_weight="1"
-                android:gravity="bottom"
+                android:gravity="center_vertical"
                 android:text="Đơn hàng"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 android:textStyle="bold"></TextView>
         </RelativeLayout>
 
