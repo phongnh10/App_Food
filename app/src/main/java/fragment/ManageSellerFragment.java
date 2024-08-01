@@ -40,19 +40,16 @@ public class ManageSellerFragment extends Fragment {
         replaceFragment(new ManageProductFragment());
         binding.imgProduct.setVisibility(View.VISIBLE);
         binding.imgCategory.setVisibility(View.GONE);
-        binding.imgShop.setVisibility(View.GONE);
 
         binding.txtProduct.setOnClickListener(view1 -> {
             replaceFragment(new ManageProductFragment());
             binding.imgProduct.setVisibility(View.VISIBLE);
             binding.imgCategory.setVisibility(View.GONE);
-            binding.imgShop.setVisibility(View.GONE);
         });
         binding.txtCategory.setOnClickListener(view1 -> {
             replaceFragment(new ManageCategoryFragment());
             binding.imgProduct.setVisibility(View.GONE);
             binding.imgCategory.setVisibility(View.VISIBLE);
-            binding.imgShop.setVisibility(View.GONE);
         });
         getShop();
 

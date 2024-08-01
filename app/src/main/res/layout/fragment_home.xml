@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="0dp"
-        app:cardElevation="0dp">
+        app:cardElevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:text="ffood"
                 android:textColor="#F5643A"
                 android:textStyle="bold"
-                android:textSize="25dp"/>
+                android:textSize="25sp"/>
 
             <View
                 android:layout_width="0dp"
@@ -67,13 +67,6 @@
                 android:orientation="vertical"
                 android:paddingVertical="0dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:text="Bạn hãy nhập địa chỉ để Shop có thể giao món nhé!"
-                    android:textSize="15dp"
-                    android:textColor="#000000"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -97,19 +90,12 @@
                         android:gravity="center"
                         android:text="Phòng 813, tầng 8, tòa T"
                         android:textColor="@color/background_dark"
-                        android:textSize="16dp" />
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/baseline_edit_24" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -170,12 +156,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Danh mục món ăn"
+                                android:text="Danh mục"
                                 android:textColor="@color/black"
-                                android:textSize="18dp"
+                                android:textSize="18sp"
                                 android:textStyle="bold"
                                 android:layout_marginRight="10dp"></TextView>
-
+                            <!-- icon mũi tên
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
@@ -183,6 +169,7 @@
                                 android:layout_gravity="center"
                                 android:padding="5dp"
                                 android:src="@drawable/baseline_arrow_forward_ios_24" />
+                                -->
                         </LinearLayout>
 
                         <LinearLayout
@@ -219,69 +206,65 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Món mới hôm nay"
+                        android:text="Món ăn mới hôm nay"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginRight="10dp"></TextView>
+                    <!-- icon mũi tên
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:background="@drawable/background_circle_blue"
+                                            android:layout_gravity="center"
+                                            android:padding="5dp"
+                                            android:src="@drawable/baseline_arrow_forward_ios_24" />
+                                    -->
+                                    </LinearLayout>
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/rcv_eat_home"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"></androidx.recyclerview.widget.RecyclerView>
+                                </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/background_circle_blue"
-                        android:layout_gravity="center"
-                        android:padding="5dp"
-                        android:src="@drawable/baseline_arrow_forward_ios_24" />
-                </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_eat_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"></androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingHorizontal="20dp"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_marginBottom="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Đồ uống được yêu thích"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:layout_marginRight="10dp"></TextView>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"
-                        android:src="@mipmap/heart" />
-                </LinearLayout>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Đồ uống được yêu thích"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"
+                                            android:textStyle="bold"
+                                            android:layout_marginRight="10dp"></TextView>
+                                    </LinearLayout>
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_drink_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"></androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/rcv_drink_home"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"></androidx.recyclerview.widget.RecyclerView>
+                                </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/girlorderfood" />
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/girlorderfood" />
 
-        </LinearLayout>
+                            </LinearLayout>
 
-    </ScrollView>
-</RelativeLayout>
+                        </ScrollView>
+                    </RelativeLayout>
