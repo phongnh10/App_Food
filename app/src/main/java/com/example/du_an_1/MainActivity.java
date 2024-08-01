@@ -1,6 +1,7 @@
 package com.example.du_an_1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         checkRole();
 
+        loadFragmentFromIntent();
+
         // Load the default fragment
-        replaceFragment(new HomeFragment());
 
         int role = getRoleFromSharedPreferences();
 
@@ -110,4 +112,43 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    private void loadFragmentFromIntent() {
+        Intent intent = getIntent();
+        String fragmentName = intent.getStringExtra("fragment");
+        if (fragmentName != null && !fragmentName.isEmpty()) {
+            Fragment fragment = getFragmentByName(fragmentName);
+            if (fragment != null) {
+                replaceFragment(fragment);
+            } else {
+                replaceFragment(new HomeFragment());
+            }
+        } else {
+            replaceFragment(new HomeFragment());
+        }
+    }
+
+    private Fragment getFragmentByName(String fragmentName) {
+        switch (fragmentName) {
+            case "CartSellFragment":
+                return new CartSellFragment();
+            case "CartBuyFragment":
+                return new CartBuyFragment();
+            case "HomeFragment":
+                return new HomeFragment();
+            case "ManageAdminFragment":
+                return new ManageAdminFragment();
+            case "ManageBuyerFragment":
+                return new ManageBuyerFragment();
+            case "ManageSellerFragment":
+                return new ManageSellerFragment();
+            case "SearchFragment":
+                return new SearchFragment();
+            case "SettingFragment":
+                return new SettingFragment();
+            default:
+                return null;
+        }
+    }
+
 }

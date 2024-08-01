@@ -129,7 +129,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
                     boolean isUpdated = orderDetailsDAO.updateOrderDetails(orderDetails);
                     if (!isUpdated) {
-                        Toast.makeText(view.getContext(), "Giảm số lượng sản phẩm không thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Giảm số lượng sản phẩm faild", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
