@@ -97,7 +97,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.txt_name_user_order.setText("Người Mua: " + order.getName());
         holder.txt_quantity_order.setText("SL: " + String.valueOf(order.getQuantity()));
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
-        holder.txt_total_price_order.setText("Tổng Tiền: " + String.valueOf(decimalFormat.format(order.getTotalPrice())) + " VND");
+        holder.txt_total_price_order.setText("Tổng Tiền: " + String.valueOf(decimalFormat.format(order.getTotalPrice())) + " đ");
         holder.txt_date_order.setText("Ngày: " + String.valueOf(order.getDate()));
         holder.img_image_order.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
         holder.txt_note_order.setText(order.getNote());
@@ -132,7 +132,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                 return;
                             }
                             if (note.length() < 10) {
-                                Toast.makeText(context, "nội dung hơn ít nhất 10 kí tự", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "nội dung ít nhất 10 kí tự", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
