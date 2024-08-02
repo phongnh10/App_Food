@@ -67,6 +67,8 @@ public class OrdersCurrentFragment extends Fragment {
         orderList = new ArrayList<>();
         orderDetailsList = new ArrayList<>();
 
+
+
         // Set up RecyclerView
         loadlist();
 
@@ -229,7 +231,7 @@ public class OrdersCurrentFragment extends Fragment {
                             CustomToast.show(getContext(), "Đặt hàng thất bại", R.mipmap.image_logo_admin);
 
                         }
-                    dialog.dismiss();
+                        dialog.dismiss();
                     }
 
                 });
@@ -293,7 +295,7 @@ public class OrdersCurrentFragment extends Fragment {
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText("Tổng: "+String.valueOf(quantityProduct));
+            binding.txtQuantityProduct.setText("Tổng: " + String.valueOf(quantityProduct));
         }
         loadlist();
     }
@@ -309,6 +311,11 @@ public class OrdersCurrentFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         if (orderDetailsList.isEmpty() || (orderDetailsList == null)) {
             binding.txtQuantityProduct.setText("Tổng: 0");
+        }
+        if (orderDetailsList == null || orderDetailsList.isEmpty() || orderDetailsList.size() == 0) {
+            binding.imgCardEmpty.setVisibility(View.VISIBLE);
+        } else {
+            binding.imgCardEmpty.setVisibility(View.GONE);
         }
     }
 

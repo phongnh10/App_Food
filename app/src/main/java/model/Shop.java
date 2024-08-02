@@ -8,17 +8,10 @@ public class Shop {
     private String address;
     private byte[] image;
     private int status;
+    private int totalSold = -1; //
 
     public Shop() {
     }
-
-    public Shop(int idShop, int idUser, String address, byte[] image, int status) {
-    }
-
-    public int getIdShop() {
-        return idShop;
-    }
-
 
     public Shop(int idShop, int idUser, String name, String address, byte[] image, int status) {
         this.idShop = idShop;
@@ -29,6 +22,14 @@ public class Shop {
         this.status = status;
     }
 
+    public Shop(int idShop, int idUser, String name, String address, byte[] image, int status, int totalSold) {
+        this(idShop, idUser, name, address, image, status);
+        this.totalSold = totalSold;
+    }
+
+    public int getIdShop() {
+        return idShop;
+    }
 
     public void setIdShop(int idShop) {
         this.idShop = idShop;
@@ -72,5 +73,13 @@ public class Shop {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getTotalSold() {
+        return totalSold;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
     }
 }

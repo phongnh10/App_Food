@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.ManageProductFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,8 +20,9 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_add_24">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:backgroundTint="@color/orange"
+        app:srcCompat="@drawable/ic_add_24"
+        app:fabSize="auto" />
 </RelativeLayout>

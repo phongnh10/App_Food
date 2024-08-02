@@ -279,7 +279,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         productDAO = new ProductDAO(getContext());
-        List<Product> productList = productDAO.getProductsListByIdCategories(3);
+        List<Product> productList = productDAO.getProductsListByIdCategories(2);
         searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
         recyclerView.setAdapter(searchAdapter);
         isProductSearch = true;
