@@ -96,7 +96,7 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
         holder.txt_name_user_order.setText("Người Mua: " + order.getName());
         holder.txt_quantity_order.setText("SL: " + String.valueOf(order.getQuantity()));
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
-        holder.txt_total_price_order.setText("Tổng Tiền: " + String.valueOf(decimalFormat.format(order.getTotalPrice())) + " VND");
+        holder.txt_total_price_order.setText("Tổng Tiền: " + String.valueOf(decimalFormat.format(order.getTotalPrice())) + " đ");
         holder.txt_date_order.setText("Ngày: " + String.valueOf(order.getDate()));
         holder.img_image_order.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
         holder.txt_note_order.setText(order.getNote());
@@ -210,7 +210,7 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, getItemCount());
 
-                                Toast.makeText(context, "Hãy nhanh chống giao đơn hàng nhé", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Hãy nhanh chóng giao đơn hàng nhé", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             } else {
                                 Toast.makeText(context, "Xác nhận đơn hàng thất bại", Toast.LENGTH_SHORT).show();
@@ -371,7 +371,7 @@ public class OrderSellAdapter extends RecyclerView.Adapter<OrderSellAdapter.View
                                 Toast.makeText(context, "Chúc mừng đã giao thành công đơn hàng", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             } else {
-                                Toast.makeText(context, "Xác nhận đơn hàng, giao thành công thất bại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
