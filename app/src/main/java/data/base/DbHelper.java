@@ -42,6 +42,8 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ADDRESS_SHOP = "address";
     private static final String COLUMN_IMAGE_SHOP = "image";
     private static final String COLUMN_STATUS_SHOP = "status";
+    private static final String COLUMN_SHOP_SOLD = "sold";
+
 
     // Categories table columns
     private static final String COLUMN_ID_CATEGORIES = "idCategories";

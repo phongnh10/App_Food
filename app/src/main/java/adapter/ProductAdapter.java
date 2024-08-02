@@ -81,11 +81,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
 
         int status = product.getStatus();
+
         if (status == 1) {
-            holder.txt_status_product.setText("Còn Hàng");
             holder.txt_status_product.setTextColor(ContextCompat.getColor(context, R.color.selected_color));
         } else {
-            holder.txt_status_product.setText("Hết Hàng");
             holder.txt_status_product.setTextColor(ContextCompat.getColor(context, R.color.default_color));
 
         }
@@ -93,10 +92,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.ll_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Khởi tạo và thiết lập dialog update product
                 Dialog dialog = new Dialog(context, androidx.appcompat.R.style.Theme_AppCompat_Light);
                 LayoutInflater inflater = LayoutInflater.from(context);
-                View dialogView = inflater.inflate(R.layout.dialog_information_product, null);
-
+                View dialogView = inflater.inflate(R.layout.dialog_update_product, null);
                 dialog.setContentView(dialogView);
 
                 EditText edt_name = dialogView.findViewById(R.id.edt_name_product);
@@ -107,14 +106,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 TextView txt_categories = dialogView.findViewById(R.id.txt_categories_product);
                 Button btn_select_image = dialogView.findViewById(R.id.btn_select_image);
                 Button btn_save = dialogView.findViewById(R.id.btn_save_product);
+                Button btn_delete = dialogView.findViewById(R.id.btn_delete_product);
+
                 Switch switch_status = dialogView.findViewById(R.id.sw_status_product);
 
+                // Thiết lập thông tin sản phẩm vào dialog
                 categories = categoriesDao.getCategoryById(product.getIdCategories());
                 edt_name.setText(product.getName());
                 edt_price.setText(String.valueOf(product.getPrice()));
                 edt_note.setText(product.getNote());
                 imageView.setImageBitmap(convertByteArrayToBitmap(product.getImage()));
-                txt_categories.setText(String.valueOf(categories.getName()));
+                txt_categories.setText(categories.getName());
                 statusProduct = product.getStatus();
 
                 img_back.setOnClickListener(new View.OnClickListener() {
@@ -127,49 +129,93 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 switch_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (switch_status.isChecked()) {
+                        if (isChecked) {
                             statusProduct = 1;
                             switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
                             switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
-                            Toast.makeText(context, "Còn hàng", Toast.LENGTH_SHORT).show();
                         } else {
                             statusProduct = 0;
                             switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.default_color));
                             switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.default_color));
-                            Toast.makeText(context, "Hết hàng", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
 
                 if (statusProduct == 1) {
                     switch_status.setThumbTintList(ContextCompat.getColorStateList(context, R.color.green_color));
                     switch_status.setTrackTintList(ContextCompat.getColorStateList(context, R.color.green_color));
                     switch_status.setChecked(true);
                 }
+
                 btn_save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final Product product1 = new Product(product.getIdProduct(),product.getIdCategories(),product.getIdShop(),edt_name.getText().toString(),null,Integer.parseInt(edt_price.getText().toString()),edt_note.getText().toString(),statusProduct,statusProduct);
-                        boolean check = productDAO.upProduct(product1);
-                        if(check){
+                        // Cập nhật thông tin sản phẩm
+                        Product product1 = new Product(product.getIdProduct(), product.getIdCategories(), product.getIdShop(),
+                                edt_name.getText().toString(), null, Double.valueOf(edt_price.getText().toString()),
+                                edt_note.getText().toString(), statusProduct, statusProduct);
+                        boolean updateProduct = productDAO.upProduct(product1);
+                        if (updateProduct) {
                             productList.clear();
-                            productList.addAll(productDAO.getProductsListAll());
+                            productList.addAll(productDAO.getProductsByIdShop(idShop));
                             notifyDataSetChanged();
                             Toast.makeText(context, "Cập nhập sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
+                        } else {
                             Toast.makeText(context, "Cập nhập sản phẩm thất bại", Toast.LENGTH_SHORT).show();
-
                         }
                         dialog.dismiss();
+                    }
+                });
+
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Hiển thị dialog xác nhận xóa
+                        final Dialog dialog1 = new Dialog(context);
+                        dialog1.setContentView(R.layout.dialog_delete_product);
+                        dialog1.setCancelable(true); // Cho phép đóng dialog khi nhấn ra ngoài
+
+                        // Tìm các view trong dialog
+                        TextView txt_cancel = dialog1.findViewById(R.id.txt_canel);
+                        TextView txt_confirm = dialog1.findViewById(R.id.txt_confirm);
+                        TextView txt_note = dialog1.findViewById(R.id.txt_note);
+
+                        // Thiết lập nội dung cho các TextView
+                        txt_note.setText("Bạn có muốn xoá: " + product.getName() + " với số lượng đã bán là: " + product.getSold());
+
+                        // Xử lý sự kiện cho nút hủy
+                        txt_cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog1.dismiss();
+                            }
+                        });
+
+                        // Xử lý sự kiện cho nút xác nhận
+                        txt_confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                boolean deleteProduct = productDAO.deleteProduct(product.getIdProduct(), product.getIdShop());
+                                if (deleteProduct) {
+                                    productList.remove(product);
+                                    notifyDataSetChanged();
+
+                                    Toast.makeText(context, "Xóa sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                                dialog1.dismiss();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialog1.show();
                     }
                 });
 
                 dialog.show();
             }
         });
-
 
     }
 
@@ -204,6 +250,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         SharedPreferences sharedPreferences = context.getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }
+
     private Bitmap convertByteArrayToBitmap(byte[] imageBytes) {
         if (imageBytes != null && imageBytes.length > 0) {
             return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);

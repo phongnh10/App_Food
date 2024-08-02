@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_item_shop"
     android:layout_width="140dp"
     android:layout_height="170dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="10dp"
     android:layout_gravity="center"
@@ -33,7 +33,16 @@
             android:textStyle="bold"
             android:textSize="13dp"
             android:textColor="@color/black"
-            android:text="Name Shop"
-            android:ellipsize="end"></TextView>
+            android:text="Name Shop"></TextView>
+    <TextView
+        android:id="@+id/txt_sold_shopppp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:textSize="10dp"
+        android:textColor="@color/black"
+        android:text="Đã bán: "></TextView>
 
 </LinearLayout>
