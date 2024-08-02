@@ -71,7 +71,7 @@ public class ShopNewAdapter extends RecyclerView.Adapter<ShopNewAdapter.ShopView
                     final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleUpdate,null);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Thông Báo");
+                    builder.setTitle("Thông báo");
                     builder.setMessage("Bạn có đồng ý cho User này thành nhà bán hàng ?");
                     builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         @Override

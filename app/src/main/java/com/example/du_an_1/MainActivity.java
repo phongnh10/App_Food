@@ -19,10 +19,14 @@ import fragment.CartBuyFragment;
 import fragment.CartSellFragment;
 import fragment.HomeFragment;
 import fragment.ManageAdminFragment;
+import fragment.ManageBoothFragment;
 import fragment.ManageBuyerFragment;
+import fragment.ManageCategoryFragment;
 import fragment.ManageSellerFragment;
 import fragment.SearchFragment;
 import fragment.SettingFragment;
+import fragment.StatisticalAdminFragment;
+import fragment.StatisticalSellFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        int role = getRoleFromSharedPreferences();
 
         checkRole();
 
@@ -50,37 +56,65 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(getFragmentByName(fragmentName));
             binding.bottomNavigation.setSelectedItemId(getMenuItemIdByFragmentName(fragmentName));
         } else {
-            replaceFragment(new HomeFragment());
-            binding.bottomNavigation.setSelectedItemId(R.id.nav_home);
-        }
+            if (role == 0) {
+                replaceFragment(new HomeFragment());
+            } else if (role == 1) {
+                replaceFragment(new SearchFragment());
+                binding.bottomNavigation.setSelectedItemId(R.id.nav_home);
+            } else if (role == 2) {
+                replaceFragment(new HomeFragment());
 
-        int role = getRoleFromSharedPreferences();
+            }
+        }
 
         // Handle bottom navigation item selection
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            //tim kiem
             if (item.getItemId() == R.id.nav_home) {
-                replaceFragment(new HomeFragment());
-            } else if (item.getItemId() == R.id.nav_search) {
-                replaceFragment(new SearchFragment());
-            } else if (item.getItemId() == R.id.nav_shop) {
-                if (role == 0) {
-                    replaceFragment(new ManageAdminFragment());
-                } else if (role == 1) {
-                    replaceFragment(new ManageSellerFragment());
-                } else if (role == 2) {
-                    replaceFragment(new ManageBuyerFragment());
+                if (role == 1) {
+                    replaceFragment(new SearchFragment());
+                } else {
+                    replaceFragment(new HomeFragment());
                 }
-            } else if (item.getItemId() == R.id.nav_cart) {
+
+            }
+            //shop
+            else if (item.getItemId() == R.id.nav_search) {
+                if (role == 1) {
+                    replaceFragment(new ManageSellerFragment());
+                } else {
+                    replaceFragment(new SearchFragment());
+                }
+            }
+
+            //thong ke
+            else if (item.getItemId() == R.id.nav_cart) {
                 if (role == 1) {
                     replaceFragment(new CartSellFragment());
                 } else if (role == 2) {
                     replaceFragment(new CartBuyFragment());
+                } else if (role == 0) {
+                    replaceFragment(new ManageAdminFragment());
                 }
-            } else if (item.getItemId() == R.id.nav_setting) {
-                replaceFragment(new SettingFragment());
-            } else {
-                replaceFragment(new HomeFragment());
             }
+            //don hang
+            else if (item.getItemId() == R.id.nav_shop) {
+                if (role == 1) {
+                    replaceFragment(new StatisticalSellFragment());
+
+                } else if (role == 0) {
+                    replaceFragment(new StatisticalAdminFragment());
+
+                } else if (role == 2) {
+                    replaceFragment(new ManageBuyerFragment());
+                }
+            }
+            //cai dat
+            else if (item.getItemId() == R.id.nav_setting) {
+                replaceFragment(new SettingFragment());
+            }
+
+
             return true;
         });
 
@@ -158,20 +192,54 @@ public class MainActivity extends AppCompatActivity {
 
         switch (role) {
             case 0: // admin
-                MenuItem nav_shop = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
-                if (nav_shop != null) {
-                    nav_shop.setTitle("Manage");
-                    nav_shop.setIcon(R.drawable.ic_item_manage);
+                MenuItem nav_search1 = binding.bottomNavigation.getMenu().findItem(R.id.nav_search);
+                if (nav_search1 != null) {
+                    nav_search1.setTitle("Tìm kiếm");
+                    nav_search1.setIcon(R.drawable.ic_item_search);
                 }
                 MenuItem nav_cart = binding.bottomNavigation.getMenu().findItem(R.id.nav_cart);
-                nav_cart.setVisible(false);
+                if (nav_cart != null) {
+                    nav_cart.setTitle("Quản lý");
+                    nav_cart.setIcon(R.drawable.ic_item_manage);
+                }
+
+                MenuItem nav_shop = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
+                if (nav_shop != null) {
+                    nav_shop.setTitle("Thống kê");
+                    nav_shop.setIcon(R.drawable.icon_stacked_bar_chart_24);
+                }
+
                 break;
             case 1: // seller
+                MenuItem nav_home = binding.bottomNavigation.getMenu().findItem(R.id.nav_home);
+                if (nav_home != null) {
+                    nav_home.setTitle("Tìm kiếm");
+                    nav_home.setIcon(R.drawable.ic_item_search);
+                }
+
+                MenuItem nav_search = binding.bottomNavigation.getMenu().findItem(R.id.nav_search);
+                if (nav_search != null) {
+                    nav_search.setTitle("Shop");
+                    nav_search.setIcon(R.drawable.ic_item_shop);
+                }
+
+                MenuItem nav_cart1 = binding.bottomNavigation.getMenu().findItem(R.id.nav_cart);
+                if (nav_cart1 != null) {
+                    nav_cart1.setTitle("Đơn hàng");
+                    nav_cart1.setIcon(R.drawable.ic_item_cart);
+                }
+
+                MenuItem nav_shop3 = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
+                if (nav_shop3 != null) {
+                    nav_shop3.setTitle("Thống kê");
+                    nav_shop3.setIcon(R.drawable.icon_stacked_bar_chart_24);
+                }
+
 
                 break;
             case 2: // buyer
-                MenuItem nav_shop1 = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
-                nav_shop1.setVisible(false);
+                MenuItem nav_shop4 = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
+                nav_shop4.setVisible(false);
                 break;
             default:
                 break;

@@ -143,6 +143,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        binding.svSearchProduct.setIconified(false);
         setupSearchView();
 
         return view;

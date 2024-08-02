@@ -83,7 +83,7 @@ public class RegisterShopActivity extends AppCompatActivity {
                             String address = edt_address_register.getText().toString();
 
                             if (name.length() == 0 || address.length() == 0) {
-                                Toast.makeText(RegisterShopActivity.this, "Enter complete information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterShopActivity.this, "Nhập thông tin đầy đủ.", Toast.LENGTH_SHORT).show();
                             } else {
 
                                 int check = shopDAO.addShop(idUser, name, address, null, 1);
@@ -91,8 +91,8 @@ public class RegisterShopActivity extends AppCompatActivity {
                                     case 1:
 
                                         AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterShopActivity.this);
-                                        builder1.setTitle("Messenger");
-                                        builder1.setMessage("Sign Up Success");
+                                        builder1.setTitle("Thông báo");
+                                        builder1.setMessage("Đăng ký thành công");
 
                                         builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
@@ -104,7 +104,7 @@ public class RegisterShopActivity extends AppCompatActivity {
                                         alertDialog1.show();
                                         break;
                                     case 0:
-                                        Toast.makeText(RegisterShopActivity.this, "Account has registered for the store", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterShopActivity.this, "Tài khoản đã đăng ký cửa hàng", Toast.LENGTH_SHORT).show();
                                         break;
                                     case -1:
                                         Toast.makeText(RegisterShopActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
