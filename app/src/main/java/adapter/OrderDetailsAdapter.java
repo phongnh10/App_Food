@@ -110,7 +110,7 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
                     // Cập nhật cơ sở dữ liệu
                     boolean isUpdated = orderDetailsDAO.updateOrderDetails(orderDetails);
                     if (!isUpdated) {
-                        Toast.makeText(view.getContext(), "Failed to update the order detail in the database", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Không cập nhật được chi tiết đơn hàng trong cơ sở dữ liệu", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

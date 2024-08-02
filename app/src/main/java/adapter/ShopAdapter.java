@@ -59,9 +59,9 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
                 final Shop shop1 = new Shop(shop.getIdShop(), shop.getIdUser(), shop.getName(), shop.getAddress(), shop.getImage(), updateStatusShop);
 
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
-                builder.setTitle("Thông Báo");
-                builder.setMessage("Bạn có muốn khoá Shop id là " + shop.getIdShop() +" Name là " + shop.getName() + " không ?");
-                builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+                builder.setTitle("Thông báo");
+                builder.setMessage("Bạn có muốn khoá Shop id là " + shop.getIdShop() +". Name là " + shop.getName() + " không?");
+                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // update
@@ -101,8 +101,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
                 builder.setTitle("Thông Báo");
-                builder.setMessage("Bạn có muốn mở Shop id là " + shop.getIdShop() +" Name là " + shop.getName() + " không ?");
-                builder.setPositiveButton("Đồng Ý", new DialogInterface.OnClickListener() {
+                builder.setMessage("Bạn có muốn mở Shop id là " + shop.getIdShop() +". Name là " + shop.getName() + " không ?");
+                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // update

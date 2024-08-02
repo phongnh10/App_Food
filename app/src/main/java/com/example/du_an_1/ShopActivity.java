@@ -82,7 +82,7 @@ public class ShopActivity extends AppCompatActivity {
         User user = userDAO.getUserByID(idUser);
 
         binding.txtQuantityOrder.setText(String.valueOf(quantity));
-        binding.txtAddressShopBuy.setText("Địa Chỉ: " + shop.getAddress());
+        binding.txtAddressShopBuy.setText("Địa chỉ: " + shop.getAddress());
         binding.txtPhoneShopBuy.setText(String.valueOf("Hotline: " + user.getPhone()));
         binding.txtNameShopBuy.setText(shop.getName());
         binding.imgImageShopBuy.setImageBitmap(convertByteArrayToBitmap(shop.getImage()));
