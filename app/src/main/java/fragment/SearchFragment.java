@@ -1,15 +1,22 @@
 package fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -42,6 +49,7 @@ public class SearchFragment extends Fragment {
 
         loadProductList();
 
+
         binding.showMenu1Textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,8 +60,16 @@ public class SearchFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.item1) {
                             binding.showMenu1Textview.setText("Sản Phẩm");
-
                             loadProductList();
+                        } else if (item.getItemId() == R.id.item3) {
+                            binding.showMenu1Textview.setText("Đồ ăn");
+                            loadProductEat();
+
+                        } else if (item.getItemId() == R.id.item4) {
+                            binding.showMenu1Textview.setText("Nước uống");
+                            loadProductDrink();
+
+
                         } else if (item.getItemId() == R.id.item2) {
                             binding.showMenu1Textview.setText("Shop");
                             loadShopList();
@@ -131,8 +147,8 @@ public class SearchFragment extends Fragment {
                             loadProductListMax();
                         } else if (item.getItemId() == R.id.item4) {
                             binding.showMenu3Textview.setText("Lượt Bán");
-                            loadProductListSold();                        }
-                        else if (item.getItemId() == R.id.item5) {
+                            loadProductListSold();
+                        } else if (item.getItemId() == R.id.item5) {
                             binding.showMenu3Textview.setText("A-Z");
                             loadProductList();
                         }
@@ -143,24 +159,29 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        binding.svSearchProduct.setIconified(false);
         setupSearchView();
+
+        binding.svSearchProduct.setIconified(false);
+        binding.svSearchProduct.requestFocus();
+
+//        if(getRoleFromSharedPreferences() == 1){
+//            hideKeyboard();
+//        }
 
         return view;
     }
-
-
-
 
 
     private void filterProductList(String query) {
         List<Product> filteredList = productDAO.getProductsByName(query);
         searchAdapter.updateProductList(filteredList);
     }
+
     private void filterShopList(String query) {
         List<Shop> filteredList = shopDAO.getShopByName(query);
         shopItemAdapter.updateShopList(filteredList);
     }
+
     private void setupSearchView() {
         binding.svSearchProduct.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -223,6 +244,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(searchAdapter);
 
     }
+
     public void loadProductListMax() {
         recyclerView = binding.rcvProductSearch;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -235,6 +257,7 @@ public class SearchFragment extends Fragment {
         isProductSearch = true;
 
     }
+
     public void loadProductListMin() {
         recyclerView = binding.rcvProductSearch;
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -390,8 +413,57 @@ public class SearchFragment extends Fragment {
 
         isProductSearch = true;
     }
+    public void loadProductEat() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListEat();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+
+        isProductSearch = true;
+    }
+    public void loadProductDrink() {
+        recyclerView = binding.rcvProductSearch;
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        productDAO = new ProductDAO(getContext());
+        List<Product> productList = productDAO.getProductsListDrinks();
+        searchAdapter = new SearchAdapter(getContext(), productList, productDAO);
+        recyclerView.setAdapter(searchAdapter);
+
+        isProductSearch = true;
+    }
 
 
+    public int getRoleFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("role", -1);
+    }
 
+//    public void hideKeyboard() {
+//        if (getView() != null) {
+//            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+//            if (imm != null) {
+//                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+//            }
+//        }
+//    }
+
+//    public void reloadFragment() {
+//        FragmentManager fragmentManager = getParentFragmentManager(); // Hoặc getChildFragmentManager() nếu nó là một fragment con
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        // Tạo một thể hiện mới của SearchFragment
+//        SearchFragment newFragment = new SearchFragment();
+//
+//        // Thay thế fragment hiện tại bằng fragment mới
+//        fragmentTransaction.replace(R.id.fragment_container, newFragment);
+//        fragmentTransaction.addToBackStack(null); // Optional: Thêm vào back stack nếu bạn muốn có thể quay lại fragment cũ
+//        fragmentTransaction.commit();
+//    }
 
 }
