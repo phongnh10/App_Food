@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đổi mật khẩu"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:gravity="center"
         android:textColor="@color/orange"
         android:textStyle="bold"

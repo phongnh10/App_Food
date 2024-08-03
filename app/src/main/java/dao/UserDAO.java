@@ -1,11 +1,16 @@
 package dao;
 
 
+import static java.sql.DriverManager.getConnection;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import data.base.DbHelper;
@@ -18,7 +23,6 @@ public class UserDAO {
     }
 
     //add user
-
 
     //update
     public boolean upDateUser(User user){
