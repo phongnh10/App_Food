@@ -65,6 +65,7 @@ public class ManageSellerFragment extends Fragment {
         binding.imgProduct.setVisibility(View.VISIBLE);
         binding.imgCategory.setVisibility(View.GONE);
 
+
         binding.txtProduct.setOnClickListener(view1 -> {
             replaceFragment(new ManageProductFragment());
             binding.imgProduct.setVisibility(View.VISIBLE);
