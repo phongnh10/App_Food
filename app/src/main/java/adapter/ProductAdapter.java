@@ -85,9 +85,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         if (status == 1) {
 
             holder.txt_status_product.setTextColor(ContextCompat.getColor(context, R.color.selected_color));
+            holder.txt_status_product.setText("Đang bán");
+
         } else {
 
             holder.txt_status_product.setTextColor(ContextCompat.getColor(context, R.color.default_color));
+            holder.txt_status_product.setText("Ngừng bán");
 
         }
 

@@ -1,22 +1,26 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.du_an_1.MainActivity;
 import com.example.du_an_1.R;
 
 import java.util.List;
 
 import dao.CategoriesDao;
+import fragment.SearchFragment;
 import model.Categories;
 
 public class CategoriesHomeAdapter extends RecyclerView.Adapter<CategoriesHomeAdapter.ViewHolder> {
@@ -43,6 +47,15 @@ public class CategoriesHomeAdapter extends RecyclerView.Adapter<CategoriesHomeAd
         Categories categories = categoriesList.get(position);
         holder.img_image.setImageBitmap(convertByteArrayToBitmap(categories.getImage()));
         holder.txt_name.setText(categories.getName());
+        holder.rl_item_categories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("SearchFragment", "SearchFragment");
+                intent.putExtra("idCategories", categories.getIdCategories());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,10 +66,12 @@ public class CategoriesHomeAdapter extends RecyclerView.Adapter<CategoriesHomeAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img_image;
         TextView txt_name;
+        RelativeLayout rl_item_categories;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img_image = itemView.findViewById(R.id.img_categories_img);
             txt_name = itemView.findViewById(R.id.txt_name_categories_img);
+            rl_item_categories = itemView.findViewById(R.id.rl_item_categories);
         }
     }
     // Helper method to convert byte[] to Bitmap

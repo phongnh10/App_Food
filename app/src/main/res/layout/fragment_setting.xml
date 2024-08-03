@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.SettingFragment"
     android:orientation="vertical"
-    android:background="#FEE9D5">
+    android:background="#FFFFFF">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
