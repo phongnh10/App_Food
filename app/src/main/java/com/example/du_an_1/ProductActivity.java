@@ -48,10 +48,10 @@ public class ProductActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        idRole = getRoleUserFromSharedPreferences();
-        if (idRole == 0 || idRole == 1) {
-            binding.btnAddProductCart.setVisibility(View.GONE);
-        }
+//        idRole = getRoleUserFromSharedPreferences();
+//        if (idRole == 0 || idRole == 1) {
+//            binding.btnAddProductCart.setVisibility(View.GONE);
+//        }
 
 
         Intent intent = getIntent();
@@ -166,7 +166,6 @@ public class ProductActivity extends AppCompatActivity {
 
                 if (check > 0) {
                     orderDetailsList.add(orderDetailsUp);
-                    adapter.notifyDataSetChanged();
                     Toast.makeText(ProductActivity.this, "Thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
 
                     if (product.getIdShop() != idShopList) {
