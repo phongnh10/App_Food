@@ -72,6 +72,8 @@ public class ManageCategoryFragment extends Fragment {
         idShop = categoriesDao.getIdShop(idUser);
         loadCategoriesList();
 
+        floatingActionButton.setVisibility(View.GONE);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -48,15 +48,14 @@ public class ProductActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-//        idRole = getRoleUserFromSharedPreferences();
-//        if (idRole == 0 || idRole == 1) {
-//            binding.btnAddProductCart.setVisibility(View.GONE);
-//        }
+        idRole = getRoleUserFromSharedPreferences();
+        if (idRole != 2) {
+            binding.btnAddProductCart.setVisibility(View.GONE);
+        }
 
 
         Intent intent = getIntent();
         int productId = intent.getIntExtra("productId", -1);
-
 
 
         if (productId != -1) {
@@ -75,7 +74,7 @@ public class ProductActivity extends AppCompatActivity {
             Shop shop = new Shop();
             ShopDAO shopDAO = new ShopDAO(ProductActivity.this);
             shop = shopDAO.getShopByIdShop(product.getIdShop());
-            binding.txtNameShop.setText("Shop "+shop.getName());
+            binding.txtNameShop.setText("Shop " + shop.getName());
             binding.txtNameShop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -173,17 +172,16 @@ public class ProductActivity extends AppCompatActivity {
                         intent1.putExtra("idShop", product.getIdShop());
                         startActivity(intent1);
 
-                    }
-                    else{
+                    } else {
                         finish();
                     }
                 } else if (check == 0) {
-                    for(OrderDetails orderDetail : orderDetailsList){
-                        if(orderDetail.getIdProduct() == product.getIdProduct()){
-                            orderDetail.setQuantity(orderDetail.getQuantity() +orderDetailsUp.getQuantity() );
+                    for (OrderDetails orderDetail : orderDetailsList) {
+                        if (orderDetail.getIdProduct() == product.getIdProduct()) {
+                            orderDetail.setQuantity(orderDetail.getQuantity() + orderDetailsUp.getQuantity());
                             orderDetail.setTotalPrice(orderDetail.getTotalPrice() + orderDetailsUp.getTotalPrice());
                             orderDetailsDAO.updateOrderDetails(orderDetail);
-                            Toast.makeText(ProductActivity.this, "Sản phẩm + "+orderDetailsUp.getQuantity(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProductActivity.this, "Sản phẩm + " + orderDetailsUp.getQuantity(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {

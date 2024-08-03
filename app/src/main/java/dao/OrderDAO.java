@@ -162,6 +162,46 @@ public class OrderDAO {
         return order;
     }
 
+    public List<Order> getOrderByStatus( int status) {
+        List<Order> orderList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery(
+                "SELECT idOrder, idShop, idUser, quantity, totalPrice, date, note, name, phone, address, status " +
+                        "FROM OrderTable " +
+                        "WHERE status = ? " +
+                        "ORDER BY date DESC",
+                new String[]{String.valueOf(status)})) {
+            while (cursor.moveToNext()) {
+                try {
+                    Order order = new Order(
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idOrder")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idShop")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("idUser")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("quantity")),
+                            cursor.getDouble(cursor.getColumnIndexOrThrow("totalPrice")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("date")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("note")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                            cursor.getLong(cursor.getColumnIndexOrThrow("phone")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("address")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("status"))
+                    );
+                    orderList.add(order);
+                } catch (Exception e) {
+                    Log.e("OrderDAO", "Error parsing order from cursor: " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            Log.e("OrderDAO", "Error while fetching orders: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        return orderList;
+    }
+
+
     public List<Order> getOrderByIdShopStatus(int idShop, int status) {
         List<Order> orderList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
