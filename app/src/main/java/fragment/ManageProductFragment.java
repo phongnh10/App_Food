@@ -182,43 +182,47 @@ public class ManageProductFragment extends Fragment implements ItemCategoriesAdd
                         String productNote = edt_note.getText().toString();
                         String sStatusProduct = String.valueOf(statusProduct);
 
-
-                        int sold = 0;
-                        int productPrice = Integer.parseInt(sProductPrice);
-
+                        // Kiểm tra điều kiện đầu vào
                         if (bitmap != null && !productName.isEmpty() && !sProductPrice.isEmpty() && !sidCategories.isEmpty() && !sStatusProduct.isEmpty()) {
-                            int targetWidth = 600;
-                            int targetHeight = 600;
-                            bitmap = resizeBitmap(bitmap, targetWidth, targetHeight);
-                            byte[] imageBytes = getBitmapAsByteArray(bitmap);
+                            try {
+                                double productPrice = Double.parseDouble(sProductPrice);
+                                int sold = 0;
 
-                            Product product = new Product();
-                            product.setName(productName);
-                            product.setImage(imageBytes);
-                            product.setStatus(statusProduct);
-                            product.setPrice(productPrice);
-                            product.setIdShop(idShop);
-                            product.setNote(productNote);
-                            product.setSold(sold);
-                            product.setIdCategories(idCategories);
+                                int targetWidth = 600;
+                                int targetHeight = 600;
+                                bitmap = resizeBitmap(bitmap, targetWidth, targetHeight);
+                                byte[] imageBytes = getBitmapAsByteArray(bitmap);
 
-                            long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote, statusProduct, sold);
+                                Product product = new Product();
+                                product.setName(productName);
+                                product.setImage(imageBytes);
+                                product.setStatus(statusProduct);
+                                product.setPrice(productPrice);
+                                product.setIdShop(idShop);
+                                product.setNote(productNote);
+                                product.setSold(sold);
+                                product.setIdCategories(idCategories);
 
-                            if (check > 0) {
-                                productList.add(product);
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(context, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
-                                loadProductList();
-                            } else if (check < 1) {
-                                Toast.makeText(context, "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                long check = productDAO.addProduct(idCategories, idShop, productName, imageBytes, productPrice, productNote, statusProduct, sold);
+
+                                if (check > 0) {
+                                    productList.add(product);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(context, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                                    loadProductList();
+                                } else {
+                                    Toast.makeText(context, "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismiss();
+                            } catch (NumberFormatException e) {
+                                // Xử lý lỗi khi giá trị không phải số hợp lệ
+                                Toast.makeText(context, "Giá sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
                             }
-                            dialog.dismiss();
                         } else {
                             Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
-                dialog.show();
+                });                dialog.show();
                 loadProductList();
             }
         });

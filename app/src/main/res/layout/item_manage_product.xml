@@ -11,9 +11,9 @@
         android:id="@+id/ll_item_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@android:color/white">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/img_product"
@@ -24,31 +24,34 @@
 
         <TextView
             android:id="@+id/txt_name_product"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="Bánh Canh Cá Lóc"
-            android:textSize="18sp"
             android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_price_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="50000 VND"
-            android:textSize="16sp"
             android:textColor="@android:color/holo_red_dark"
-            android:layout_marginTop="5dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_status_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Còn Hàng"
-            android:textSize="16sp"
             android:textColor="@android:color/holo_green_dark"
-            android:layout_marginTop="5dp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

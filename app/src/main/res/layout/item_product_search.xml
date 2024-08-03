@@ -16,6 +16,7 @@
             android:id="@+id/img_product_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxHeight="80dp"
             android:src="@mipmap/image_goivit"
             android:scaleType="centerCrop"
             android:layout_gravity="top"/>

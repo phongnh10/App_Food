@@ -145,20 +145,32 @@
 
 
     <!-- RecyclerView for Order Details -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_lits_order_details"
+    <RelativeLayout
+        android:id="@+id/rl_mid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/linear_layout_footer"
-        android:layout_below="@+id/mid"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_below="@+id/mid">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_lits_order_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="0dp" />
+        <ImageView
+            android:id="@+id/img_card_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/image_cart_empty_icon"></ImageView>
+
+    </RelativeLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#BDBDBD"
-        android:layout_below="@+id/rcv_lits_order_details"/>
+        android:layout_below="@+id/rl_mid"/>
     <!-- Footer with Total Price and Order Button -->
     <LinearLayout
         android:id="@+id/linear_layout_footer"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentName = intent.getStringExtra("CartBuyFragment");
         } else if (intent.hasExtra("SearchFragment")) {
             fragmentName = intent.getStringExtra("SearchFragment");
-        }else if(intent.hasExtra("SettingFragment")){
+        } else if (intent.hasExtra("SettingFragment")) {
             fragmentName = intent.getStringExtra("SettingFragment");
         }
 
@@ -83,15 +84,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_checked }, // trạng thái được chọn
-                new int[] { -android.R.attr.state_checked } // trạng thái không được chọn
+        int[][] states = new int[][]{new int[]{android.R.attr.state_checked}, // trạng thái được chọn
+                new int[]{-android.R.attr.state_checked} // trạng thái không được chọn
         };
 
-        int[] colors = new int[] {
-                getResources().getColor(R.color.orange),
-                getResources().getColor(R.color.default_color)
-        };
+        int[] colors = new int[]{getResources().getColor(R.color.orange), getResources().getColor(R.color.default_color)};
 
         ColorStateList colorStateList = new ColorStateList(states, colors);
 
@@ -170,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 nav_cart.setVisible(false);
                 break;
             case 1: // seller
+
                 break;
             case 2: // buyer
                 MenuItem nav_shop1 = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);

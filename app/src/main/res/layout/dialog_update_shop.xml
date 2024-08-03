@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/custom_price"
+    android:elevation="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:elevation="8dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="10dp">
+
+            <ImageView
+                android:id="@+id/img_image_editShop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ImageView>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt_select_edit_shop"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_background"
+            android:text="Chọn ảnh"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
+
+
+        <EditText
+            android:id="@+id/txt_phone_edit_shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bogoc_edittext"
+            android:hint="Nhập vào số điện thoại"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
+
+        <EditText
+            android:id="@+id/txt_address_edit_shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bogoc_edittext"
+            android:hint="Nhập vào địa chỉ cửa hàng"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_cancel_edit_shop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_cancel_background"
+                android:gravity="center"
+                android:text="Trở về"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:id="@+id/txt_update_edit_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_background"
+                android:gravity="center"
+                android:text="Thay đổi"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

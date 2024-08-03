@@ -28,6 +28,7 @@ import java.util.List;
 import adapter.CategoriesHomeAdapter;
 import adapter.HomeProductAdapter;
 import adapter.PagerHomeAdapter;
+import adapter.ShopItemAdapter;
 import bottomRecycleview.RightSpaceItemDecoration;
 import dao.CategoriesDao;
 import dao.ProductDAO;
@@ -35,6 +36,7 @@ import dao.ShopDAO;
 import dao.UserDAO;
 import model.Categories;
 import model.Product;
+import model.Shop;
 import model.User;
 
 public class HomeFragment extends Fragment {
@@ -43,8 +45,8 @@ public class HomeFragment extends Fragment {
     private ProductDAO productDAO;
     private CategoriesDao categoriesDao;
     private ShopDAO shopDAO;
-    private RecyclerView recyclerView, recyclerView1, recyclerView2;
-    private Handler handler = new Handler();
+    private RecyclerView recyclerView, recyclerView1, recyclerView2, recyclerView3;
+    private Handler handler;
     private Runnable runnable;
     private final int PAGE_DELAY = 3000;
 
@@ -52,9 +54,31 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        initializeViews(view);
+        setupViewPager(view);
+        setupRecyclerViews(view);
+        loadProductData();
+        startAutoSlide();
+
+        return view;
+    }
+
+    private void initializeViews(View view) {
         ImageView img_search = view.findViewById(R.id.img_search_home);
         TextView home_location = view.findViewById(R.id.home_location);
 
+        img_search.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.putExtra("SearchFragment", "SearchFragment");
+            startActivity(intent);
+        });
+
+        UserDAO userDAO = new UserDAO(getContext());
+        User user = userDAO.getUserByID(getIdUserFromSharedPreferences());
+        home_location.setText("Location: " + user.getAddress());
+    }
+
+    private void setupViewPager(View view) {
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
 
@@ -65,83 +89,82 @@ public class HomeFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             // Cài đặt tiêu đề hoặc biểu tượng cho các tab nếu cần
         }).attach();
+    }
 
-
-        img_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                intent.putExtra("SearchFragment", "SearchFragment");
-                startActivity(intent);
-            }
-        });
-
-        handler = new Handler(Looper.getMainLooper());
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                int currentItem = viewPager.getCurrentItem();
-                int nextItem = (currentItem + 1) % imageList.size(); // Chuyển đến trang tiếp theo
-                viewPager.setCurrentItem(nextItem, true); // Chuyển trang với hiệu ứng cuộn
-                handler.postDelayed(this, PAGE_DELAY); // Đặt lại Runnable sau một khoảng thời gian
-            }
-        };
-
-        handler.postDelayed(runnable, PAGE_DELAY); // Bắt đầu tự động chuyển trang
-
-
-        User user = new User();
-        UserDAO userDAO = new UserDAO(getContext());
-        user = userDAO.getUserByID(getIdUserFromSharedPreferences());
-        home_location.setText("Location: "+user.getAddress());
-
-
+    private void setupRecyclerViews(View view) {
         recyclerView = view.findViewById(R.id.rcv_eat_home);
         recyclerView1 = view.findViewById(R.id.rcv_drink_home);
         recyclerView2 = view.findViewById(R.id.rcv_categories_home);
+        recyclerView3 = view.findViewById(R.id.rcv_shop_home);
+
         StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerCategories = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager layoutManagerShop = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManagerEat);
         recyclerView1.setLayoutManager(layoutManagerDrink);
         recyclerView2.setLayoutManager(layoutManagerCategories);
+        recyclerView3.setLayoutManager(layoutManagerShop);
+
         int rightSpaceWidth = getResources().getDimensionPixelSize(R.dimen.right_space_width);
-        recyclerView2.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
-        recyclerView1.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
         recyclerView.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
+        recyclerView1.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
+        recyclerView2.addItemDecoration(new RightSpaceItemDecoration(rightSpaceWidth));
+    }
+
+    private void loadProductData() {
+        productDAO = new ProductDAO(getContext());
+        shopDAO = new ShopDAO(getContext());
+        categoriesDao = new CategoriesDao(getContext());
+
         loadProductList();
         loadProductList1();
         loadProductList2();
-
-        return view;
+        loadProductList3();
     }
 
-    public void loadProductList() {
-        productDAO = new ProductDAO(getContext());
-        shopDAO = new ShopDAO(getContext());
+    private void loadProductList() {
         List<Product> productList = productDAO.getProductsListEat();
         homeProductAdapter = new HomeProductAdapter(getContext(), productList, productDAO, shopDAO);
         recyclerView.setAdapter(homeProductAdapter);
     }
 
-    public void loadProductList1() {
-        productDAO = new ProductDAO(getContext());
-        shopDAO = new ShopDAO(getContext());
+    private void loadProductList1() {
         List<Product> productList = productDAO.getProductsListDrinks();
         homeProductAdapter = new HomeProductAdapter(getContext(), productList, productDAO, shopDAO);
         recyclerView1.setAdapter(homeProductAdapter);
     }
 
-    public void loadProductList2() {
-        categoriesDao = new CategoriesDao(getContext());
-        shopDAO = new ShopDAO(getContext());
+    private void loadProductList2() {
         List<Categories> categoriesList = categoriesDao.getAllCategories();
         categoriesHomeAdapter = new CategoriesHomeAdapter(getContext(), categoriesList, categoriesDao);
         recyclerView2.setAdapter(categoriesHomeAdapter);
     }
 
-    public int getIdUserFromSharedPreferences() {
+    private void loadProductList3() {
+        List<Shop> shopList = shopDAO.getTop5ShopsSoldProducts();
+        ShopItemAdapter shopItemAdapter = new ShopItemAdapter(getContext(), shopList, shopDAO);
+        recyclerView3.setAdapter(shopItemAdapter);
+    }
+
+    private void startAutoSlide() {
+        handler = new Handler(Looper.getMainLooper());
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                ViewPager2 viewPager = getView().findViewById(R.id.viewPager);
+                int currentItem = viewPager.getCurrentItem();
+                int nextItem = (currentItem + 1) % 3; // assuming you have 3 images
+                viewPager.setCurrentItem(nextItem, true);
+                handler.postDelayed(this, PAGE_DELAY);
+            }
+        };
+
+        handler.postDelayed(runnable, PAGE_DELAY);
+    }
+
+    private int getIdUserFromSharedPreferences() {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         return sharedPreferences.getInt("idUser", -1);
     }

@@ -82,6 +82,44 @@ public class ShopDAO {
         return shopList;
     }
 
+
+    public List<Shop> getTop5ShopsSoldProducts() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        List<Shop> shopList = new ArrayList<>();
+
+        String query = "SELECT shop.idShop, shop.idUser, shop.name, shop.address, shop.image, shop.status, " +
+                "COALESCE(SUM(product.sold), 0) as total_sold " +
+                "FROM shop " +
+                "INNER JOIN user ON shop.idUser = user.idUser " +
+                "LEFT JOIN product ON shop.idShop = product.idShop " +
+                "WHERE user.role = 1 " +
+                "GROUP BY shop.idShop " +
+                "ORDER BY total_sold DESC " +
+                "LIMIT 5";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int idShop = cursor.getInt(cursor.getColumnIndexOrThrow("idShop"));
+                int idUser = cursor.getInt(cursor.getColumnIndexOrThrow("idUser"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+                byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
+                int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+                int totalSold = cursor.getInt(cursor.getColumnIndexOrThrow("total_sold"));
+
+                Shop shop = new Shop(idShop, idUser, name, address, image, status, totalSold);
+                shopList.add(shop);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        db.close();
+
+        return shopList;
+    }
     public List<Shop> getShopByName(String query) {
         List<Shop> shopList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
