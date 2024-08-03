@@ -7,9 +7,10 @@
     android:layout_marginLeft="20dp">
 
     <RelativeLayout
-        android:id="@+id/rl_item_categories"
-        android:layout_width="100dp"
-        android:layout_height="100dp">
+
+        android:layout_width="80dp"
+        android:layout_height="80dp">
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/img_categories_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:foreground="@drawable/foreground_gradient"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/anhmenu1"></ImageView>
@@ -29,13 +30,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/txt_name_categories_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="#FFFFFF"
                 android:text="Name"
                 android:textStyle="bold"

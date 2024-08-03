@@ -15,7 +15,6 @@ public class StarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
-        TextView textView = findViewById(R.id.txt_terms_and_privacy);
         Button btn_signin = findViewById(R.id.btnSignin);
         Button btn_login = findViewById(R.id.btnLogin);
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -35,8 +34,6 @@ public class StarActivity extends AppCompatActivity {
             }
         });
 
-        String text = "Bằng cách tiếp tục, bạn đồng ý với <b>Điều khoản Dịch vụ</b> của FFood và xác nhận rằng bạn đã đọc <b>Chính sách quyền riêng tư</b> của chúng tôi.";
-        textView.setText(Html.fromHtml(text));
 
 
     }

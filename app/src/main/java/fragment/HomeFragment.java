@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
 
-        List<Integer> imageList = Arrays.asList(R.mipmap.slide1, R.mipmap.slide2, R.mipmap.slide3);
+        List<Integer> imageList = Arrays.asList(R.mipmap.banner_1, R.mipmap.banner_2, R.mipmap.slide3);
         PagerHomeAdapter adapter = new PagerHomeAdapter(imageList);
         viewPager.setAdapter(adapter);
 
