@@ -108,7 +108,9 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             } else if (user.getRole() == 2) {
                 sRole = "user";
                 img_image.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.image_user_default));
-            } else if (user.getRole() == -1) {
+            }
+
+            if (user.getStatus() == 0) {
                 sRole = "Tài khoản bị khoá";
                 img_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.baseline_remove_24));
             }
@@ -125,7 +127,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
             LayoutInflater inflater = LayoutInflater.from(context);
             View dialogView = inflater.inflate(R.layout.dialog_information_user, null);
             builder.setView(dialogView);
-
 
             ///
             EditText edt_id_user = dialogView.findViewById(R.id.edt_id_user);
@@ -204,7 +205,9 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                 sRole = "shop";
             } else if (user.getRole() == 2) {
                 sRole = "user";
-            } else if (user.getRole() == -1) {
+            }
+
+            if (user.getStatus() == 0) {
                 sRole = "Tài khoản đã khoá";
                 btn_suspend_account.setText("Mở Tài Khoản");
                 checkUser = 0;
@@ -296,8 +299,9 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                 public void onClick(View view) {
                     // check role
                     if (checkUser == 1) {
-                        int roleSuspendAccount = -1;
-                        final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount,null);
+                        int statusSuspendAccount = 0;
+
+                        user.setStatus(statusSuspendAccount);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setTitle("Thông Báo");
@@ -306,7 +310,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // update
-                                boolean check = userDAO.SuspendAccount(user2);
+                                boolean check = userDAO.SuspendAccount(user);
                                 if (check) {
                                     Toast.makeText(context, "Ngưng tài khoản thành công", Toast.LENGTH_SHORT).show();
                                     // Load data
@@ -331,11 +335,11 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                         alertDialog11.dismiss();
-                    }
-                    else if (checkUser == 0) {
+                    } else if (checkUser == 0) {
 
-                        int roleSuspendAccount = 2;
-                        final User user2 = new User(user.getIdUser(), user.getUser(), user.getPass(), user.getName(), user.getPhone(), user.getCccd(), roleSuspendAccount,null);
+                        int statusSuspendAccount = 1;
+
+                        user.setStatus(statusSuspendAccount);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setTitle("Thông Báo");
@@ -344,7 +348,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.AdapterViewH
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // update
-                                boolean check = userDAO.SuspendAccount(user2);
+                                boolean check = userDAO.SuspendAccount(user);
                                 if (check) {
                                     Toast.makeText(context, "Mở tài khoản thành công", Toast.LENGTH_SHORT).show();
                                     // Load data

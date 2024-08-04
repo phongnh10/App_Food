@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 checkUserPass();
             }
         });
@@ -68,14 +69,15 @@ public class LoginActivity extends AppCompatActivity {
         int check = userDAO.login(user, pass);
 
         switch (check) {
+            case -1:
+                Toast.makeText(LoginActivity.this, "Tài khoản bị khoá", Toast.LENGTH_SHORT).show();
+                return;
             case 1:
                 Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                 break;
             case 0:
                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
                 sharedPreferences();
-
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -103,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         cccd = user1.getCccd();
         role = user1.getRole();
 
-        // Save role
+        // Save rol
         SharedPreferences sharedPreferences = getSharedPreferences("User_Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("idUser", idUser);
