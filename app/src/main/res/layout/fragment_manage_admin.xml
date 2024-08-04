@@ -85,7 +85,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Chờ xác nhận đăng ký shop"
-                                android:textSize="18sp"></TextView>
+                                android:textSize="14sp"></TextView>
 
                             <ImageView
                                 android:id="@+id/iv_booth_new"
@@ -109,7 +109,7 @@
                                 android:gravity="center"
                                 android:text="Xem shop
                                 đang bán"
-                                android:textSize="18sp"></TextView>
+                                android:textSize="14sp"></TextView>
 
                             <ImageView
                                 android:id="@+id/iv_booth"
@@ -132,7 +132,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Quản lý khách hàng và shop"
-                                android:textSize="18sp"></TextView>
+                                android:textSize="14sp"></TextView>
 
                             <ImageView
                                 android:id="@+id/iv_user"
@@ -195,9 +195,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="ADMIN"
+                android:text="Admin"
                 android:textColor="#F5643A"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"></TextView>
         </LinearLayout>
 

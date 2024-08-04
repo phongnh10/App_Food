@@ -2,9 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:layout_margin="10dp"
-    app:circularflow_radiusInDP="40dp">
+    android:layout_height="92dp"
+    android:layout_margin="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,14 +17,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:padding="5dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
+                    android:layout_margin="4dp"
                     app:cardCornerRadius="100dp">
 
                     <ImageView
@@ -51,7 +50,7 @@
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="ID User:"
-                            android:textSize="15dp"
+                            android:textSize="12sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -59,7 +58,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="1"
-                            android:textSize="15dp"></TextView>
+                            android:textSize="12sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -70,7 +69,7 @@
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="Name:"
-                            android:textSize="15dp"
+                            android:textSize="12sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -79,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Nguyen Hong Phong"
-                            android:textSize="15dp"></TextView>
+                            android:textSize="12sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -90,7 +89,7 @@
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="Phone:"
-                            android:textSize="15dp"
+                            android:textSize="12sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -98,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0123456789"
-                            android:textSize="15dp"></TextView>
+                            android:textSize="12sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -109,7 +108,7 @@
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="Role:"
-                            android:textSize="15dp"
+                            android:textSize="12sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -117,7 +116,7 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:text="Admin"
-                            android:textSize="15dp"></TextView>
+                            android:textSize="12sp"></TextView>
 
                     </LinearLayout>
 
@@ -141,11 +140,10 @@
             android:layout_marginEnd="15dp">
             <TextView
                 android:id="@+id/txt_manage_user"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edit_user_admin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/baseline_edit_square_24"
                 android:gravity="center"
-                android:text="Edit"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"

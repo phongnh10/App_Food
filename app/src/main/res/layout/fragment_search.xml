@@ -18,30 +18,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:paddingHorizontal="20dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ffood"
-                android:textColor="#F5643A"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:layout_marginRight="20dp"/>
+            android:layout_height="50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bogoccovien">
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_margin="4dp"
+                android:paddingStart="-10dp">
 
                 <SearchView
                     android:id="@+id/svSearchProduct"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Tìm kiếm sản phẩm..." >
-                </SearchView>
+                    android:queryHint="Tìm kiếm ..." />
             </LinearLayout>
 
         </LinearLayout>
@@ -53,19 +44,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_corner_top"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_top"
             android:orientation="vertical"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
 
@@ -75,18 +66,17 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="8dp">
 
                     <TextView
                         android:id="@+id/show_menu1_textview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="All sản phẩm"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
+                        android:background="@drawable/bg_xam_search_choose"
                         android:gravity="center"
-                        android:background="@drawable/bogoccovien"/>
-
+                        android:text="All sản phẩm"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
 
@@ -96,18 +86,38 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="8dp">
 
                     <TextView
                         android:id="@+id/show_menu2_textview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Thể loại"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
                         android:gravity="center"
-                        android:background="@drawable/custom_boder_right_lefrt"/>
+                        android:background="@drawable/bg_xam_search_choose"/>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/show_menu3_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:background="@drawable/bg_xam_search_choose"
+                        android:gravity="center"
+                        android:text="Mới Nhất"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>
@@ -117,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginHorizontal="10dp">
+            android:layout_marginHorizontal="4dp">
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>

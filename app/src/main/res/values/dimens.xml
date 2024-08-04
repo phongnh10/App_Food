@@ -8,5 +8,5 @@
     <dimen name="extra_height">80dp</dimen>
     <dimen name="space_height">100dp</dimen>
     <dimen name="space_height_200">200dp</dimen>
-    <dimen name="right_space_width">20dp</dimen>
+    <dimen name="right_space_width">8dp</dimen>
 </resources>
