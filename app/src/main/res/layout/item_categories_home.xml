@@ -40,18 +40,6 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:paddingStart="8dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_forward_ios_24"
-            android:layout_gravity="center_vertical" />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        android:layout_marginHorizontal="10dp" />
 
 </LinearLayout>

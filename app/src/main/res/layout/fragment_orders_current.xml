@@ -43,7 +43,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Họ và tên: "
+                        android:text="Họ và tên:           "
                         android:textSize="14sp"
                         android:textStyle="bold"/>
                     <TextView
@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại: "
+                        android:text="Số điện thoại:    "
                         android:textSize="14sp"
                         android:textStyle="bold"/>
                     <TextView
@@ -79,7 +79,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Địa chỉ: "
+                        android:text="Địa chỉ:                "
                         android:textSize="14dp"
                         android:textStyle="bold"/>
                     <TextView
