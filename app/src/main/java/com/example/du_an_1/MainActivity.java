@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.du_an_1.databinding.ActivityMainBinding;
 
+import dao.ShopDAO;
+import dao.UserDAO;
 import fragment.CartBuyFragment;
 import fragment.CartSellFragment;
 import fragment.HomeFragment;
@@ -25,8 +27,11 @@ import fragment.ManageCategoryFragment;
 import fragment.ManageSellerFragment;
 import fragment.SearchFragment;
 import fragment.SettingFragment;
+import fragment.ShopIsLockedFragment;
 import fragment.StatisticalAdminFragment;
 import fragment.StatisticalSellFragment;
+import model.Shop;
+import model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         int role = getRoleFromSharedPreferences();
+        ShopDAO shopDAO = new ShopDAO(MainActivity.this);
+
+        Shop shop = shopDAO.getShopByIdUser(getIdUserFromSharedPreferences());
+
 
         checkRole();
 
@@ -78,10 +87,16 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
+
             //shop
             else if (item.getItemId() == R.id.nav_search) {
                 if (role == 1) {
-                    replaceFragment(new ManageSellerFragment());
+                    if (shop.getStatus() == 0) {
+                        replaceFragment(new ShopIsLockedFragment());
+                    } else {
+                        replaceFragment(new ManageSellerFragment());
+                    }
                 } else {
                     replaceFragment(new SearchFragment());
                 }
@@ -187,6 +202,11 @@ public class MainActivity extends AppCompatActivity {
         return sharedPreferences.getInt("role", -1);
     }
 
+    public int getIdUserFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("User_Login", Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("idUser", -1);
+    }
+
     public void checkRole() {
         int role = getRoleFromSharedPreferences();
 
@@ -211,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case 1: // seller
+
                 MenuItem nav_home = binding.bottomNavigation.getMenu().findItem(R.id.nav_home);
                 if (nav_home != null) {
                     nav_home.setTitle("Tìm kiếm");
@@ -241,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 MenuItem nav_shop4 = binding.bottomNavigation.getMenu().findItem(R.id.nav_shop);
                 nav_shop4.setVisible(false);
                 break;
+
             default:
                 break;
         }

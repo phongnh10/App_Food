@@ -18,6 +18,7 @@ import model.User;
 
 public class UserDAO {
     private static DbHelper dbHelper;
+
     public UserDAO(Context context) {
         dbHelper = new DbHelper(context);
     }
@@ -25,7 +26,7 @@ public class UserDAO {
     //add user
 
     //update
-    public boolean upDateUser(User user){
+    public boolean upDateUser(User user) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -36,51 +37,61 @@ public class UserDAO {
         values.put("cccd", user.getCccd());
         values.put("role", user.getRole());
 
-        int check = sqLiteDatabase.update("user",values,"idUser=?",new String[]{String.valueOf(user.getIdUser())});
+        int check = sqLiteDatabase.update("user", values, "idUser=?", new String[]{String.valueOf(user.getIdUser())});
         if (check <= 0) return false;
         return true;
     }
 
-    public boolean upDateAddress(User user){
+    public boolean upDateAddress(User user) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put("name", user.getName());
         values.put("phone", user.getPhone());
         values.put("address", user.getAddress());
-        int check = sqLiteDatabase.update("user",values,"idUser=?",new String[]{String.valueOf(user.getIdUser())});
+        int check = sqLiteDatabase.update("user", values, "idUser=?", new String[]{String.valueOf(user.getIdUser())});
         if (check <= 0) return false;
         return true;
     }
 
-    public boolean SuspendAccount(User user){
+    public boolean SuspendAccount(User user) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put("role", user.getRole());
+        values.put("status", user.getStatus());
 
-        int check = sqLiteDatabase.update("user",values,"idUser=?",new String[]{String.valueOf(user.getIdUser())});
+        int check = sqLiteDatabase.update("user", values, "idUser=?", new String[]{String.valueOf(user.getIdUser())});
         if (check <= 0) return false;
         return true;
     }
 
+
+
     //Login
     public int login(String user, String pass) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE user = ? AND pass = ?", new String[]{user, pass});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT status FROM user WHERE user = ? AND pass = ?", new String[]{user, pass});
 
         int check;
-        if (cursor.getCount() > 0) {
-            cursor.close();
-            sqLiteDatabase.close();
-            check = 0; // Login True
+        if (cursor.moveToFirst()) {
+            int status = cursor.getInt(cursor.getColumnIndexOrThrow("status"));
+            if (status == 0) {
+                check = -1;
+            } else {
+                check = 0;
+            }
         } else {
-            cursor.close();
-            sqLiteDatabase.close();
-            check = 1; // Login false
+            check = 1;
         }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
         return check;
     }
+
+
 
     //get role
     public int getRole(User user) {
@@ -108,7 +119,7 @@ public class UserDAO {
 
         String[] columns = {"idShop"};
         String selection = "idUser = ?";
-        String[] selectionArgs = { String.valueOf(idUser) };
+        String[] selectionArgs = {String.valueOf(idUser)};
 
         Cursor cursor = db.query("Shop", columns, selection, selectionArgs, null, null, null);
 
@@ -122,12 +133,13 @@ public class UserDAO {
         db.close();
         return idShop;
     }
+
     //get id
     public User getUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         User userData = null;
 
-        String[] columns = {"idUser", "user", "pass", "name", "phone", "cccd", "role","address"};
+        String[] columns = {"idUser", "user", "pass", "name", "phone", "cccd", "role", "address"};
         String selection = "user = ? AND pass = ?";
         String[] selectionArgs = {user.getUser(), user.getPass()};
 
@@ -150,6 +162,7 @@ public class UserDAO {
         db.close();
         return userData;
     }
+
     public User getUserByID(int idUser) {
         User userData = null;
 
@@ -157,7 +170,7 @@ public class UserDAO {
         try (SQLiteDatabase db = dbHelper.getWritableDatabase();
              Cursor cursor = db.query(
                      "user",
-                     new String[]{"idUser", "user", "pass", "name", "phone", "cccd", "role", "address"},
+                     new String[]{"idUser", "user", "pass", "name", "phone", "cccd", "role", "address","status"},
                      "idUser = ?",
                      new String[]{String.valueOf(idUser)},
                      null, null, null)) {
@@ -172,6 +185,7 @@ public class UserDAO {
                 userData.setCccd(cursor.getLong(cursor.getColumnIndexOrThrow("cccd")));
                 userData.setRole(cursor.getInt(cursor.getColumnIndexOrThrow("role")));
                 userData.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("address")));
+                userData.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,11 +195,10 @@ public class UserDAO {
     }
 
 
-
     public ArrayList<User> getListUser() {
         ArrayList<User> userList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT idUser, user, pass, name, phone,cccd,role,address FROM User", null);
+        Cursor cursor = db.rawQuery("SELECT idUser, user, pass, name, phone,cccd,role,address,status FROM User", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -197,16 +210,14 @@ public class UserDAO {
                         cursor.getInt(4),
                         cursor.getLong(5),
                         cursor.getInt(6),
-                        cursor.getString(7)));
+                        cursor.getString(7),
+                        cursor.getInt(8)));
             } while (cursor.moveToNext());
             cursor.close();
             db.close();
         }
         return userList;
     }
-
-
-
 
 
 }

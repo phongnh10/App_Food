@@ -4,8 +4,10 @@ package fragment;
 import static android.app.Activity.RESULT_OK;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -33,9 +35,12 @@ import com.example.du_an_1.databinding.FragmentManageSellerBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
+import dao.ProductDAO;
 import dao.ShopDAO;
 import dao.UserDAO;
+import model.Product;
 import model.Shop;
 import model.User;
 
@@ -83,6 +88,42 @@ public class ManageSellerFragment extends Fragment {
             public void onClick(View view) {
                 updateShop();
             }
+        });
+
+        binding.llStatusProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Xác nhận");
+                builder.setMessage("Bạn có muốn ngừng shop?");
+                Shop shop = shopDAO.getShopByIdUser(getIdUserFromSharedPreferences());
+                // Nút "Có"
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ProductDAO productDAO = new ProductDAO(getContext());
+                        List<Product> productList = productDAO.getProductsByIdShop(shop.getIdShop());
+                        for(Product product:productList){
+                            product.setStatus(0);
+                            boolean check = productDAO.upProduct(product);
+                        }
+                        productList.clear();
+                        
+                    }
+                });
+
+                // Nút "Không"
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Hủy hộp thoại khi người dùng chọn "Không"
+                        dialog.dismiss();
+                    }
+                });
+
+                // Hiển thị hộp thoại
+                AlertDialog dialog = builder.create();
+                dialog.show();            }
         });
 
         return view;

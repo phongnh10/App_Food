@@ -20,8 +20,10 @@ import com.example.du_an_1.R;
 
 import java.util.List;
 
+import dao.ProductDAO;
 import dao.ShopDAO;
 import dao.UserDAO;
+import model.Product;
 import model.Shop;
 import model.User;
 
@@ -54,41 +56,48 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         holder.txtKhoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // check role
-                int updateStatusShop = -1;
+                int updateStatusShop = 0;
                 final Shop shop1 = new Shop(shop.getIdShop(), shop.getIdUser(), shop.getName(), shop.getAddress(), shop.getImage(), updateStatusShop);
 
+                // Tạo Dialog
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
                 builder.setTitle("Thông báo");
-                builder.setMessage("Bạn có muốn khoá Shop id là " + shop.getIdShop() +". Name là " + shop.getName() + " không?");
+                builder.setMessage("Bạn có muốn khoá Shop id là " + shop.getIdShop() + ". Name là " + shop.getName() + " không?");
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // update
+                        // Cập nhật trạng thái shop
                         boolean check = shopDAO.UpdateShop(shop1);
                         if (check) {
                             Toast.makeText(context, "Khoá Shop thành công", Toast.LENGTH_SHORT).show();
-                            // Load data
+
+                            // Cập nhật trạng thái các sản phẩm thuộc shop
+                            ProductDAO productDAO = new ProductDAO(context);
+                            List<Product> productList = productDAO.getProductsByIdShop(shop.getIdShop());
+                            for (Product product : productList) {
+                                product.setStatus(0);
+                                boolean checkProduct = productDAO.upProduct(product);
+                            }
+                            productList.clear();
+
+                            // Tải lại dữ liệu danh sách shop
                             shopList.clear();
                             shopList.addAll(shopDAO.getAllShops());
                             notifyDataSetChanged();
                         } else {
                             Toast.makeText(context, "Khoá Shop thất bại", Toast.LENGTH_SHORT).show();
                         }
-                        // exit dialog
+                        // Đóng dialog
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // exit dialog
                         dialog.dismiss();
                     }
                 });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                builder.create().show();
             }
         });
 
@@ -101,7 +110,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
                 builder.setTitle("Thông Báo");
-                builder.setMessage("Bạn có muốn mở Shop id là " + shop.getIdShop() +". Name là " + shop.getName() + " không ?");
+                builder.setMessage("Bạn có muốn mở Shop id là " + shop.getIdShop() + ". Name là " + shop.getName() + " không ?");
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -110,9 +119,22 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
                         if (check) {
                             Toast.makeText(context, "Mở Shop thành công", Toast.LENGTH_SHORT).show();
                             // Load data
+
+                            ProductDAO productDAO = new ProductDAO(context);
+                            List<Product> productList = productDAO.getProductsByIdShop(shop.getIdShop());
+                            for (Product product : productList) {
+                                product.setStatus(1);
+                                boolean checkProduct = productDAO.upProduct(product);
+                            }
+                            productList.clear();
+
+
+                            //tai lai shop
                             shopList.clear();
                             shopList.addAll(shopDAO.getAllShops());
                             notifyDataSetChanged();
+
+
                         } else {
                             Toast.makeText(context, "Mở Shop thất bại", Toast.LENGTH_SHORT).show();
                         }

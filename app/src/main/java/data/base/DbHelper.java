@@ -34,6 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CCCD = "cccd";
     private static final String COLUMN_ROLE = "role";
     private static final String COLUMN_ADDRESS = "address";
+    private static final String COLUMN_STATUS = "status";
 
 
     // Shop table columns
@@ -102,7 +103,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 COLUMN_PHONE + " LONG, " +
                 COLUMN_CCCD + " LONG, " +
                 COLUMN_ROLE + " INTEGER, " +
-                COLUMN_ADDRESS + " TEXT)");
+                COLUMN_ADDRESS + " TEXT," +
+                COLUMN_STATUS + " INTEGER" +
+                ");");
+
 
         // Create Shop table
         db.execSQL("CREATE TABLE " + TABLE_SHOP + " (" +
@@ -174,16 +178,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         // Insert initial data
-        db.execSQL("INSERT INTO " + TABLE_USER + " (" + COLUMN_USER + ", " + COLUMN_PASS + ", " + COLUMN_NAME + ", " + COLUMN_PHONE + ", " + COLUMN_CCCD + ", " + COLUMN_ROLE + ", " + COLUMN_ADDRESS + ") VALUES " +
-                "('admin', '1', 'Phong Nguyễn', '0936887373', '04420020000000', 0, 'admin'), " +
-                "('sell1', '1', 'Mỹ Huyền', '0123456789', '03745923622222', 1, 'Quận 1'), " +
-                "('sell2', '1', 'Anh Tuấn', '0978654123', '03745923622222', 1, 'Lầu 2, Toà T'), " +
-                "('sell3', '1', 'Nguyễn Dung', '0972396789', '66666666666666', 1, 'Lầu 3, Toà T'), " +
-                "('buy1', '1', 'Nguyễn Văn A', '0123456789', '33333333333333', 2, 'Lầu 8, Toà T'), " +
-                "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2, 'Lầu 9, Toà 10')");
-
-
-
+        db.execSQL("INSERT INTO " + TABLE_USER + " (" + COLUMN_USER + ", " + COLUMN_PASS + ", " + COLUMN_NAME + ", " + COLUMN_PHONE + ", " + COLUMN_CCCD + ", " + COLUMN_ROLE + ", " + COLUMN_ADDRESS + ", " + COLUMN_STATUS + ") VALUES " +
+                "('admin', '1', 'Phong Nguyễn', '0936887373', '04420020000000', 0, 'admin',1), " +
+                "('sell1', '1', 'Mỹ Huyền', '0123456789', '03745923622222', 1, 'Quận 1',1), " +
+                "('sell2', '1', 'Anh Tuấn', '0978654123', '03745923622222', 1, 'Lầu 2, Toà T',1), " +
+                "('sell3', '1', 'Nguyễn Dung', '0972396789', '66666666666666', 1, 'Lầu 3, Toà T',1), " +
+                "('buy1', '1', 'Nguyễn Văn A', '0123456789', '33333333333333', 2, 'Lầu 8, Toà T',1), " +
+                "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2, 'Lầu 9, Toà 10',1)");
 
 
         //insertshop
@@ -237,7 +238,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 // Convert bitmaps to byte arrays
-
 
 
         // Convert bitmaps to byte arrays
