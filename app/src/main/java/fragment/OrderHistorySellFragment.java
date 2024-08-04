@@ -54,16 +54,16 @@ public class OrderHistorySellFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rcv_lits_order_history);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         loaddata();
-        txt_order_confirmation.setBackgroundResource(R.drawable.custom_button_background);
+        txt_order_confirmation.setBackgroundResource(R.drawable.bg_lichsu_xanh);
 
         txt_order_confirmation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 0;
-                txt_order_confirmation.setBackgroundResource(R.drawable.custom_button_background);
-                txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
+                txt_order_confirmation.setBackgroundResource(R.drawable.bg_lichsu_xanh);
+                txt_order_in_delivery.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_delivered.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_cancelled.setBackgroundResource(R.drawable.bg_lichsu_xam);
                 loaddata();
 
             }
@@ -73,10 +73,10 @@ public class OrderHistorySellFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 status = 1;
-                txt_order_confirmation.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_in_delivery.setBackgroundResource(R.drawable.custom_button_background);
-                txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
+                txt_order_confirmation.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_in_delivery.setBackgroundResource(R.drawable.bg_lichsu_xanh);
+                txt_order_delivered.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_cancelled.setBackgroundResource(R.drawable.bg_lichsu_xam);
 
                 loaddata();
             }
@@ -85,10 +85,10 @@ public class OrderHistorySellFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 status = 2;
-                txt_order_confirmation.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_delivered.setBackgroundResource(R.drawable.custom_button_background);
-                txt_order_cancelled.setBackgroundResource(R.drawable.custom_describe);
+                txt_order_confirmation.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_in_delivery.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_delivered.setBackgroundResource(R.drawable.bg_lichsu_xanh);
+                txt_order_cancelled.setBackgroundResource(R.drawable.bg_lichsu_xam);
                 loaddata();
             }
         });
@@ -96,10 +96,10 @@ public class OrderHistorySellFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 status = 3;
-                txt_order_confirmation.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_in_delivery.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_delivered.setBackgroundResource(R.drawable.custom_describe);
-                txt_order_cancelled.setBackgroundResource(R.drawable.custom_button_background);
+                txt_order_confirmation.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_in_delivery.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_delivered.setBackgroundResource(R.drawable.bg_lichsu_xam);
+                txt_order_cancelled.setBackgroundResource(R.drawable.bg_lichsu_xanh);
                 
                 loaddata();
             }
