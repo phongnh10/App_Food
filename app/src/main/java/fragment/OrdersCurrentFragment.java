@@ -295,7 +295,7 @@ public class OrdersCurrentFragment extends Fragment {
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText("Tổng: " + String.valueOf(quantityProduct));
+            binding.txtQuantityProduct.setText("Tổng đơn hàng: " + String.valueOf(quantityProduct));
         }
         loadlist();
     }
@@ -310,7 +310,7 @@ public class OrdersCurrentFragment extends Fragment {
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
         if (orderDetailsList.isEmpty() || (orderDetailsList == null)) {
-            binding.txtQuantityProduct.setText("Tổng: 0");
+            binding.txtQuantityProduct.setText("Tổng đơn hàng: 0");
         }
         if (orderDetailsList == null || orderDetailsList.isEmpty() || orderDetailsList.size() == 0) {
             binding.imgCardEmpty.setVisibility(View.VISIBLE);
