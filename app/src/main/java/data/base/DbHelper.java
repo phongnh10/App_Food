@@ -183,6 +183,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "('buy2', '1', 'Lê Đức Thọ', '0123456789', '33333333333333', 2, 'Lầu 9, Toà 10')");
 
 
+
+
+
         //insertshop
         insertShops(db);
         // Insert initial categories with image

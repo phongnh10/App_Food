@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+
     android:orientation="vertical"
     android:layout_marginLeft="8dp">
 
     <RelativeLayout
         android:id="@+id/rl_item_categories"
         android:layout_width="100dp"
+
         android:layout_height="80dp">
 
         <androidx.cardview.widget.CardView
@@ -16,8 +18,10 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
+
             app:cardBackgroundColor="@android:color/transparent"
-            android:layout_gravity="center">
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/img_categories_img"
@@ -37,13 +41,18 @@
                 android:id="@+id/txt_name_categories_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:textSize="14sp"
                 android:textColor="#FFFFFF"
                 android:text="Name"
                 android:textStyle="bold"
+
                 android:layout_gravity="center"
                 android:gravity="center"
-                ></TextView>
+                android:text="Name"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"></TextView>
         </LinearLayout>
     </RelativeLayout>
 

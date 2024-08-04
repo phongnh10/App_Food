@@ -11,4 +11,20 @@
     <item
         android:id="@+id/item2"
         android:title="Shop" />
+    <item
+        android:id="@+id/item5"
+        android:title="Mới Nhất" />
+    <item
+        android:id="@+id/item6"
+        android:title="Giá Thấp Nhất" />
+    <item
+        android:id="@+id/item7"
+        android:title="Giá Cao Nhất" />
+    <item
+        android:id="@+id/item8"
+        android:title="Lượt Bán" />
+
+    <item
+        android:id="@+id/item9"
+        android:title="A - Z" />
 </menu>

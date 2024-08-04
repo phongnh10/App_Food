@@ -71,11 +71,24 @@ public class SearchFragment extends Fragment {
                             binding.showMenu1Textview.setText("Nước uống");
                             loadProductDrink();
 
-
                         } else if (item.getItemId() == R.id.item2) {
                             binding.showMenu1Textview.setText("Shop");
                             loadShopList();
-
+                        }else if (item.getItemId() == R.id.item5) {
+                            binding.showMenu1Textview.setText("Mới Nhất");
+                            loadProductListNew();
+                        } else if (item.getItemId() == R.id.item6) {
+                            binding.showMenu1Textview.setText("Giá Thấp Nhất");
+                            loadProductListMin();
+                        } else if (item.getItemId() == R.id.item7) {
+                            binding.showMenu1Textview.setText("Giá Cao Nhất");
+                            loadProductListMax();
+                        } else if (item.getItemId() == R.id.item8) {
+                            binding.showMenu1Textview.setText("Lượt Bán");
+                            loadProductListSold();
+                        } else if (item.getItemId() == R.id.item9) {
+                            binding.showMenu1Textview.setText("A-Z");
+                            loadProductList();
                         }
                         return false;
                     }
@@ -122,37 +135,6 @@ public class SearchFragment extends Fragment {
                         } else if (item.getItemId() == R.id.item10) {
                             loadProduct10();
                             binding.showMenu2Textview.setText("Nước Khác");
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
-
-        binding.showMenu3Textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getActivity(), v, Gravity.RIGHT);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_search_3, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.item1) {
-                            binding.showMenu3Textview.setText("Mới Nhất");
-                            loadProductListNew();
-                        } else if (item.getItemId() == R.id.item2) {
-                            binding.showMenu3Textview.setText("Giá Thấp Nhất");
-                            loadProductListMin();
-                        } else if (item.getItemId() == R.id.item3) {
-                            binding.showMenu3Textview.setText("Giá Cao Nhất");
-                            loadProductListMax();
-                        } else if (item.getItemId() == R.id.item4) {
-                            binding.showMenu3Textview.setText("Lượt Bán");
-                            loadProductListSold();
-                        } else if (item.getItemId() == R.id.item5) {
-                            binding.showMenu3Textview.setText("A-Z");
-                            loadProductList();
                         }
                         return false;
                     }
