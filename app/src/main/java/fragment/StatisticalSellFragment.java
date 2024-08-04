@@ -92,11 +92,11 @@ public class StatisticalSellFragment extends Fragment {
 
                 if (orderListConfirm != null && !orderListConfirm.isEmpty()) {
                     String date1 = orderListConfirm.get(0).getDate();
-                    SimpleDateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat inputFormat1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 
                     String date2 = orderListConfirm.get((orderListConfirm.size() - 1)).getDate();
-                    SimpleDateFormat inputFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat inputFormat2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 
                     try {
@@ -123,15 +123,16 @@ public class StatisticalSellFragment extends Fragment {
             case 2:
                 List<Order> orderListConfirm1 = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 2);
                 List<Order> orderListCanel1 = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 3);
+
                 int quantityOrderConfirm1 = 0;
                 int quantityQrderCanel1 = 0;
                 Double totalPrice1 = 0.0;
 
                 Date today = Calendar.getInstance().getTime();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedToday = formatter.format(today);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedToday = dateFormatter.format(today);
 
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
 
                 for (Order order : orderListCanel1) {
@@ -165,13 +166,15 @@ public class StatisticalSellFragment extends Fragment {
                     }
                 }
 
-                DecimalFormat decimalFormat1 = new DecimalFormat("#,###,###" + "VND");
+                DecimalFormat decimalFormat1 = new DecimalFormat("#,###,###" + " VND");
                 binding.txtDateStatistical.setText(formattedToday);
                 binding.txtQuantityOrderConfirm.setText(String.valueOf(quantityOrderConfirm1));
                 binding.txtQuantityOrderCanel.setText(String.valueOf(quantityQrderCanel1));
                 binding.txtQuantityOrder.setText(String.valueOf(quantityOrderConfirm1 + quantityQrderCanel1));
                 binding.txtTotalPrice.setText(decimalFormat1.format(totalPrice1));
                 break;
+
+
             case 3:
                 break;
         }

@@ -15,14 +15,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true">
     </androidx.recyclerview.widget.RecyclerView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_catagory"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_add_24">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_add_24"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </RelativeLayout>

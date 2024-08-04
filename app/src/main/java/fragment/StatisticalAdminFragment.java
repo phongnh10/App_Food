@@ -94,7 +94,6 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
     }
 
     public void getStatistical(int x) {
-        ShopDAO shopDAO = new ShopDAO(getContext());
         OrderDAO orderDAO = new OrderDAO(getContext());
         if (shop == null) {
             return;
@@ -104,10 +103,12 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
             case 1:
                 List<Order> orderListConfirm = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 2);
                 List<Order> orderListCanel = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 3);
-                List<Order> orderListAll = orderDAO.getOrderByStatus(2);
+                List<Order> orderListAllConfrim = orderDAO.getOrderByStatus(2);
+                List<Order> orderListAllCannel = orderDAO.getOrderByStatus(3);
 
                 int quantityOrderConfirm = orderListConfirm.size();
                 int quantityQrderCanel = orderListCanel.size();
+
                 double totalPriceTong = 0.0;
 
 
@@ -116,13 +117,14 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                     totalPrice += order.getTotalPrice();
                 }
 
+                //time
                 if (orderListConfirm != null && !orderListConfirm.isEmpty()) {
                     String date1 = orderListConfirm.get(0).getDate();
-                    SimpleDateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat inputFormat1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 
                     String date2 = orderListConfirm.get((orderListConfirm.size() - 1)).getDate();
-                    SimpleDateFormat inputFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat inputFormat2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 
                     try {
@@ -139,35 +141,40 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                     binding.txtDateStatistical.setText("N/A");
                 }
 
-                for (Order order : orderListAll) {
+                for (Order order : orderListAllConfrim) {
                     totalPriceTong += order.getTotalPrice();
                 }
+
 
                 DecimalFormat decimalFormat = new DecimalFormat("#,###,###" + " VND");
                 binding.txtQuantityOrderConfirm.setText(String.valueOf(quantityOrderConfirm));
                 binding.txtQuantityOrderCanel.setText(String.valueOf(quantityQrderCanel));
                 binding.txtQuantityOrder.setText(String.valueOf(quantityOrderConfirm + quantityQrderCanel));
                 binding.txtTotalPrice.setText(decimalFormat.format(totalPrice));
+
                 binding.txtTotalPriceAllShop.setText(decimalFormat.format(totalPriceTong));
+                binding.txtQuantityOrderCanelSum.setText(String.valueOf(orderListAllCannel.size()));
+                binding.txtQuantityOrderConfirmSum.setText(String.valueOf(orderListAllConfrim.size()));
+                binding.txtQuantityOrderSum.setText(String.valueOf(orderListCanel.size() + orderListConfirm.size()));
+
                 break;
 
             case 2:
                 List<Order> orderListConfirm1 = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 2);
                 List<Order> orderListCanel1 = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 3);
-                List<Order> orderListAll1 = orderDAO.getOrderByStatus(2);
-                int quantityOrderConfirm1 = 0;
-                int quantityQrderCanel1 = 0;
-                double totalPrice1 = 0.0;
-                double totalPriceTong1 = 0.0;
+                List<Order> orderListAllConfrim1 = orderDAO.getOrderByStatus(2);
+                List<Order> orderListAllCannel1 = orderDAO.getOrderByStatus(3);
 
 
                 Date today = Calendar.getInstance().getTime();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedToday = formatter.format(today);
 
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+                // lay so luong don huy ngay hom nay theo shop
+                int quantityQrderCanelToday = 0;
                 for (Order order : orderListCanel1) {
                     String dateS = order.getDate();
                     try {
@@ -175,13 +182,17 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderCanel1 += order.getQuantity();
+                            quantityQrderCanelToday += order.getQuantity();
                         }
 
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
+
+                // lay so luong don thanh cong va tong tien trong hom nay theo shop
+                int quantityQrderConfirmToday = 0;
+                double totalPriceToday = 0.0;
 
                 for (Order order : orderListConfirm1) {
                     String dateS = order.getDate();
@@ -190,8 +201,8 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityOrderConfirm1 += order.getQuantity();
-                            totalPrice1 += order.getTotalPrice();
+                            quantityQrderConfirmToday += order.getQuantity();
+                            totalPriceToday += order.getTotalPrice();
                         }
 
                     } catch (ParseException e) {
@@ -199,14 +210,35 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                     }
                 }
 
-                for (Order order : orderListAll1) {
+                //lay so luong don thanh cong va tong tien hom nay, tat ca shop
+                int quantityQrderConfirmAllToday = 0;
+                double priceQrderConfirmAllToday = 0.0;
+                for (Order order : orderListAllConfrim1) {
                     String dateS = order.getDate();
                     try {
                         Date dateObj = inputFormat.parse(dateS);
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            totalPriceTong1 += order.getTotalPrice();
+                            quantityQrderConfirmAllToday += order.getQuantity();
+                            priceQrderConfirmAllToday+= order.getTotalPrice();
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //lay so luong don huy hom nay
+                int quantityQrderCanelAllToday = 0;
+                for (Order order : orderListAllCannel1) {
+                    String dateS = order.getDate();
+                    try {
+                        Date dateObj = inputFormat.parse(dateS);
+                        String dateDDMMYYYY = outputFormat.format(dateObj);
+
+                        if (dateDDMMYYYY.equals(formattedToday)) {
+                            quantityQrderCanelAllToday += order.getQuantity();
                         }
 
                     } catch (ParseException e) {
@@ -216,12 +248,18 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
 
 
                 DecimalFormat decimalFormat1 = new DecimalFormat("#,###,###" + " VND");
+                //ngay hom nay
                 binding.txtDateStatistical.setText(formattedToday);
-                binding.txtQuantityOrderConfirm.setText(String.valueOf(quantityOrderConfirm1));
-                binding.txtQuantityOrderCanel.setText(String.valueOf(quantityQrderCanel1));
-                binding.txtQuantityOrder.setText(String.valueOf(quantityOrderConfirm1 + quantityQrderCanel1));
-                binding.txtTotalPrice.setText(decimalFormat1.format(totalPrice1));
-                binding.txtTotalPriceAllShop.setText(decimalFormat1.format(totalPriceTong1));
+                //so luong don huy, thanh cong hom nay cua 1 shop
+                binding.txtQuantityOrderConfirm.setText(String.valueOf(quantityQrderConfirmToday));
+                binding.txtQuantityOrderCanel.setText(String.valueOf(quantityQrderCanelToday));
+                binding.txtQuantityOrder.setText(String.valueOf(quantityQrderConfirmToday + quantityQrderCanelToday));
+                binding.txtTotalPrice.setText(decimalFormat1.format(totalPriceToday));
+                //so luong don huy, thanh cong tat ca cac shop
+                binding.txtTotalPriceAllShop.setText(decimalFormat1.format(priceQrderConfirmAllToday));
+                binding.txtQuantityOrderSum.setText(String.valueOf(quantityQrderCanelAllToday+quantityQrderConfirmAllToday));
+                binding.txtQuantityOrderConfirmSum.setText(String.valueOf(quantityQrderConfirmAllToday));
+                binding.txtQuantityOrderCanelSum.setText(String.valueOf(quantityQrderCanelAllToday));
                 break;
             case 3:
                 break;

@@ -185,7 +185,7 @@ public class OrdersCurrentFragment extends Fragment {
                         idShopShare = orderDetails1.getIdShop();
 
                         Date date = new Date();
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         String formattedDate = sdf.format(date);
 
                         UserDAO userDAO = new UserDAO(getContext());
@@ -294,7 +294,7 @@ public class OrdersCurrentFragment extends Fragment {
         quantityProduct = 0;
         for (OrderDetails orderDetails : orderDetailsList) {
             quantityProduct += orderDetails.getQuantity();
-            binding.txtQuantityProduct.setText("Tổng: " + String.valueOf(quantityProduct));
+            binding.txtQuantityProduct.setText("Tổng đơn hàng: " + String.valueOf(quantityProduct));
         }
         if (orderDetailsList == null || orderDetailsList.isEmpty() || orderDetailsList.size() == 0) {
             binding.imgCardEmpty.setVisibility(View.VISIBLE);
@@ -313,7 +313,7 @@ public class OrdersCurrentFragment extends Fragment {
         adapter = new OrderDetailsAdapter(getContext(), orderDetailsList, orderDetailsDAO);
         recyclerView.setAdapter(adapter);
         if (orderDetailsList.isEmpty() || (orderDetailsList == null)) {
-            binding.txtQuantityProduct.setText("Tổng: 0");
+            binding.txtQuantityProduct.setText("Tổng đơn hàng: 0");
         }
         if (orderDetailsList == null || orderDetailsList.isEmpty() || orderDetailsList.size() == 0) {
             binding.imgCardEmpty.setVisibility(View.VISIBLE);

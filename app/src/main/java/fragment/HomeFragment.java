@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment {
 
     private void initializeViews(View view) {
         ImageView img_search = view.findViewById(R.id.img_search_home);
-        TextView home_location = view.findViewById(R.id.home_location);
 
         img_search.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class);
@@ -75,7 +74,6 @@ public class HomeFragment extends Fragment {
 
         UserDAO userDAO = new UserDAO(getContext());
         User user = userDAO.getUserByID(getIdUserFromSharedPreferences());
-        home_location.setText("Location: " + user.getAddress());
     }
 
     private void setupViewPager(View view) {
@@ -97,8 +95,8 @@ public class HomeFragment extends Fragment {
         recyclerView2 = view.findViewById(R.id.rcv_categories_home);
         recyclerView3 = view.findViewById(R.id.rcv_shop_home);
 
-        StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-        StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager layoutManagerEat = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+        StaggeredGridLayoutManager layoutManagerDrink = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerCategories = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         StaggeredGridLayoutManager layoutManagerShop = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
