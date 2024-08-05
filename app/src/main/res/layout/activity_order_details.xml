@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:id="@+id/top"
@@ -25,7 +25,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="Thông tin giao hàng"
-                android:textColor="@color/orange"
+                android:textColor="#A3A3A3"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Họ và tên: "
+                        android:text="Tên khách hàng: "
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại: "
+                        android:text="SĐT: "
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Địa chỉ: "
+                        android:text="Đ/c: "
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="5dp"
         android:layout_below="@+id/top"
         android:background="#BDBDBD" />
 
@@ -124,20 +124,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/top"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:text="Đơn Hàng"
-        android:textColor="@color/orange"
-        android:textSize="18dp"
+        android:textColor="#505050"
+        android:textSize="16sp"
         android:textStyle="bold"></TextView>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/mid"
-        android:background="#BDBDBD" />
-
-
     <ScrollView
         android:id="@+id/svvv"
         android:layout_width="match_parent"
@@ -155,34 +147,22 @@
                 android:id="@+id/rcv_lits_order_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="1dp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="#BDBDBD" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="20dp">
-                <TextView
-                    android:id="@+id/txt_Note_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="Lời nhắn:"
-                    ></TextView>
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp">
+
                 <TextView
                     android:id="@+id/txt_quantity_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
                     android:text="Số Lượng:">
                 </TextView>
                 <TextView
@@ -191,32 +171,49 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:textStyle="bold"
-                    android:textSize="25dp"
-                    android:textColor="#E91E63"
+                    android:textSize="16sp"
+                    android:textColor="@color/orange"
                     android:text="Tổng tiền:">
                 </TextView>
             </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:background="#BDBDBD" />
             <TextView
                 android:id="@+id/txt_status_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
                 android:textStyle="bold"
-                android:textSize="15dp"
-                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textColor="#009688"
                 android:text="Trạng thái: "
                 ></TextView>
-
             <TextView
                 android:id="@+id/txt_date_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:textSize="15dp"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="#000000"
                 android:text="Ngày đặt:  "
                 ></TextView>
+            <TextView
+                android:id="@+id/txt_Note_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Lời nhắn:"
+                ></TextView>
+
+
+
 
         </LinearLayout>
     </ScrollView>
@@ -227,10 +224,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/custom_edit_booth_canel"
+        android:background="@drawable/foreground_gradient"
         android:gravity="center_vertical"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
         android:padding="7dp">
                 <TextView
                     android:id="@+id/imgBackOrderDetails"
@@ -238,10 +235,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Quay Lại "
+                    android:text="Trở lại "
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
         </LinearLayout>
 </RelativeLayout>

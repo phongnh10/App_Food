@@ -63,9 +63,7 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
-
     </HorizontalScrollView>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_lits_order_history"
         android:layout_below="@+id/top"
