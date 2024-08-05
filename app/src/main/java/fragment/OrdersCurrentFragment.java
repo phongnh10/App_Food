@@ -50,14 +50,15 @@ public class OrdersCurrentFragment extends Fragment {
     private Runnable runnable;
     private int idShopShare;
 
+    private Dialog currentDialog; // Biến để lưu trữ dialog hiện tại
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentOrdersCurrentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        idUser = getIdUsserFromSharedPreferences();
-
+        idUser = getIdUserFromSharedPreferences();
 
         // Initialize DAO
         orderDetailsDAO = new OrderDetailsDAO(getContext());
@@ -68,49 +69,47 @@ public class OrdersCurrentFragment extends Fragment {
         orderDetailsList = new ArrayList<>();
 
         // Set up RecyclerView
-        loadlist();
+        loadList();
 
-        //address
-        loadAddrest();
+        // Address
+        loadAddress();
 
         // Check if orderDetailsList is null or empty
         binding.txtEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.diaglog_edit_address);
+                if (!isAdded() || isRemoving()) return;
+
+                currentDialog = new Dialog(getContext());
+                currentDialog.setContentView(R.layout.diaglog_edit_address);
 
                 // Tìm các view trong layout dialog
-                final EditText editName = dialog.findViewById(R.id.txt_name_edit_address);
-                final EditText editPhone = dialog.findViewById(R.id.txt_phone_edit_address);
-                final EditText editAddress = dialog.findViewById(R.id.txt_address_edit_address);
-                final TextView txtCancel = dialog.findViewById(R.id.txt_cancel_edit_address);
-                final TextView txtUpdate = dialog.findViewById(R.id.txt_update_edit_address);
+                final EditText editName = currentDialog.findViewById(R.id.txt_name_edit_address);
+                final EditText editPhone = currentDialog.findViewById(R.id.txt_phone_edit_address);
+                final EditText editAddress = currentDialog.findViewById(R.id.txt_address_edit_address);
+                final TextView txtCancel = currentDialog.findViewById(R.id.txt_cancel_edit_address);
+                final TextView txtUpdate = currentDialog.findViewById(R.id.txt_update_edit_address);
 
                 UserDAO userDAO = new UserDAO(getContext());
                 User user = userDAO.getUserByID(idUser);
 
-                //set data
+                // Set data
                 editName.setText(user.getName());
                 editPhone.setText("0" + String.valueOf(user.getPhone()));
                 editAddress.setText(user.getAddress());
 
-
                 // Thiết lập độ rộng của dialog
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.copyFrom(currentDialog.getWindow().getAttributes());
                 layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                dialog.getWindow().setAttributes(layoutParams);
+                currentDialog.getWindow().setAttributes(layoutParams);
 
-                // Đặt sự kiện click cho nút OK
                 txtUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() || editAddress.getText().toString().isEmpty()) {
                             CustomToast.show(getContext(), "Nhập đầy đủ thông tin", R.mipmap.image_logo_admin);
-
                             return;
                         }
                         if ((!editPhone.getText().toString().matches("\\d+")) || (editPhone.getText().toString().length() != 10)) {
@@ -124,29 +123,27 @@ public class OrdersCurrentFragment extends Fragment {
 
                         boolean check = userDAO.upDateAddress(user);
                         if (check) {
-                            loadAddrest();
+                            loadAddress();
                             CustomToast.show(getContext(), "Cập nhật thông tin thành công", R.mipmap.image_logo_admin);
                         } else {
-
                             CustomToast.show(getContext(), "Cập nhật thông tin thất bại", R.mipmap.image_logo_admin);
                         }
 
-                        dialog.dismiss();
+                        currentDialog.dismiss();
                     }
                 });
 
                 txtCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+                        currentDialog.dismiss();
                     }
                 });
 
                 // Hiển thị dialog
-                dialog.show();
+                currentDialog.show();
             }
         });
-
 
         binding.llOrderDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,28 +153,30 @@ public class OrdersCurrentFragment extends Fragment {
                     return;
                 }
 
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog_confirm_order);
+                if (!isAdded() || isRemoving()) return;
+
+                currentDialog = new Dialog(getContext());
+                currentDialog.setContentView(R.layout.dialog_confirm_order);
 
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.copyFrom(currentDialog.getWindow().getAttributes());
                 layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
                 layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                dialog.getWindow().setAttributes(layoutParams);
+                currentDialog.getWindow().setAttributes(layoutParams);
 
-                dialog.show();
+                currentDialog.show();
 
-                TextView txt_canel = dialog.findViewById(R.id.txt_canel);
-                TextView txt_confirm = dialog.findViewById(R.id.txt_confirm);
-                TextView txt_note = dialog.findViewById(R.id.txt_note);
+                TextView txt_cancel = currentDialog.findViewById(R.id.txt_canel);
+                TextView txt_confirm = currentDialog.findViewById(R.id.txt_confirm);
+                EditText txt_note = currentDialog.findViewById(R.id.txt_note);
 
                 txt_note.setText("");
                 txt_note.setHint("Hãy nhắn gì đó cho cửa hàng");
 
-
                 txt_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (!isAdded() || isRemoving()) return;
 
                         // Tạo đối tượng Order và set các thuộc tính
                         Order order = new Order();
@@ -192,10 +191,6 @@ public class OrdersCurrentFragment extends Fragment {
                         User user = userDAO.getUserByID(idUser);
 
                         String note = txt_note.getText().toString();
-//                        if(note.length() < 5){
-//                            Toast.makeText(getContext(), "Nội dung phải lớn hơn 5 ký tự", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
 
                         order.setIdShop(idShopShare);
                         order.setIdUser(idUser);
@@ -224,24 +219,21 @@ public class OrdersCurrentFragment extends Fragment {
                             }
                             adapter.notifyDataSetChanged();
                             orderDetailsList.clear();
-                            loadlist();
+                            loadList();
                             CustomToast.show(getContext(), "Đặt hàng thành công", R.mipmap.image_logo_admin);
                         } else {
                             CustomToast.show(getContext(), "Đặt hàng thất bại", R.mipmap.image_logo_admin);
-
                         }
-                        dialog.dismiss();
+                        currentDialog.dismiss();
                     }
-
                 });
 
-                txt_canel.setOnClickListener(new View.OnClickListener() {
+                txt_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        currentDialog.dismiss();
                     }
                 });
-
             }
         });
 
@@ -256,7 +248,6 @@ public class OrdersCurrentFragment extends Fragment {
                 handler.postDelayed(this, 500);
             }
         };
-
         return view;
     }
 
@@ -264,17 +255,19 @@ public class OrdersCurrentFragment extends Fragment {
     public void onResume() {
         super.onResume();
         handler.post(runnable);
-        loadlist();
+        loadList();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
+        if (currentDialog != null && currentDialog.isShowing()) {
+            currentDialog.dismiss();
+        }
     }
 
-
-    private int getIdUsserFromSharedPreferences() {
+    private int getIdUserFromSharedPreferences() {
         if (getContext() != null) {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("User_Login", Context.MODE_PRIVATE);
             return sharedPreferences.getInt("idUser", -1);
@@ -303,8 +296,7 @@ public class OrdersCurrentFragment extends Fragment {
         }
     }
 
-
-    public void loadlist() {
+    public void loadList() {
         RecyclerView recyclerView = binding.rcvLitsOrderDetails;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -322,7 +314,7 @@ public class OrdersCurrentFragment extends Fragment {
         }
     }
 
-    public void loadAddrest() {
+    public void loadAddress() {
         final UserDAO userDAO = new UserDAO(getContext());
         final User user = userDAO.getUserByID(idUser);
 

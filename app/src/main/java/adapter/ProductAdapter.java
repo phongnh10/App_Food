@@ -75,6 +75,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.txt_name.setText(product.getName());
         DecimalFormat decimalFormat = new DecimalFormat("#,### đ");
         holder.txt_price.setText(decimalFormat.format(product.getPrice()));
+        holder.txt_sold_product.setText(String.valueOf(product.getSold()+" lượt bán"));
+
         int idProduct = product.getIdProduct();
         int idUser = getIdUserFromSharedPreferences();
         int idShop = categoriesDao.getIdShop(idUser);
@@ -230,7 +232,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_name, txt_status_product, txt_price;
+        TextView txt_name, txt_status_product, txt_price,txt_sold_product;
         ImageView img_product;
         LinearLayout ll_item;
 
@@ -242,6 +244,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             img_product = itemView.findViewById(R.id.img_product);
             txt_price = itemView.findViewById(R.id.txt_price_product);
             ll_item = itemView.findViewById(R.id.ll_item_product);
+            txt_sold_product = itemView.findViewById(R.id.txt_sold_product);
         }
     }
 

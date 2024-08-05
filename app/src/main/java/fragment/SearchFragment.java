@@ -1,5 +1,7 @@
 package fragment;
 
+import static com.google.android.material.internal.ViewUtils.hideKeyboard;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -143,14 +145,15 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        setupSearchView();
 
         binding.svSearchProduct.setIconified(false);
         binding.svSearchProduct.requestFocus();
+        binding.svSearchProduct.clearFocus();
+        binding.svSearchProduct.setQueryHint("Tìm kiếm sản phẩm");
 
-//        if(getRoleFromSharedPreferences() == 1){
-//            hideKeyboard();
-//        }
+
+        setupSearchView();
+
 
         return view;
     }

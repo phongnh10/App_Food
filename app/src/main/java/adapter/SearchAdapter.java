@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         int idShop = product.getIdShop();
         ShopDAO shopDAO = new ShopDAO(context);
         Shop shop = shopDAO.getShopByIdShop(idShop);
+        int heightInPixels;
+        if (product.getIdProduct() % 2 == 0) {
+            heightInPixels = dpToPx(300, holder.img.getContext()); // Đặt chiều cao cố định 250dp cho ImageView
+        } else {
+            heightInPixels = dpToPx(250, holder.img.getContext()); // Đặt chiều cao cố định khác cho các sản phẩm khác
+        }
+
+        // Lấy LayoutParams của ImageView
+        ViewGroup.LayoutParams layoutParams = holder.img.getLayoutParams();
+        layoutParams.height = heightInPixels; // Đặt chiều cao cố định cho ImageView
+
+        // Áp dụng lại LayoutParams cho ImageView
+        holder.img.setLayoutParams(layoutParams);
+
+        // Yêu cầu ImageView cập nhật lại bố cục
+        holder.img.requestLayout();
+
+
 
         holder.txt_name_shop.setText(shop.getName());
         holder.txt_sold_shop_home.setText(String.valueOf(product.getSold()) + " lượt bán");
@@ -114,5 +133,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         } else {
             return BitmapFactory.decodeResource(context.getResources(), R.drawable.side_nav_bar);
         }
+    }
+    private int dpToPx(int dp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 }
