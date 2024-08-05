@@ -13,15 +13,9 @@
         android:text="Xác nhận đơn hàng"
         android:textColor="@color/orange"
         android:textSize="16sp"
+
         android:gravity="center"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thông báo đến cho người bán."
         android:layout_marginBottom="10dp"
-        android:textSize="16sp"
-        android:gravity="center"
         ></TextView>
     <TextView
         android:id="@+id/txt_note"

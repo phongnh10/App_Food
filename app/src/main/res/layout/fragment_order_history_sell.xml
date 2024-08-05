@@ -67,7 +67,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_lits_order_history"
         android:layout_below="@+id/top"
-        android:layout_marginHorizontal="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
