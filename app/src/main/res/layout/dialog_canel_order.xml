@@ -13,6 +13,7 @@
         android:text="Bạn muốn hủy đơn hàng?"
         android:textColor="@color/orange"
         android:textSize="16sp"
+
         android:gravity="center"
         android:layout_marginBottom="10dp"
         ></TextView>
