@@ -136,7 +136,8 @@
                     android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:layout_marginTop="0dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/txt_sold_product"
@@ -166,7 +167,7 @@
                     android:background="@drawable/custom_boder_update_user"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="30dp"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Thêm vào Giỏ Hàng"
                     android:textColor="@color/white"
                     android:textSize="16sp"

@@ -26,7 +26,6 @@ public class UserDAO {
     //add user
     public int addUser(User user) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-
         // Check if the user already exists
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE user = ?", new String[]{user.getUser()});
         if (cursor.getCount() > 0) {
