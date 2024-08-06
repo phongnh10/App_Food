@@ -14,9 +14,12 @@ import dao.UserDAO;
 import data.base.DbHelper;
 import model.User;
 
+import model.User;
+
 public class SigninActivity extends AppCompatActivity {
 
-    EditText edtUser, edtPass, edtRePass, edtFName, edtPhone, edtCCCD;
+    EditText edtUser,edtPass,edtRePass,edtFullName,edtPhone,edtCCCD;
+
     Button btnSignin;
     DbHelper dbHelper;
 
@@ -40,8 +43,10 @@ public class SigninActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edtPassword);
         edtRePass = findViewById(R.id.edtRePassword);
         edtPhone = findViewById(R.id.edtPhone);
-        edtFName = findViewById(R.id.edtFullName);
+
+        edtFullName = findViewById(R.id.edtFullName);
         edtCCCD = findViewById(R.id.edtCCCD);
+
         btnSignin = findViewById(R.id.btnSignin);
 
 
@@ -52,7 +57,7 @@ public class SigninActivity extends AppCompatActivity {
                 String pass = edtPass.getText().toString();
                 String rePass = edtRePass.getText().toString();
                 String phone = edtPhone.getText().toString();
-                String name = edtFName.getText().toString();
+                String name = edtFullName.getText().toString();
                 String cccd = edtCCCD.getText().toString();
 
                 //check
@@ -87,7 +92,6 @@ public class SigninActivity extends AppCompatActivity {
                 }
             }
         });
-
-
+        
     }
 }
