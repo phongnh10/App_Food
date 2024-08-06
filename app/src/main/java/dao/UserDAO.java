@@ -39,6 +39,13 @@ public class UserDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("user", user.getUser());
         contentValues.put("pass", user.getPass());
+
+        contentValues.put("name", user.getName());
+        contentValues.put("phone", user.getPhone());
+        contentValues.put("cccd", user.getCccd());
+        contentValues.put("role", user.getRole());
+        contentValues.put("status", user.getStatus());
+
         long result = sqLiteDatabase.insert("TABLE_USER", null, contentValues);
 
         return result != -1; // Return true if insertion was successful, otherwise false
