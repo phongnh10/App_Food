@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 import dao.UserDAO;
 import data.base.DbHelper;
+
 import model.User;
 
 public class SigninActivity extends AppCompatActivity {
 
     EditText edtUser,edtPass,edtRePass,edtFullName,edtPhone,edtCCCD;
+
     Button btnSignin;
     DbHelper dbHelper;
 
@@ -40,6 +42,7 @@ public class SigninActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edtPassword);
         edtRePass = findViewById(R.id.edtRePassword);
         edtPhone = findViewById(R.id.edtPhone);
+
         edtFullName = findViewById(R.id.edtFullName);
         edtCCCD = findViewById(R.id.edtCCCD);
 
@@ -87,6 +90,7 @@ public class SigninActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
     }
