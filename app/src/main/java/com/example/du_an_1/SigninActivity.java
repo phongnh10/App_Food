@@ -12,10 +12,11 @@ import android.widget.Toast;
 
 import dao.UserDAO;
 import data.base.DbHelper;
+import model.User;
 
 public class SigninActivity extends AppCompatActivity {
 
-    EditText edtUser,edtPass,edtRePass,edtFName,edtPhone,edtCCCD;
+    EditText edtUser, edtPass, edtRePass, edtFName, edtPhone, edtCCCD;
     Button btnSignin;
     DbHelper dbHelper;
 
@@ -42,7 +43,50 @@ public class SigninActivity extends AppCompatActivity {
         edtFName = findViewById(R.id.edtFullName);
         edtCCCD = findViewById(R.id.edtCCCD);
         btnSignin = findViewById(R.id.btnSignin);
-        UserDAO userDAO = new UserDAO(SigninActivity.this);
+
+
+        btnSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user = edtUser.getText().toString();
+                String pass = edtPass.getText().toString();
+                String rePass = edtRePass.getText().toString();
+                String phone = edtPhone.getText().toString();
+                String name = edtFName.getText().toString();
+                String cccd = edtCCCD.getText().toString();
+
+                //check
+                if (user.isEmpty() || pass.isEmpty() || rePass.isEmpty() || phone.isEmpty() || name.isEmpty() || cccd.isEmpty()) {
+                    Toast.makeText(SigninActivity.this, "Nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                } else if (!rePass.equals(pass)) {
+                    Toast.makeText(SigninActivity.this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    UserDAO userDAO = new UserDAO(SigninActivity.this);
+                    User user1 = new User();
+                    user1.setUser(user);
+                    user1.setPass(pass);
+                    user1.setName(name);
+                    user1.setPhone(Long.parseLong(phone));
+                    user1.setCccd(Long.parseLong(cccd));
+                    user1.setRole(2);
+                    user1.setAddress("");
+                    user1.setStatus(1);
+                    int addUser = userDAO.addUser(user1);
+                    if (addUser == 0) {
+                        Toast.makeText(SigninActivity.this, "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                    } else if (addUser == -1) {
+                        Toast.makeText(SigninActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(SigninActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SigninActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+        });
 
 
     }

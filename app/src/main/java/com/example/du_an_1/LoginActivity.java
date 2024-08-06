@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         ImageView btnBack = findViewById(R.id.btnBack);
         Button btnLogin = findViewById(R.id.btnLogin);
         TextView txtChangePass = findViewById(R.id.txtChangePass);
+        TextView txtSignIn = findViewById(R.id.txtSignIn);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SigninActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 

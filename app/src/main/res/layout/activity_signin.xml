@@ -161,11 +161,12 @@
                 android:background="@null"
                 android:ellipsize="end"
                 android:hint="SĐT của bạn"
-                android:maxLength="25"
+                android:maxLength="10"
                 android:paddingVertical="15dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:inputType="phone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -188,11 +189,12 @@
                 android:background="@null"
                 android:ellipsize="end"
                 android:hint="CCCD của bạn"
-                android:maxLength="25"
+                android:maxLength="14"
                 android:paddingVertical="15dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:inputType="number"/>
         </LinearLayout>
 
 

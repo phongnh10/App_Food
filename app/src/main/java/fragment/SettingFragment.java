@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.du_an_1.ChangepassActivity;
 import com.example.du_an_1.LoginActivity;
 import com.example.du_an_1.RegisterShopActivity;
 import com.example.du_an_1.databinding.FragmentSettingBinding;
@@ -41,6 +42,13 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), RegisterShopActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.txtChancePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ChangepassActivity.class);
                 startActivity(intent);
             }
         });
