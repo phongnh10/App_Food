@@ -6,45 +6,44 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
     <HorizontalScrollView
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_order_confirmation"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
                 android:background="@drawable/bg_xam_search_choose"
                 android:gravity="center"
                 android:padding="10dp"
+                android:layout_marginHorizontal="5dp"
                 android:text="Chờ xác nhận"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_order_in_delivery"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"
                 android:gravity="center"
+                android:layout_marginRight="5dp"
                 android:padding="10dp"
                 android:text="Đang giao"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_order_delivered"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"
                 android:gravity="center"
                 android:padding="10dp"
@@ -53,11 +52,11 @@
 
             <TextView
                 android:id="@+id/txt_order_cancelled"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"
                 android:gravity="center"
+                android:layout_marginHorizontal="5dp"
                 android:padding="10dp"
                 android:text="Đơn bị hủy"
                 android:textSize="14sp" />
