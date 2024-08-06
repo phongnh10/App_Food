@@ -24,7 +24,27 @@ public class UserDAO {
     }
 
     //add user
+    public boolean addUser(User user) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
 
+        // Check if the user already exists
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM TABLE_USER WHERE user = ?", new String[]{user.getUser()});
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return false; // User already exists
+        }
+        cursor.close();
+
+        // If user does not exist, insert the new user data
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user", user.getUser());
+        contentValues.put("pass", user.getPass());
+        long result = sqLiteDatabase.insert("TABLE_USER", null, contentValues);
+
+        return result != -1; // Return true if insertion was successful, otherwise false
+    }
+
+    ////
     //update
     public boolean upDateUser(User user) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();

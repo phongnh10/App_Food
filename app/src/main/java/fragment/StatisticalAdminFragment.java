@@ -46,7 +46,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
         binding = FragmentStatisticalAdminBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.txtMenuStatistical.setText("Chọn ngày");
+        binding.txtMenuStatistical.setText("Ngày");
         binding.txtDateStatistical.setText("dd/mm/yyyy");
         binding.llSelectShop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +146,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                 }
 
 
-                DecimalFormat decimalFormat = new DecimalFormat("#,###,###" + " VND");
+                DecimalFormat decimalFormat = new DecimalFormat("#,###,###" + " đ");
                 binding.txtQuantityOrderConfirm.setText(String.valueOf(quantityOrderConfirm));
                 binding.txtQuantityOrderCanel.setText(String.valueOf(quantityQrderCanel));
                 binding.txtQuantityOrder.setText(String.valueOf(quantityOrderConfirm + quantityQrderCanel));
@@ -247,7 +247,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                 }
 
 
-                DecimalFormat decimalFormat1 = new DecimalFormat("#,###,###" + " VND");
+                DecimalFormat decimalFormat1 = new DecimalFormat("#,###,###" + " đ");
                 //ngay hom nay
                 binding.txtDateStatistical.setText(formattedToday);
                 //so luong don huy, thanh cong hom nay cua 1 shop
