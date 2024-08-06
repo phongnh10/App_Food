@@ -13,17 +13,11 @@
         android:text="Bạn muốn hủy đơn hàng?"
         android:textColor="@color/orange"
         android:textSize="16sp"
+
         android:gravity="center"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hãy ghi lý do cho người bán."
         android:layout_marginBottom="10dp"
-        android:textSize="16sp"
-        android:gravity="center"
         ></TextView>
-    <TextView
+    <EditText
         android:id="@+id/txt_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
