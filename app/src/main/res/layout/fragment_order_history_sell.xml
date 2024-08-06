@@ -18,7 +18,7 @@
 
             <TextView
                 android:id="@+id/txt_order_confirmation"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:background="@drawable/bg_xam_search_choose"
@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/txt_order_in_delivery"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"
@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/txt_order_delivered"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"
@@ -51,7 +51,7 @@
 
             <TextView
                 android:id="@+id/txt_order_cancelled"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_xam_search_choose"

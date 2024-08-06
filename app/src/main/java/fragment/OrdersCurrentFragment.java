@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -59,6 +60,12 @@ public class OrdersCurrentFragment extends Fragment {
         View view = binding.getRoot();
 
         idUser = getIdUserFromSharedPreferences();
+        User user = new User();
+        UserDAO userDAO = new UserDAO(getContext());
+        user = userDAO.getUserByID(idUser);
+        binding.txtNameOrderCurent.setText(user.getName());
+        binding.txtPhoneOrderCurent.setText("0" + String.valueOf(user.getPhone()));
+        binding.txtAddressOrderCurent.setText(user.getAddress());
 
         // Initialize DAO
         orderDetailsDAO = new OrderDetailsDAO(getContext());
@@ -95,7 +102,7 @@ public class OrdersCurrentFragment extends Fragment {
 
                 // Set data
                 editName.setText(user.getName());
-                editPhone.setText("0" + String.valueOf(user.getPhone()));
+                editPhone.setText(String.valueOf(user.getPhone()));
                 editAddress.setText(user.getAddress());
 
                 // Thiết lập độ rộng của dialog
@@ -149,7 +156,7 @@ public class OrdersCurrentFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (orderDetailsList == null || orderDetailsList.isEmpty()) {
-                    CustomToast.show(getContext(), "Bạn chưa thêm sản phẩm vào giỏ hàng", R.mipmap.image_logo_admin);
+                    Toast.makeText(getContext(),"Giỏ hàng trống", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -214,15 +221,15 @@ public class OrdersCurrentFragment extends Fragment {
 
                                 boolean isUpdated = orderDetailsDAO.updateOrderDetailsToOrder(orderDetails);
                                 if (!isUpdated) {
-                                    CustomToast.show(getContext(), "Cập nhật idOder trong OrderDetails thất bại", R.mipmap.image_logo_admin);
+                                    Toast.makeText(getContext(),"Cập nhật idOder trong OrderDetails thất bại", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             adapter.notifyDataSetChanged();
                             orderDetailsList.clear();
                             loadList();
-                            CustomToast.show(getContext(), "Đặt hàng thành công", R.mipmap.image_logo_admin);
+                            Toast.makeText(getContext(),"Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                         } else {
-                            CustomToast.show(getContext(), "Đặt hàng thất bại", R.mipmap.image_logo_admin);
+                            Toast.makeText(getContext(),"Đặt hàng thất bại", Toast.LENGTH_SHORT).show();
                         }
                         currentDialog.dismiss();
                     }
