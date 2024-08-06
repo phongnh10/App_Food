@@ -3,6 +3,7 @@ package data.base;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -83,8 +84,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PHONE_USER_ORDER = "phone";
     private static final String COLUMN_ADDRESS_USER_ORDER = "address";
     private static final String COLUMN_STATUS_ORDER = "status";
-
-    ///
     private Context context;
 
     public DbHelper(Context context) {
@@ -92,8 +91,10 @@ public class DbHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         // Create User table
         db.execSQL("CREATE TABLE " + TABLE_USER + " (" +
                 COLUMN_ID_USER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -206,6 +207,10 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER_DETAILS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ORDER);
         onCreate(db);
+    }
+
+    public SQLiteDatabase open(){
+        return this.getWritableDatabase();
     }
 
     public void insertShops(SQLiteDatabase db) {
@@ -435,4 +440,6 @@ public class DbHelper extends SQLiteOpenHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, quality, stream);
         return stream.toByteArray();
     }
+
+
 }
