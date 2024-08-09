@@ -61,6 +61,10 @@ public class OrderDetailActivity extends AppCompatActivity {
         OrderDAO orderDAO = new OrderDAO(OrderDetailActivity.this);
         order = orderDAO.getOrderByIdOrder(idOrder);
 
+        binding.txtNameOrderCurent.setText(order.getName());
+        binding.txtPhoneOrderCurent.setText(String.valueOf(order.getPhone()));
+        binding.txtAddressOrderCurent.setText(order.getAddress());
+
         binding.txtDateOrder.setText("Ngày đặt: " + order.getDate());
         binding.txtNoteOrder.setText("Lời nhắn: "+order.getNote());
         binding.mid.setText("Đơn hàng số: "+ order.getIdOrder());
