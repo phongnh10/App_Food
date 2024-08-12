@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Thông tin cá nhân"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:gravity="center"
         android:textColor="@color/orange"
         android:textStyle="bold"

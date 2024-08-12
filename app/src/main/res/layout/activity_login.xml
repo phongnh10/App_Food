@@ -6,7 +6,7 @@
     tools:context=".LoginActivity"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#FFFFFF">
+    android:background="@color/background_new">
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="30dp"
@@ -14,27 +14,28 @@
         android:padding="5dp"
         android:src="@drawable/baseline_arrow_back_ios_new_24"
         android:background="@drawable/bg_ic_back"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Đăng nhập"
+        android:textColor="@color/orange"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_above="@+id/khungdangnhap"/>
 
     <LinearLayout
+        android:id="@+id/khungdangnhap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="Đăng nhập"
-            android:textStyle="bold"
-            android:textColor="@color/orange"
-            android:textSize="18sp"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bogoc_edittext"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -91,7 +92,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/orange"
             android:padding="10dp"
             android:text="Đăng nhập"
@@ -103,11 +104,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="Quên mật khẩu"
             android:textColor="@color/black"
-            android:layout_marginBottom="8dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Bạn chưa có tài khoản? "
+                android:text="Bạn chưa có tài khoản ? "
                 android:textColor="#808080"
                 android:textSize="16sp" />
 
@@ -131,7 +133,8 @@
                 android:gravity="center"
                 android:text="Đăng ký"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-       
+
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

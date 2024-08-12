@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.SettingFragment"
     android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:background="@color/background_new">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardCornerRadius="100dp">
 
                     <ImageView
                         android:id="@+id/mi"

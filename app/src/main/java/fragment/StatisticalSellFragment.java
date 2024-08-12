@@ -105,7 +105,7 @@ public class StatisticalSellFragment extends Fragment {
 
                         Date dateObj2 = inputFormat2.parse(date2);
                         String formattedDate2 = outputFormat2.format(dateObj2);
-                        binding.txtDateStatistical.setText(formattedDate1 + " - " + formattedDate2);
+                        binding.txtDateStatistical.setText(formattedDate2 + " - " + formattedDate1);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -142,7 +142,7 @@ public class StatisticalSellFragment extends Fragment {
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderCanel1 += order.getQuantity();
+                            quantityQrderCanel1 ++;
                         }
 
                     } catch (ParseException e) {
@@ -157,7 +157,7 @@ public class StatisticalSellFragment extends Fragment {
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityOrderConfirm1 += order.getQuantity();
+                            quantityOrderConfirm1 ++;
                             totalPrice1 += order.getTotalPrice();
                         }
 

@@ -23,8 +23,7 @@ public class ChangepassActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChangepassActivity.this, LoginActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/background_new"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -58,7 +58,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@drawable/custom_button_background"
+            android:background="@drawable/custom_boder_update_user"
             android:text="Đồng ý"/>
     </LinearLayout>
 

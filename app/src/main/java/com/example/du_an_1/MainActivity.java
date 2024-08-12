@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             if (role == 0) {
                 replaceFragment(new HomeFragment());
             } else if (role == 1) {
-                replaceFragment(new SearchFragment());
-                binding.bottomNavigation.setSelectedItemId(R.id.nav_home);
+                replaceFragment(new ManageSellerFragment());
+                binding.bottomNavigation.setSelectedItemId(R.id.nav_search);
             } else if (role == 2) {
                 replaceFragment(new HomeFragment());
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 new int[]{-android.R.attr.state_checked} // trạng thái không được chọn
         };
 
-        int[] colors = new int[]{getResources().getColor(R.color.orange), getResources().getColor(R.color.default_color)};
+        int[] colors = new int[]{getResources().getColor(R.color.orange), getResources().getColor(R.color.navbottombar_nochoose)};
 
         ColorStateList colorStateList = new ColorStateList(states, colors);
 

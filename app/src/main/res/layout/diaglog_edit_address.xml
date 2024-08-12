@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/background_new"
     android:elevation="10dp">
 
 
@@ -96,7 +96,7 @@
                 android:id="@+id/txt_update_edit_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_button_background"
+                android:background="@drawable/custom_boder_update_user"
                 android:gravity="center"
                 android:text="Thay đổi"
                 android:textSize="16sp"
