@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             if (role == 0) {
                 replaceFragment(new HomeFragment());
             } else if (role == 1) {
-                replaceFragment(new SearchFragment());
-                binding.bottomNavigation.setSelectedItemId(R.id.nav_home);
+                replaceFragment(new ManageSellerFragment());
+                binding.bottomNavigation.setSelectedItemId(R.id.nav_search);
             } else if (role == 2) {
                 replaceFragment(new HomeFragment());
 

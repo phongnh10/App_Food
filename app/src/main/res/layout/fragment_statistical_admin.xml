@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fragment.StatisticalAdminFragment"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="fragment.StatisticalAdminFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -45,25 +47,39 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txt_menu_statistical"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Hôm nay:  "
-                android:textColor="#000000"
-                android:textSize="20sp"></TextView>
+                >
+
+                <TextView
+                    android:id="@+id/txt_menu_statistical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hôm nay "
+                    android:textColor="#000000"
+                    android:textSize="20sp"></TextView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_keyboard_arrow_down_24"
+                    android:layout_gravity="center"></ImageView>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/txt_date_statistical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
                 android:text="30/6/2023"
                 android:textColor="#000000"
                 android:textSize="20sp"></TextView>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,28 +108,29 @@
                     android:textSize="20dp"></TextView>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/custom_price"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:text="Tổng đơn"
-                    android:layout_marginBottom="20dp"
                     android:textColor="@color/black"
                     android:textSize="20sp"></TextView>
 
@@ -144,9 +161,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:text="Đơn đã giao         thành công"
-                        android:layout_marginBottom="10dp"
                         android:textColor="#4CAF50"
                         android:textSize="20sp"></TextView>
 
@@ -171,9 +188,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:text="Đơn đã bị hủy bỏ"
-                        android:layout_marginBottom="10dp"
                         android:textColor="#FF0000"
                         android:textSize="20sp"></TextView>
 
@@ -191,23 +208,24 @@
         </LinearLayout>
 
 
-
         <TextView
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="1dp"
+            android:layout_marginTop="10dp"
             android:background="@color/gray_light"></TextView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="Tất cả Shop"
-            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"></TextView>
+
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -233,28 +251,29 @@
                     android:textSize="20sp"></TextView>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/custom_price"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:text="Tổng đơn"
-                    android:layout_marginBottom="20dp"
                     android:textColor="@color/black"
                     android:textSize="20sp"></TextView>
 
@@ -286,9 +305,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:text="Đơn đã giao           thành công"
-                        android:layout_marginBottom="10dp"
                         android:textColor="#4CAF50"
                         android:textSize="20sp"></TextView>
 
@@ -312,9 +331,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:text="Đơn đã bị hủy bỏ"
-                        android:layout_marginBottom="10dp"
                         android:textColor="#FF0000"
                         android:textSize="20sp"></TextView>
 
@@ -330,8 +349,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>

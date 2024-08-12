@@ -105,6 +105,10 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                 List<Order> orderListCanel = orderDAO.getOrderByIdShopStatus(shop.getIdShop(), 3);
                 List<Order> orderListAllConfrim = orderDAO.getOrderByStatus(2);
                 List<Order> orderListAllCannel = orderDAO.getOrderByStatus(3);
+                List<Order> orderListStatus2And3 = orderDAO.getOrderByStatus2And3();
+
+
+
 
                 int quantityOrderConfirm = orderListConfirm.size();
                 int quantityQrderCanel = orderListCanel.size();
@@ -118,12 +122,12 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                 }
 
                 //time
-                if (orderListConfirm != null && !orderListConfirm.isEmpty()) {
-                    String date1 = orderListConfirm.get(0).getDate();
+                if (orderListStatus2And3 != null && !orderListStatus2And3.isEmpty()) {
+                    String date1 = orderListStatus2And3.get(0).getDate();
                     SimpleDateFormat inputFormat1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 
-                    String date2 = orderListConfirm.get((orderListConfirm.size() - 1)).getDate();
+                    String date2 = orderListStatus2And3.get((orderListStatus2And3.size() - 1)).getDate();
                     SimpleDateFormat inputFormat2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     SimpleDateFormat outputFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -133,7 +137,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
 
                         Date dateObj2 = inputFormat2.parse(date2);
                         String formattedDate2 = outputFormat2.format(dateObj2);
-                        binding.txtDateStatistical.setText(formattedDate1 + " - " + formattedDate2);
+                        binding.txtDateStatistical.setText(formattedDate2 + " - " + formattedDate1);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -155,7 +159,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                 binding.txtTotalPriceAllShop.setText(decimalFormat.format(totalPriceTong));
                 binding.txtQuantityOrderCanelSum.setText(String.valueOf(orderListAllCannel.size()));
                 binding.txtQuantityOrderConfirmSum.setText(String.valueOf(orderListAllConfrim.size()));
-                binding.txtQuantityOrderSum.setText(String.valueOf(orderListCanel.size() + orderListConfirm.size()));
+                binding.txtQuantityOrderSum.setText(String.valueOf(orderListAllConfrim.size() + orderListAllCannel.size()));
 
                 break;
 
@@ -182,7 +186,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderCanelToday += order.getQuantity();
+                            quantityQrderCanelToday ++;
                         }
 
                     } catch (ParseException e) {
@@ -201,7 +205,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderConfirmToday += order.getQuantity();
+                            quantityQrderConfirmToday ++;
                             totalPriceToday += order.getTotalPrice();
                         }
 
@@ -220,7 +224,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderConfirmAllToday += order.getQuantity();
+                            quantityQrderConfirmAllToday ++;
                             priceQrderConfirmAllToday+= order.getTotalPrice();
                         }
 
@@ -238,7 +242,7 @@ public class StatisticalAdminFragment extends Fragment implements ShopSelectAdap
                         String dateDDMMYYYY = outputFormat.format(dateObj);
 
                         if (dateDDMMYYYY.equals(formattedToday)) {
-                            quantityQrderCanelAllToday += order.getQuantity();
+                            quantityQrderCanelAllToday ++;
                         }
 
                     } catch (ParseException e) {

@@ -87,15 +87,10 @@ public class ShopDAO {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<Shop> shopList = new ArrayList<>();
 
-        String query = "SELECT shop.idShop, shop.idUser, shop.name, shop.address, shop.image, shop.status, " +
-                "COALESCE(SUM(product.sold), 0) as total_sold " +
-                "FROM shop " +
-                "INNER JOIN user ON shop.idUser = user.idUser " +
+        String query = "SELECT shop.idShop, shop.idUser, shop.name, shop.address, shop.image, shop.status, " + "COALESCE(SUM(product.sold), 0) as total_sold " +
+                "FROM shop " + "INNER JOIN user ON shop.idUser = user.idUser " +
                 "LEFT JOIN product ON shop.idShop = product.idShop " +
-                "WHERE user.role = 1 " +
-                "GROUP BY shop.idShop " +
-                "ORDER BY total_sold DESC " +
-                "LIMIT 5";
+                "WHERE user.role = 1 " + "GROUP BY shop.idShop " + "ORDER BY total_sold DESC " + "LIMIT 5";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -120,6 +115,7 @@ public class ShopDAO {
 
         return shopList;
     }
+
     public List<Shop> getShopByName(String query) {
         List<Shop> shopList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -171,11 +167,7 @@ public class ShopDAO {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         List<Shop> shopList = new ArrayList<>();
 
-        String query = "SELECT " + "shop.idShop, " + "shop.idUser, " + "shop.name, " + "shop.address, " + "shop.image, " + "shop.status " +
-                "FROM shop " +
-                "JOIN user ON shop.idUser = user.idUser " +
-                "WHERE shop.status = 1 " +
-                "AND user.role = 1";
+        String query = "SELECT " + "shop.idShop, " + "shop.idUser, " + "shop.name, " + "shop.address, " + "shop.image, " + "shop.status " + "FROM shop " + "JOIN user ON shop.idUser = user.idUser " + "WHERE shop.status = 1 " + "AND user.role = 1";
 
         Cursor cursor = db.rawQuery(query, null);
 
