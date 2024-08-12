@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/background_new"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp">
@@ -45,7 +45,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="Hôm nay "
                     android:textColor="#000000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="16sp"></TextView>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,7 +78,7 @@
                 android:layout_marginTop="20dp"
                 android:text="30/6/2023"
                 android:textColor="#000000"
-                android:textSize="20sp"></TextView>
+                android:textSize="16sp"></TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Doanh thu"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -105,7 +106,8 @@
                     android:gravity="right"
                     android:text="0.000 vnd"
                     android:textColor="#F5643A"
-                    android:textSize="20dp"></TextView>
+                    android:textStyle="bold"
+                    android:textSize="16sp"></TextView>
             </LinearLayout>
         </LinearLayout>
 
@@ -132,7 +134,7 @@
                     android:gravity="center"
                     android:text="Tổng đơn"
                     android:textColor="@color/black"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="16sp"></TextView>
 
                 <TextView
                     android:id="@+id/txt_quantity_order"
@@ -163,9 +165,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Đơn đã giao         thành công"
+                        android:text="Đơn đã giao                         thành công"
                         android:textColor="#4CAF50"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:id="@+id/txtQuantityOrderConfirm"
@@ -190,9 +192,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Đơn đã bị hủy bỏ"
+                        android:text="Đơn đã bị                                              hủy bỏ"
                         android:textColor="#FF0000"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:id="@+id/txtQuantityOrderCanel"
@@ -207,19 +209,12 @@
 
         </LinearLayout>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/gray_light"></TextView>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="Tất cả Shop"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"></TextView>
 
         <LinearLayout
@@ -237,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Doanh thu tổng"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"></TextView>
 
                 <TextView
@@ -248,7 +243,8 @@
                     android:gravity="right"
                     android:text="0.000 vnd"
                     android:textColor="#F5643A"
-                    android:textSize="20sp"></TextView>
+                    android:textStyle="bold"
+                    android:textSize="16sp"></TextView>
             </LinearLayout>
         </LinearLayout>
 
@@ -275,7 +271,7 @@
                     android:gravity="center"
                     android:text="Tổng đơn"
                     android:textColor="@color/black"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="16sp"></TextView>
 
                 <TextView
                     android:id="@+id/txt_quantity_order_sum"
@@ -307,9 +303,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Đơn đã giao           thành công"
+                        android:text="Đơn đã giao                                        thành công"
                         android:textColor="#4CAF50"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:id="@+id/txtQuantityOrderConfirm_sum"
@@ -333,9 +329,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Đơn đã bị hủy bỏ"
+                        android:text="Đơn đã bị                                               hủy bỏ"
                         android:textColor="#FF0000"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:id="@+id/txtQuantityOrderCanel_sum"

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_new"
     tools:context="fragment.StatisticalSellFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:text="Hôm nay: "
                         android:textColor="#000000"
-                        android:textSize="20dp"></TextView>
+                        android:textSize="16sp"></TextView>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_marginTop="20dp"
                     android:text="30/6/2023"
                     android:textColor="#000000"
-                    android:textSize="20dp"></TextView>
+                    android:textSize="16sp"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +74,7 @@
                         android:gravity="center"
                         android:text="Tổng đơn"
                         android:textColor="#000000"
-                        android:textSize="20sp"></TextView>
+                        android:textSize="16sp"></TextView>
 
                     <TextView
                         android:id="@+id/txt_quantity_order"
@@ -108,7 +108,7 @@
                             android:gravity="center"
                             android:text="Đơn đã giao                     thành công"
                             android:textColor="#4CAF50"
-                            android:textSize="20sp"></TextView>
+                            android:textSize="16sp"></TextView>
 
                         <TextView
                             android:id="@+id/txtQuantityOrderConfirm"
@@ -134,7 +134,7 @@
                             android:gravity="center"
                             android:text="Đơn đã bị                         hủy bỏ"
                             android:textColor="#FF0000"
-                            android:textSize="20dp"></TextView>
+                            android:textSize="16sp"></TextView>
 
                         <TextView
                             android:id="@+id/txtQuantityOrderCanel"
@@ -148,11 +148,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:background="@color/gray_light"></ImageView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Tổng doanh thu"
-                    android:textSize="20dp"
+                    android:textSize="18sp"
                     android:textStyle="bold"></TextView>
             </LinearLayout>
 
@@ -181,7 +176,8 @@
                     android:gravity="center"
                     android:text="0.000 vnd"
                     android:textColor="#F5643A"
-                    android:textSize="30dp"></TextView>
+                    android:textSize="16sp"
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
         </LinearLayout>

@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 new int[]{-android.R.attr.state_checked} // trạng thái không được chọn
         };
 
-        int[] colors = new int[]{getResources().getColor(R.color.orange), getResources().getColor(R.color.default_color)};
+        int[] colors = new int[]{getResources().getColor(R.color.orange), getResources().getColor(R.color.navbottombar_nochoose)};
 
         ColorStateList colorStateList = new ColorStateList(states, colors);
 

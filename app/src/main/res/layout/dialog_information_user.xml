@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:background="@color/white">
+        android:background="@color/background_new">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,9 +32,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_centerInParent="true">
 
                 <EditText
                     android:id="@+id/edt_role"
@@ -57,7 +58,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/background_new"
         android:padding="20dp"
         android:orientation="vertical">
 
@@ -240,7 +241,7 @@
                 android:layout_weight="1"
                 android:text="Tạm ngưng                    tài khoản"
                 android:layout_marginRight="10dp"
-                app:backgroundTint="#B32525"
+                app:backgroundTint="#B52727"
                 android:textColor="#FFFFFF"/>
 
             <Button
@@ -248,7 +249,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Cập nhập thông tin"
+                android:text="Cập nhập                 thông tin"
                 app:backgroundTint="#4CAF50"/>
 
         </LinearLayout>

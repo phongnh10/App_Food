@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginHorizontal="4dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="8dp">
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,8 +26,8 @@
                 android:layout_gravity="top"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_max="300dp"
-                app:layout_constraintHeight_min="300dp"
+                app:layout_constraintHeight_max="240dp"
+                app:layout_constraintHeight_min="240dp"
                 tools:ignore="MissingConstraints" />
 
             <LinearLayout
@@ -49,25 +49,15 @@
                 android:text="Bánh tráng trộn"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:singleLine="true"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="14sp"
+                android:maxLines="2"
+                android:textSize="16sp"
                 />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/txt_name_shop_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nino Shop"
-                    android:textColor="#D3D3D3"
-                    android:textSize="12sp"
-                    android:layout_weight="3">
-                </TextView>
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/txt_sold_shop_home"
                     android:layout_width="wrap_content"
@@ -75,8 +65,25 @@
                     android:text="200 lượt bán"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:layout_weight="3">
                 </TextView>
+                <TextView
+                    android:id="@+id/txt_name_shop_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nino Shop"
+                    android:gravity="right"
+                    android:textColor="#FFFFFF"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:layout_weight="3">
+                </TextView>
+
 
             </LinearLayout>
             <LinearLayout
@@ -107,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
                         android:text="4.5"
-                        android:textSize="15sp"
+                        android:textSize="16sp"
                         android:textColor="#FFD500"
                         ></TextView>
 
